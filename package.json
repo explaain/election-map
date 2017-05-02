@@ -1,26 +1,36 @@
 {
-  "name": "node-js-getting-started",
+  "name": "election-map",
   "version": "0.2.6",
-  "description": "A sample Node.js app using Express 4",
+  "description": "Interactive Map for the UK General Election 2017",
   "engines": {
     "node": "6.10.2"
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js && watchify views/main.js -o public/js/bundle.js",
+    "test": "mocha tests",
+    "watch": "watchify views/main.js -o public/js/bundle.js"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "chai": "^3.5.0",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "ejs": "2.5.6",
-    "express": "4.15.2"
+    "express": "4.15.2",
+    "httpism": "^2.7.0",
+    "hyperdom": "^0.5.0",
+    "hyperdom-router": "^2.18.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/heroku/node-js-getting-started"
   },
   "keywords": [
-    "node",
-    "heroku",
-    "express"
+    "election",
+    "ge2017",
+    "Explaain"
   ],
   "license": "MIT"
 }
