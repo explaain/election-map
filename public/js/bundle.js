@@ -4172,7 +4172,6 @@ function isArray(obj) {
 //Services
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
-const router = require('hyperdom-router');
 const model = require('../models/model');
 Model = model;
 
@@ -4184,7 +4183,7 @@ const Card = require('./card');
 
 class App {
   constructor() {
-    router.start({history: router.hash});
+
   }
 
   render() {
@@ -4204,56 +4203,59 @@ class App {
       }
     ];
 
+    var getSeatsWidth = function(seats) {
+      return (seats/5 + '%');
+    }
+
     var summary = 'No. of Results: ' + model.data.summary.resultsDeclared + '\n'
                 + 'Total Votes: ' + model.data.summary.totalVotesCounted + '\n'
                 + 'Forecast Winner: ' + model.data.summary.forecastWinner + '\n'
                 + 'Forecast Majority: ' + model.data.summary.forecastMajority;
 
-    const selectConstituency = function(key) {
-      return implementSelectConstituency(key)
+    const selectConstituency = function(constituency) {
+      return implementSelectConstituency(constituency)
     }
 
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
-    // const seatsCard = new Card({ name: "Seats at a Glance", parties: partySeats, type: "votes" });
+    const seatsCard = new Card({ name: "Seats at a Glance", parties: partySeats, getWidth: getSeatsWidth, type: "votes" });
     const summaryCard = new Card({ name: "Voting Summary", description: summary, type: "Detail" });
     // const latestCard = new Card({ name: "Latest Results", description: "Conservatives, Labour, Lib Dems", type: "Organization" });
     // const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", "parties": model.data.detailsByParty });
 
 
 
-    const implementSelectConstituency = function(key) {
-      ukMap.selectConstituency(key);
-      seatsCard.selectConstituency(key);
+    const implementSelectConstituency = function(constituency) {
+      ukMap.selectConstituency(constituency.objectID);
+      var newData = {
+        parties: constituency.ge2015Results
+      }
+      newData.parties.map(function(party) {
+        party.seats = party.share
+        return party
+      })
+      seatsCard.updateData(newData);
+      setTimeout(function(){
+        // seatsCard.refresh();
+      },1000);
     }
 
     var returnable = h('div.app',
       ukMap,
       h('div.side-cards',
-        // seatsCard,
+        seatsCard,
         summaryCard,
         // latestCard
       )
       // tableCard
     );
     return returnable;
-
-
-    // return h('div',
-    //   routes.home(function() {
-    //     return this.renderHome();
-    //   }),
-    //   routes.contacts(function() {
-    //     return this.renderContacts();
-    //   }),
-    //
-    // )
   }
 }
 
 module.exports = App;
 
-},{"../models/model":70,"./card":65,"./map":66,"./search":67,"hyperdom":19,"hyperdom-router":13}],65:[function(require,module,exports){
+},{"../models/model":70,"./card":65,"./map":66,"./search":67,"hyperdom":19}],65:[function(require,module,exports){
 //Services
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
@@ -4263,15 +4265,18 @@ const model = require('../models/model');
 const Helpers = require("../includes/Helpers"),
 helpers = new Helpers(model, h, http)
 
+var self;
+
 class Card {
 
   constructor(data) {
     this.data = data;
+    self = this;
   }
   updateData(data) {
     var dataKeys = Object.keys(data);
     dataKeys.forEach(function(dataKey) {
-      this.data[dataKey] = data[dataKey];
+      self.data[dataKey] = data[dataKey];
     })
   }
 
@@ -4285,24 +4290,31 @@ module.exports = Card;
 },{"../includes/Helpers":68,"../models/model":70,"httpism":5,"hyperdom":19,"hyperdom-router":13}],66:[function(require,module,exports){
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
-const router = require('hyperdom-router');
 
-const routes = {
-  home:  router.route('/'),
-  contacts: router.route('/contacts'),
-};
+var selectConstituency,
+    findConstituency,
+    self;
 
 class Map {
   constructor() {
 
   }
 
+  selectConstituency(key) {
+    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
+      padding: [100,100]
+    });
+  }
+
   onload() {
     $('#ukMap').ready(function() {
-      setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
-        var geojson;
+      self = this;
+      self.constituencies = {};
+      self.constituencyFeatures;
 
-        var ukMap = L.map('ukMap', {
+      setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
+
+        this.ukMap = L.map('ukMap', {
           center: [54.505, -4.09],
           zoom: 6,
           scrollWheelZoom: false
@@ -4346,14 +4358,27 @@ class Map {
           }
         }
         function resetHighlight(e) {
-          geojson.resetStyle(e.target);
+          self.constituencyFeatures.resetStyle(e.target);
         }
+        self.findConstituency = function(key) {
+          var feature = this.constituencyFeatures.eachLayer(function(layer) {
+            if (layer.feature.properties.pcon16cd == key) {
+              return layer
+            }
+          })
+          return feature;
+        }
+
         function zoomToFeature(e) {
           ukMap.fitBounds(e.target.getBounds(), {
             padding: [100,100]
           });
         }
         function onEachFeature(feature, layer) {
+          // console.log(feature);
+          var key = feature.properties.pcon16cd;
+          self.constituencies[key] = feature;
+          self.constituencies[key].getBounds = feature.getBounds;
           layer.on({
             mouseover: highlightFeature,
             mouseout: resetHighlight,
@@ -4362,13 +4387,14 @@ class Map {
         }
 
 
-        geojson = L.geoJson(constituencyData, {
+        self.constituencyFeatures = L.geoJson(constituencyData, {
           style: style,
           onEachFeature: onEachFeature,
           zoomSnap: 0.5
         }).addTo(ukMap);
 
-
+        self.findConstituency("E14000885");
+        self.findConstituency("E14000577");
 
 
         //Saving for when we do events
@@ -4385,21 +4411,19 @@ class Map {
   }
 }
 
+selectConstituency = Map.selectConstituency;
+findConstituency = Map.findConstituency;
+
 module.exports = Map;
 
-},{"hyperdom":19,"hyperdom-router":13}],67:[function(require,module,exports){
+},{"hyperdom":19}],67:[function(require,module,exports){
 //Services
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
-const router = require('hyperdom-router');
-
-const routes = {
-  home:  router.route('/'),
-  contacts: router.route('/contacts'),
-};
 
 class Search {
   constructor(selectConstituency) {
+    const self = this;
     this.selectConstituency = selectConstituency;
 
     var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
@@ -4410,14 +4434,12 @@ class Search {
         displayKey: 'name',
         templates: {
           suggestion: function(suggestion) {
-            console.log(suggestion._highlightResult)
             return suggestion._highlightResult.name.value;
           }
         }
       }
     ]).on('autocomplete:selected', function(event, suggestion, dataset) {
-      console.log(suggestion, dataset);
-      this.selectConstituency(suggestion);
+      self.selectConstituency(suggestion);
     });
   }
 
@@ -4428,7 +4450,7 @@ class Search {
 
 module.exports = Search;
 
-},{"hyperdom":19,"hyperdom-router":13}],68:[function(require,module,exports){
+},{"hyperdom":19}],68:[function(require,module,exports){
 module.exports = class Helpers {
 
   constructor(model, h, http) {
@@ -4603,8 +4625,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
   for(var key in templates){
     CardTemplates[key] = templates[key];
   };
-
-  console.log(CardTemplates);
 
   hyperdom.append(document.body, new App());
 });

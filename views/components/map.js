@@ -1,23 +1,30 @@
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
-const router = require('hyperdom-router');
 
-const routes = {
-  home:  router.route('/'),
-  contacts: router.route('/contacts'),
-};
+var selectConstituency,
+    findConstituency,
+    self;
 
 class Map {
   constructor() {
 
   }
 
+  selectConstituency(key) {
+    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
+      padding: [100,100]
+    });
+  }
+
   onload() {
     $('#ukMap').ready(function() {
-      setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
-        var geojson;
+      self = this;
+      self.constituencies = {};
+      self.constituencyFeatures;
 
-        var ukMap = L.map('ukMap', {
+      setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
+
+        this.ukMap = L.map('ukMap', {
           center: [54.505, -4.09],
           zoom: 6,
           scrollWheelZoom: false
@@ -61,14 +68,27 @@ class Map {
           }
         }
         function resetHighlight(e) {
-          geojson.resetStyle(e.target);
+          self.constituencyFeatures.resetStyle(e.target);
         }
+        self.findConstituency = function(key) {
+          var feature = this.constituencyFeatures.eachLayer(function(layer) {
+            if (layer.feature.properties.pcon16cd == key) {
+              return layer
+            }
+          })
+          return feature;
+        }
+
         function zoomToFeature(e) {
           ukMap.fitBounds(e.target.getBounds(), {
             padding: [100,100]
           });
         }
         function onEachFeature(feature, layer) {
+          // console.log(feature);
+          var key = feature.properties.pcon16cd;
+          self.constituencies[key] = feature;
+          self.constituencies[key].getBounds = feature.getBounds;
           layer.on({
             mouseover: highlightFeature,
             mouseout: resetHighlight,
@@ -77,13 +97,14 @@ class Map {
         }
 
 
-        geojson = L.geoJson(constituencyData, {
+        self.constituencyFeatures = L.geoJson(constituencyData, {
           style: style,
           onEachFeature: onEachFeature,
           zoomSnap: 0.5
         }).addTo(ukMap);
 
-
+        self.findConstituency("E14000885");
+        self.findConstituency("E14000577");
 
 
         //Saving for when we do events
@@ -99,5 +120,8 @@ class Map {
     return h('div#ukMap', '');
   }
 }
+
+selectConstituency = Map.selectConstituency;
+findConstituency = Map.findConstituency;
 
 module.exports = Map;

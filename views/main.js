@@ -16,7 +16,5 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
     CardTemplates[key] = templates[key];
   };
 
-  console.log(CardTemplates);
-
   hyperdom.append(document.body, new App());
 });

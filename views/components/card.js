@@ -7,15 +7,18 @@ const model = require('../models/model');
 const Helpers = require("../includes/Helpers"),
 helpers = new Helpers(model, h, http)
 
+var self;
+
 class Card {
 
   constructor(data) {
     this.data = data;
+    self = this;
   }
   updateData(data) {
     var dataKeys = Object.keys(data);
     dataKeys.forEach(function(dataKey) {
-      this.data[dataKey] = data[dataKey];
+      self.data[dataKey] = data[dataKey];
     })
   }
 

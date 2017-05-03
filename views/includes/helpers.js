@@ -1,12 +1,10 @@
 module.exports = class Helpers {
 
-  constructor(model, h, http) {
-    this.http = http;
-    console.log(http);
-    console.log(http);
-    console.log(http);
+  constructor(model, h, cardTemplates,http) {
     this.model = model;
     this.h = h;
+    this.cardTemplates = cardTemplates;
+    this.http = http;
   }
 
   assembleCards(data, template) {
@@ -44,6 +42,8 @@ module.exports = class Helpers {
       content = element.content.map(function(el){return self.assembleCards(params, el); });
     else if (element.content.var)
       content = self.getObjectPathProperty(params, element.content.var) || ''; //'var' MUST use dot notation, not []
+    else if (element.content.func)
+      content = self.getObjectPathProperty(params, element.content.func[0]).apply(null,element.content.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
     else
       content = element.default ? element.default : element.content;
 
@@ -66,13 +66,11 @@ module.exports = class Helpers {
         }
       })
     }
-    if (!element.dom && element.template){
+    if (!element.dom){
       return content;
     } else if (element.content && element.content.markdown) {
       return self.h.rawHtml(element.dom, attr, self.markdownToHtml(content));
     } else {
-      console.log('element')
-      console.log(element)
       return self.h(element.dom, attr, content);
     }
   }
