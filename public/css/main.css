@@ -1,5 +1,60 @@
 #ukMap {
+  margin-top: 200px;
   height: 580px;
   width: 50%;
   min-width: 600px;
+}
+
+
+.card {
+  margin: 30px;
+  text-align: left;
+}
+.slick-container .card {
+  width: 380px;
+}
+.card.postcode, .card.share, .card.vote-worth, .card.postcode-compare {
+  text-align: center;
+}
+
+.card .card-visible {
+  padding: 0;
+}
+.card .card-visible .close {
+  display: none !important; /*Temporary */
+}
+.card section {
+  padding: 0;
+  max-width: none;
+}
+.card section {
+  padding-bottom: 1em;
+}
+.card section.card-media {
+  background-position: center;
+  background-size: cover;
+}
+.card section.card-media {
+  min-height: 250px;
+}
+
+.card .content, .card .content > div, .card .content section, .card .content h2, .card .content .body-content  {
+  overflow: hidden;
+}
+.card .content {
+  margin: 0;
+}
+.card .content h2 {
+  margin: 1em 0;
+  font-weight: 700;
+}
+.card .content .card-image {
+  overflow: hidden;
+  margin: 0;
+}
+.card .content .card-image img {
+  transform: inherit;
+}
+.card table tr td {
+  padding: 5px 10px;
 }

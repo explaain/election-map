@@ -37,23 +37,33 @@ var markdownToHtml = function(text) {
 
 assembleCards.prototype.cards = function(data, template) {
   data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');
-  var dom = [];
-  if (typeof template == 'string') {
-    template = CardTemplates[template];
-  }
-  template.forEach(function(element) {
+  if (typeof template == 'string') { template = CardTemplates[template]; }
+  console.log(template);
+  const dom = template.map(function(element) {
     var content,
-        attr = {}
-    if (element.template)
+        attr = {};
+    if(
+      element.condition
+      &&
+      (
+        !getObjectPathProperty(data, element.condition) && !element.condition.match(/^!/)
+        ||
+        getObjectPathProperty(data, element.condition.replace(/^!/),"") && element.condition.match(/^!/)
+      )
+    )
+      return undefined;
+    else if (element.template)
       content = self.assembleCards(data, CardTemplates[element.template.var ? getObjectPathProperty(data, element.template.var) : element.template])
     else if (!element.content)
-      content = ''
+      content = '';
+    else if (element.loop)
+      content = getObjectPathProperty(data, element.loop).map(function(el){return self.assembleCards(el, element.content)});
     else if (element.content.constructor === Array)
-      content = self.assembleCards(data, element.content)
+      content = self.assembleCards(data, element.content);
     else if (element.content.var)
-      content = getObjectPathProperty(data, element.content.var) || ''; //'var' MUST use dot notation, not [
+      content = getObjectPathProperty(data, element.content.var) || ''; //'var' MUST use dot notation, not []
     else
-      content = element.default ? element.default : element.content
+      content = element.default ? element.default : element.content;
 
     if (element.attr) {
       var attrKeys = Object.keys(element.attr);
@@ -74,11 +84,10 @@ assembleCards.prototype.cards = function(data, template) {
         }
       })
     }
-    console.log(element.content)
     if (element.content && element.content.markdown) {
-      dom.push(h.rawHtml(element.dom, attr, markdownToHtml(content)));
+      return h.rawHtml(element.dom, attr, markdownToHtml(content));
     } else {
-      dom.push(h(element.dom, attr, content));
+      return h(element.dom, attr, content);
     }
   });
   return dom;

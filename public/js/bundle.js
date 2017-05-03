@@ -4173,46 +4173,69 @@ function isArray(obj) {
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
 const router = require('hyperdom-router');
+const model = require('../models/model');
+Model = model;
+
 
 //Components
+const Search = require('./search');
 const ClickMap = require('./map');
 const Card = require('./card');
-
-
-
-const routes = {
-  home:  router.route('/'),
-  contacts: router.route('/contacts'),
-};
 
 class App {
   constructor() {
     router.start({history: router.hash});
   }
 
-  // renderHome() {
-  //   return h('div','Home');
-  // }
-  //
-  // renderContacts() {
-  //   return h('div','Contacts')
-  // }
-
   render() {
-    const ukMap = new ClickMap;
-    const seatsCard = new Card({name:"Seats at a Glance", description: "Conservatives, Labour, Lib Dems", type: "Organization", image: "http://www.planwallpaper.com/static/images/Abstract-Cool-Background.jpg"});
+
+    var partySeats = [
+      {
+        name: "Conservatives",
+        seats: 326
+      },
+      {
+        name: "Labour",
+        seats: 230
+      },
+      {
+        name: "Scottish National Party",
+        seats: 56
+      }
+    ];
+
+    var summary = 'No. of Results: ' + model.data.summary.resultsDeclared + '\n'
+                + 'Total Votes: ' + model.data.summary.totalVotesCounted + '\n'
+                + 'Forecast Winner: ' + model.data.summary.forecastWinner + '\n'
+                + 'Forecast Majority: ' + model.data.summary.forecastMajority;
+
+    const selectConstituency = function(key) {
+      return implementSelectConstituency(key)
+    }
+
+    const searchBar = new Search(selectConstituency);
+    const ukMap = new ClickMap(selectConstituency);
+    // const seatsCard = new Card({ name: "Seats at a Glance", parties: partySeats, type: "votes" });
+    const summaryCard = new Card({ name: "Voting Summary", description: summary, type: "Detail" });
+    // const latestCard = new Card({ name: "Latest Results", description: "Conservatives, Labour, Lib Dems", type: "Organization" });
+    // const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", "parties": model.data.detailsByParty });
 
 
-    console.log('ukMap')
-    console.log(ukMap);
-    console.log('seatsCard')
-    console.log(seatsCard);
+
+    const implementSelectConstituency = function(key) {
+      ukMap.selectConstituency(key);
+      seatsCard.selectConstituency(key);
+    }
+
     var returnable = h('div.app',
       ukMap,
-      seatsCard
+      h('div.side-cards',
+        // seatsCard,
+        summaryCard,
+        // latestCard
+      )
+      // tableCard
     );
-    console.log('returnable')
-    console.log(returnable);
     return returnable;
 
 
@@ -4230,31 +4253,36 @@ class App {
 
 module.exports = App;
 
-},{"./card":65,"./map":66,"hyperdom":19,"hyperdom-router":13}],65:[function(require,module,exports){
+},{"../models/model":70,"./card":65,"./map":66,"./search":67,"hyperdom":19,"hyperdom-router":13}],65:[function(require,module,exports){
 //Services
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
+const http = require('httpism');
 const router = require('hyperdom-router');
-const assemble = require('../services/assembleCards');
-
-const routes = {
-  home:  router.route('/'),
-  contacts: router.route('/contacts'),
-};
+const model = require('../models/model');
+const Helpers = require("../includes/Helpers"),
+helpers = new Helpers(model, h, http)
 
 class Card {
+
   constructor(data) {
     this.data = data;
   }
+  updateData(data) {
+    var dataKeys = Object.keys(data);
+    dataKeys.forEach(function(dataKey) {
+      this.data[dataKey] = data[dataKey];
+    })
+  }
 
   render() {
-    return h('div',assemble.cards(this.data, 'card'));
+    return h('div',helpers.assembleCards(this.data, 'card'));
   }
 }
 
 module.exports = Card;
 
-},{"../services/assembleCards":68,"hyperdom":19,"hyperdom-router":13}],66:[function(require,module,exports){
+},{"../includes/Helpers":68,"../models/model":70,"httpism":5,"hyperdom":19,"hyperdom-router":13}],66:[function(require,module,exports){
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
 const router = require('hyperdom-router');
@@ -4272,8 +4300,13 @@ class Map {
   onload() {
     $('#ukMap').ready(function() {
       setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
-        var geojson,
-        ukMap = L.map('ukMap').setView([54.505, -4.09], 6);
+        var geojson;
+
+        var ukMap = L.map('ukMap', {
+          center: [54.505, -4.09],
+          zoom: 6,
+          scrollWheelZoom: false
+        });
 
         L.tileLayer('https://api.mapbox.com/styles/v1/jeremynevans/cj27w58m8001t2smzpntviyhw/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamVyZW15bmV2YW5zIiwiYSI6ImNqMjd3MGl2azAwNmsyd25zOW5zYWFtbncifQ.p0EZjsWStzknkgEyBOHrfA', {
           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -4281,12 +4314,17 @@ class Map {
           id: 'mapbox.light'
         }).addTo(ukMap);
 
-        function getColor(d) {
-          return 'rgba(0,0,200,' + (Math.random()*0.5+0.25) + ')';
-        }
+        constituencyData.features.forEach(function(feature) {
+          feature.properties.currentParty = {
+            key: 'labour',
+            name: 'Labour',
+            color: 'red'
+          };
+        })
+
         function style(feature) {
           return {
-            fillColor: getColor(),
+            fillColor: feature.properties.currentParty.color,
             weight: 1,
             opacity: 1,
             color: 'white',
@@ -4323,6 +4361,7 @@ class Map {
           });
         }
 
+
         geojson = L.geoJson(constituencyData, {
           style: style,
           onEachFeature: onEachFeature,
@@ -4350,82 +4389,94 @@ module.exports = Map;
 
 },{"hyperdom":19,"hyperdom-router":13}],67:[function(require,module,exports){
 //Services
-const http = require('httpism');
-const hyperdom = require('hyperdom');
-const loadTemplates = require('./services/loadTemplates')(http);
-
-//Components
-const App = require('./components/app');
-
-
-const templatesUrl = '//explaain-api.herokuapp.com/templates';
-loadTemplates(templatesUrl).then(function(templates){
-  for(var key in templates){
-    CardTemplates[key] = templates[key];
-  };
-
-  console.log(CardTemplates);
-
-  hyperdom.append(document.body, new App());
-});
-
-},{"./components/app":64,"./services/loadTemplates":69,"httpism":5,"hyperdom":19}],68:[function(require,module,exports){
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
-// const getObjectPathProperty = require('./getObjectPathProperty');
+const router = require('hyperdom-router');
 
-const self = {};
+const routes = {
+  home:  router.route('/'),
+  contacts: router.route('/contacts'),
+};
 
-function assembleCards() {
+class Search {
+  constructor(selectConstituency) {
+    this.selectConstituency = selectConstituency;
 
-}
-
-
-const getObjectPathProperty = function(object, path){
-  var schema = object;  // a moving reference to internal objects within the object
-  var pList = path.split('.');
-  var len = pList.length;
-  for(var i = 0; i < len-1; i++) {
-    var elem = pList[i];
-    if( !schema[elem] ) schema[elem] = {}
-    schema = schema[elem];
+    var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+    var index = client.initIndex('constituencies');
+    autocomplete('#search-input', {hint: false}, [
+      {
+        source: autocomplete.sources.hits(index, {hitsPerPage: 5}),
+        displayKey: 'name',
+        templates: {
+          suggestion: function(suggestion) {
+            console.log(suggestion._highlightResult)
+            return suggestion._highlightResult.name.value;
+          }
+        }
+      }
+    ]).on('autocomplete:selected', function(event, suggestion, dataset) {
+      console.log(suggestion, dataset);
+      this.selectConstituency(suggestion);
+    });
   }
-  return schema[pList[len-1]];
-}
 
-var updateObject = function(obj, objUpdates) {
-  var objKeys = Object.keys(objUpdates);
-  objKeys.forEach(function(key) {
-    obj[key] = objUpdates[key];
-  })
-  return obj;
-}
-
-var markdownToHtml = function(text) {
-  return text ? text.replace(/\[([^\]]+)\]\(([^\)]+)\)/g,"<a class='internal' tabindex='-1' href='$2'>$1</a>") : '';
-}
-
-
-
-assembleCards.prototype.cards = function(data, template) {
-  data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');
-  var dom = [];
-  if (typeof template == 'string') {
-    template = CardTemplates[template];
+  render() {
+    return h('input.search-input', { "type": "text" });
   }
-  template.forEach(function(element) {
+}
+
+module.exports = Search;
+
+},{"hyperdom":19,"hyperdom-router":13}],68:[function(require,module,exports){
+module.exports = class Helpers {
+
+  constructor(model, h, http) {
+    this.http = http;
+    console.log(http);
+    console.log(http);
+    console.log(http);
+    this.model = model;
+    this.h = h;
+  }
+
+  assembleCards(data, template) {
+    const self = this;
+    data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');
+    if (typeof template === 'string') { template = CardTemplates[template]; }
+    const element = template;
+    var params = {};
+    if(element.mapping){
+      element.mapping.forEach(function(kv){
+        params[kv[0]] = self.getObjectPathProperty(data, kv[1]);
+      });
+    } else {
+      params = data;
+    }
     var content,
-        attr = {}
-    if (element.template)
-      content = self.assembleCards(data, CardTemplates[element.template.var ? getObjectPathProperty(data, element.template.var) : element.template])
+      attr = {};
+    if(
+      element.condition
+      &&
+      (
+        !self.getObjectPathProperty(params, element.condition) && !element.condition.match(/^!/)
+        ||
+        self.getObjectPathProperty(params, element.condition.replace(/^!/,"")) && element.condition.match(/^!/)
+      )
+    )
+      return undefined;
+    else if (element.template)
+      content = self.assembleCards(params, element.template.var ? self.getObjectPathProperty(params, element.template.var) : element.template)
     else if (!element.content)
-      content = ''
+      content = '';
+    else if (element.loop)
+      content = self.getObjectPathProperty(params, element.loop).map(function(_params){return element.content.map(function(_element){return self.assembleCards(_params, _element);})});
     else if (element.content.constructor === Array)
-      content = self.assembleCards(data, element.content)
+      content = element.content.map(function(el){return self.assembleCards(params, el); });
     else if (element.content.var)
-      content = getObjectPathProperty(data, element.content.var) || ''; //'var' MUST use dot notation, not [
+      content = self.getObjectPathProperty(params, element.content.var) || ''; //'var' MUST use dot notation, not []
     else
-      content = element.default ? element.default : element.content
+      content = element.default ? element.default : element.content;
 
     if (element.attr) {
       var attrKeys = Object.keys(element.attr);
@@ -4435,41 +4486,207 @@ assembleCards.prototype.cards = function(data, template) {
           var styles = {}
           styleKeys.forEach(function(styleKey) {
             var style = element.attr.style[styleKey];
-            styles[styleKey] = style.var ? getObjectPathProperty(data, style.var) : style; //'var' MUST use dot notation, not []
+            styles[styleKey] = style.var ? self.getObjectPathProperty(data, style.var) : style; //'var' MUST use dot notation, not []
             if (styleKey == "background-image" && style.var) {
               styles[styleKey] = 'url("' + styles[styleKey] + '")'
             }
           });
           attr[attrKey] = styles;
         } else {
-          attr[attrKey] = element.attr[attrKey].var ? getObjectPathProperty(data, element.attr[attrKey].var) :  element.attr[attrKey]; //'var' MUST use dot notation, not []
+          attr[attrKey] = element.attr[attrKey].var ? self.getObjectPathProperty(params, element.attr[attrKey].var) :  element.attr[attrKey]; //'var' MUST use dot notation, not []
         }
       })
     }
-    console.log(element.content)
-    if (element.content && element.content.markdown) {
-      dom.push(h.rawHtml(element.dom, attr, markdownToHtml(content)));
+    if (!element.dom && element.template){
+      return content;
+    } else if (element.content && element.content.markdown) {
+      return self.h.rawHtml(element.dom, attr, self.markdownToHtml(content));
     } else {
-      dom.push(h(element.dom, attr, content));
+      console.log('element')
+      console.log(element)
+      return self.h(element.dom, attr, content);
     }
-  });
-  return dom;
-}
+  }
 
-self.assembleCards = assembleCards.prototype.cards
+  getModel(path){
+    const self = this;
+    return self.getObjectPathProperty(self.model, path);  // a moving reference to internal objects within model
+  }
 
-module.exports = new assembleCards();
+  getObjectPathProperty(object, path){
+    const self = this;
+    var schema = object;  // a moving reference to internal objects within the object
+    var pList = path.split('.');
+    var len = pList.length;
+    for(var i = 0; i < len-1; i++) {
+      var elem = pList[i];
+      if( !schema[elem] ) schema[elem] = {}
+      schema = schema[elem];
+    }
+    return schema[pList[len-1]];
+  }
 
-},{"hyperdom":19}],69:[function(require,module,exports){
-module.exports = function(http){
-  return function(templateUrl){
+  loadTemplates(templateUrl){
+    const self = this;
     return new Promise(function(resolve,reject){
-      http.get(templateUrl)
+      self.http.get(templateUrl)
       .then(function (res) {
         resolve(res.body);
       });
     });
   }
+
+  markdownToHtml(text) {
+    const self = this;
+    return text.replace(
+      /\[([^\]]+)\]\(([^\)]+)\)/g,
+      "<a class='internal' tabindex='-1' href='$2'>$1</a>"
+    );
+  }
+
+  updateData(dataUpdates) {
+    const self = this;
+    dataUpdates.forEach(function(update) {
+      self.updateModel(update.data, update.value, update.action);
+    });
+  }
+
+  updateModel(path, value, action) {
+    const self = this;
+    var schema = self.model;  // a moving reference to internal objects within model
+    var pList = path.split('.');
+    var len = pList.length;
+    for(var i = 0; i < len-1; i++) {
+      var elem = pList[i];
+      if( !schema[elem] ) schema[elem] = {}
+      schema = schema[elem];
+    }
+    switch(action){
+      case "toggle":
+        if(schema[pList[len-1]]){
+          delete schema[pList[len-1]];
+        } else {
+          schema[pList[len-1]] = value;
+        }
+        break;
+      default:
+        schema[pList[len-1]] = value;
+    }
+  }
+
+  updateObject(obj, objUpdates) {
+    const self = this;
+    var objKeys = Object.keys(objUpdates);
+    objKeys.forEach(function(key) {
+      obj[key] = objUpdates[key];
+    })
+    return obj;
+  }
+
 }
 
-},{}]},{},[67]);
+},{}],69:[function(require,module,exports){
+//Services
+const http = require('httpism');
+const hyperdom = require('hyperdom');
+const h = hyperdom.html;
+const model = require('./models/model');
+const Helpers = require("./includes/Helpers"),
+helpers = new Helpers(model, h, http)
+
+//Components
+const App = require('./components/app');
+
+
+const templatesUrl = 'http://localhost:5002/templates';
+helpers.loadTemplates(templatesUrl).then(function(templates){
+  for(var key in templates){
+    CardTemplates[key] = templates[key];
+  };
+
+  console.log(CardTemplates);
+
+  hyperdom.append(document.body, new App());
+});
+
+},{"./components/app":64,"./includes/Helpers":68,"./models/model":70,"httpism":5,"hyperdom":19}],70:[function(require,module,exports){
+module.exports = {
+  data: {
+    summary: {
+      resultsDeclared: 643,
+      totalVotesCounted: 30388065,
+      forecastWinner: "Conservatives",
+      forecastMajority: 12
+    },
+    national: {
+
+    },
+    selectedConstituency: {
+
+    },
+    parties: [
+      {
+        partyResults: [
+          {
+            name: "name",
+            value: "Conservatives"
+          },
+          {
+            name: "seats",
+            value: 326
+          },
+          {
+            name: "gains",
+            value: 60
+          },
+          {
+            name: "losses",
+            value: 11
+          }
+        ]
+      },
+      {
+        partyResults: [
+          {
+            name: "name",
+            value: "Labour"
+          },
+          {
+            name: "seats",
+            value: 230
+          },
+          {
+            name: "gains",
+            value: 6
+          },
+          {
+            name: "losses",
+            value: 79
+          }
+        ]
+      },
+      {
+        partyResults: [
+          {
+            name: "name",
+            value: "Scottish National Party"
+          },
+          {
+            name: "seats",
+            value: 56
+          },
+          {
+            name: "gains",
+            value: 37
+          },
+          {
+            name: "losses",
+            value: 0
+          }
+        ]
+      }
+    ]
+  }
+}
+
+},{}]},{},[69]);

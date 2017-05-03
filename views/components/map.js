@@ -15,8 +15,13 @@ class Map {
   onload() {
     $('#ukMap').ready(function() {
       setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
-        var geojson,
-        ukMap = L.map('ukMap').setView([54.505, -4.09], 6);
+        var geojson;
+
+        var ukMap = L.map('ukMap', {
+          center: [54.505, -4.09],
+          zoom: 6,
+          scrollWheelZoom: false
+        });
 
         L.tileLayer('https://api.mapbox.com/styles/v1/jeremynevans/cj27w58m8001t2smzpntviyhw/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamVyZW15bmV2YW5zIiwiYSI6ImNqMjd3MGl2azAwNmsyd25zOW5zYWFtbncifQ.p0EZjsWStzknkgEyBOHrfA', {
           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -24,12 +29,17 @@ class Map {
           id: 'mapbox.light'
         }).addTo(ukMap);
 
-        function getColor(d) {
-          return 'rgba(0,0,200,' + (Math.random()*0.5+0.25) + ')';
-        }
+        constituencyData.features.forEach(function(feature) {
+          feature.properties.currentParty = {
+            key: 'labour',
+            name: 'Labour',
+            color: 'red'
+          };
+        })
+
         function style(feature) {
           return {
-            fillColor: getColor(),
+            fillColor: feature.properties.currentParty.color,
             weight: 1,
             opacity: 1,
             color: 'white',
@@ -65,6 +75,7 @@ class Map {
             click: zoomToFeature
           });
         }
+
 
         geojson = L.geoJson(constituencyData, {
           style: style,
