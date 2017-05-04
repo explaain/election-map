@@ -42,10 +42,38 @@ class App {
       }
     ];
 
-    var summary = 'No. of Results: ' + model.data.summary.resultsDeclared + '\n'
-                + 'Total Votes: ' + model.data.summary.totalVotesCounted + '\n'
-                + 'Forecast Winner: ' + model.data.summary.forecastWinner + '\n'
-                + 'Forecast Majority: ' + model.data.summary.forecastMajority;
+
+    var summary = [
+      {
+        "cells": [
+          { value: 'No. of Results:' },
+          { value: model.data.summary.resultsDeclared }
+        ]
+      },
+      {
+        "cells": [
+          { value: 'Total Votes:' },
+          { value: model.data.summary.totalVotesCounted }
+        ]
+      },
+      {
+        "cells": [
+          { value: 'Forecast Winner:' },
+          { value: model.data.summary.forecastWinner }
+        ]
+      },
+      {
+        "cells": [
+          { value: 'Forecast Majority:' },
+          { value: model.data.summary.forecastMajority }
+        ]
+      }
+    ]
+
+    // var summary = 'No. of Results: ' + model.data.summary.resultsDeclared + '\n'
+    //             + 'Total Votes: ' + model.data.summary.totalVotesCounted + '\n'
+    //             + 'Forecast Winner: ' + model.data.summary.forecastWinner + '\n'
+    //             + 'Forecast Majority: ' + model.data.summary.forecastMajority;
 
     const selectConstituency = function(constituency) {
       return implementSelectConstituency(constituency)
@@ -54,8 +82,8 @@ class App {
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
     const seatsCard = new Card({ name: "Seats at a Glance", parties: partySeats, getWidth: getSeatsWidth, type: "votes" });
-    const summaryCard = new Card({ name: "Voting Summary", description: summary, type: "Detail" });
-    // const latestCard = new Card({ name: "Latest Results", description: "Conservatives, Labour, Lib Dems", type: "Organization" });
+    const summaryCard = new Card({ name: "Voting Summary", "rows": summary, type: "stats" });
+    const latestCard = new Card({ name: "Latest Results", description: "Conservatives, Labour, Lib Dems", type: "Organization" });
     // const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", "parties": model.data.detailsByParty });
 
 
@@ -80,7 +108,7 @@ class App {
       h('div.side-cards',
         seatsCard,
         summaryCard,
-        // latestCard
+        latestCard
       )
       // tableCard
     );

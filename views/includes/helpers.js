@@ -9,10 +9,10 @@ module.exports = class Helpers {
   }
 
   assembleCards(data, template) {
-    console.log(data, template);
+    console.log('data, template');
     console.log(data, template);
     const self = this;
-    data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');
+    if (typeof data === 'object') {data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');}
     if (typeof template === 'string') { template = self.cardTemplates[template]; }
     const element = template;
     console.log(self.cardTemplates);
