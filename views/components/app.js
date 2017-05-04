@@ -17,24 +17,30 @@ class App {
 
   render() {
 
-    var partySeats = [
-      {
-        name: "Conservatives",
-        seats: 326
-      },
-      {
-        name: "Labour",
-        seats: 230
-      },
-      {
-        name: "Scottish National Party",
-        seats: 56
-      }
-    ];
-
     var getSeatsWidth = function(seats) {
       return (seats/5 + '%');
     }
+
+    var partySeats = [
+      {
+        name: "Conservatives",
+        seats: 326,
+        color: "blue",
+        getWidth: getSeatsWidth
+      },
+      {
+        name: "Labour",
+        seats: 230,
+        color: "red",
+        getWidth: getSeatsWidth
+      },
+      {
+        name: "Scottish National Party",
+        seats: 56,
+        color: "yellow",
+        getWidth: getSeatsWidth
+      }
+    ];
 
     var summary = 'No. of Results: ' + model.data.summary.resultsDeclared + '\n'
                 + 'Total Votes: ' + model.data.summary.totalVotesCounted + '\n'

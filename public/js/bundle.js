@@ -4188,24 +4188,30 @@ class App {
 
   render() {
 
-    var partySeats = [
-      {
-        name: "Conservatives",
-        seats: 326
-      },
-      {
-        name: "Labour",
-        seats: 230
-      },
-      {
-        name: "Scottish National Party",
-        seats: 56
-      }
-    ];
-
     var getSeatsWidth = function(seats) {
       return (seats/5 + '%');
     }
+
+    var partySeats = [
+      {
+        name: "Conservatives",
+        seats: 326,
+        color: "blue",
+        getWidth: getSeatsWidth
+      },
+      {
+        name: "Labour",
+        seats: 230,
+        color: "red",
+        getWidth: getSeatsWidth
+      },
+      {
+        name: "Scottish National Party",
+        seats: 56,
+        color: "yellow",
+        getWidth: getSeatsWidth
+      }
+    ];
 
     var summary = 'No. of Results: ' + model.data.summary.resultsDeclared + '\n'
                 + 'Total Votes: ' + model.data.summary.totalVotesCounted + '\n'
@@ -4263,7 +4269,7 @@ const http = require('httpism');
 const router = require('hyperdom-router');
 const model = require('../models/model');
 const Helpers = require("../includes/Helpers"),
-helpers = new Helpers(model, h, http)
+helpers = new Helpers(model, h, CardTemplates, http, router)
 
 var self;
 
@@ -4281,6 +4287,8 @@ class Card {
   }
 
   render() {
+    console.log('this.data');
+    console.log(this.data);
     return h('div',helpers.assembleCards(this.data, 'card'));
   }
 }
@@ -4356,9 +4364,11 @@ class Map {
           if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
           }
+          info.update(layer.feature.properties);
         }
         function resetHighlight(e) {
           self.constituencyFeatures.resetStyle(e.target);
+          info.update();
         }
         self.findConstituency = function(key) {
           var feature = this.constituencyFeatures.eachLayer(function(layer) {
@@ -4396,12 +4406,26 @@ class Map {
         self.findConstituency("E14000885");
         self.findConstituency("E14000577");
 
+        var info = L.control();
 
-        //Saving for when we do events
-        function onMapClick(e) {
-          // alert("You clicked the map at " + e.latlng);
-        }
-        ukMap.on('click', onMapClick);
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+            this.update();
+            return this._div;
+        };
+
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (props) {
+          console.log(props);
+            this._div.innerHTML = (props ?
+                '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + props.currentParty.name + '</b></p>'
+                : 'Hover over a constituency');
+        };
+
+        info.addTo(ukMap);
+
+
+
       },1000);
     });
   }
@@ -4453,20 +4477,22 @@ module.exports = Search;
 },{"hyperdom":19}],68:[function(require,module,exports){
 module.exports = class Helpers {
 
-  constructor(model, h, http) {
-    this.http = http;
-    console.log(http);
-    console.log(http);
-    console.log(http);
+  constructor(model, h, cardTemplates, http, router) {
     this.model = model;
     this.h = h;
+    this.cardTemplates = cardTemplates;
+    this.http = http;
+    this.router = router;
   }
 
   assembleCards(data, template) {
+    console.log(data, template);
+    console.log(data, template);
     const self = this;
     data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');
-    if (typeof template === 'string') { template = CardTemplates[template]; }
+    if (typeof template === 'string') { template = self.cardTemplates[template]; }
     const element = template;
+    console.log(self.cardTemplates);
     var params = {};
     if(element.mapping){
       element.mapping.forEach(function(kv){
@@ -4497,6 +4523,8 @@ module.exports = class Helpers {
       content = element.content.map(function(el){return self.assembleCards(params, el); });
     else if (element.content.var)
       content = self.getObjectPathProperty(params, element.content.var) || ''; //'var' MUST use dot notation, not []
+    else if (element.content.func)
+      content = self.getObjectPathProperty(params, element.content.func[0]).apply(null,element.content.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
     else
       content = element.default ? element.default : element.content;
 
@@ -4508,7 +4536,20 @@ module.exports = class Helpers {
           var styles = {}
           styleKeys.forEach(function(styleKey) {
             var style = element.attr.style[styleKey];
-            styles[styleKey] = style.var ? self.getObjectPathProperty(data, style.var) : style; //'var' MUST use dot notation, not []
+            var styleValue;
+            console.log("STYLE")
+            console.log(style)
+            if(style.var) {
+              styleValue = self.getObjectPathProperty(data, style.var);
+            } else if (style.func) {
+              console.log(style);
+              console.log(params);
+              console.log(self.getObjectPathProperty(params, style.func[0]));
+              styleValue = self.getObjectPathProperty(params, style.func[0]).apply(null,style.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
+            } else {
+              styleValue = style;
+            }
+            styles[styleKey] = styleValue;
             if (styleKey == "background-image" && style.var) {
               styles[styleKey] = 'url("' + styles[styleKey] + '")'
             }
@@ -4519,13 +4560,11 @@ module.exports = class Helpers {
         }
       })
     }
-    if (!element.dom && element.template){
+    if (!element.dom){
       return content;
     } else if (element.content && element.content.markdown) {
       return self.h.rawHtml(element.dom, attr, self.markdownToHtml(content));
     } else {
-      console.log('element')
-      console.log(element)
       return self.h(element.dom, attr, content);
     }
   }
@@ -4551,6 +4590,7 @@ module.exports = class Helpers {
   loadTemplates(templateUrl){
     const self = this;
     return new Promise(function(resolve,reject){
+      console.log(self.http)
       self.http.get(templateUrl)
       .then(function (res) {
         resolve(res.body);
@@ -4605,16 +4645,31 @@ module.exports = class Helpers {
     return obj;
   }
 
+  rerender(){
+    const self = this;
+    const params = {};
+    location.search.substr(1).split("&").forEach(function(kv){
+      const _kv = kv.split("=");
+      params[_kv[0]] = _kv[1];
+    });
+    if(!params.v){params.v=0}
+    params.v++;
+    self.router.route(location.pathname)(params).replace();;
+  }
+
 }
 
 },{}],69:[function(require,module,exports){
 //Services
 const http = require('httpism');
 const hyperdom = require('hyperdom');
+const router = require('hyperdom-router');
 const h = hyperdom.html;
 const model = require('./models/model');
-const Helpers = require("./includes/Helpers"),
-helpers = new Helpers(model, h, http)
+const Helpers = require("./includes/Helpers");
+
+
+helpers = new Helpers(model, h, CardTemplates, http, router);
 
 //Components
 const App = require('./components/app');
@@ -4626,10 +4681,12 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
     CardTemplates[key] = templates[key];
   };
 
+  console.log(CardTemplates)
+
   hyperdom.append(document.body, new App());
 });
 
-},{"./components/app":64,"./includes/Helpers":68,"./models/model":70,"httpism":5,"hyperdom":19}],70:[function(require,module,exports){
+},{"./components/app":64,"./includes/Helpers":68,"./models/model":70,"httpism":5,"hyperdom":19,"hyperdom-router":13}],70:[function(require,module,exports){
 module.exports = {
   data: {
     summary: {

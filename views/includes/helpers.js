@@ -1,17 +1,21 @@
 module.exports = class Helpers {
 
-  constructor(model, h, cardTemplates,http) {
+  constructor(model, h, cardTemplates, http, router) {
     this.model = model;
     this.h = h;
     this.cardTemplates = cardTemplates;
     this.http = http;
+    this.router = router;
   }
 
   assembleCards(data, template) {
+    console.log(data, template);
+    console.log(data, template);
     const self = this;
     data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');
-    if (typeof template === 'string') { template = CardTemplates[template]; }
+    if (typeof template === 'string') { template = self.cardTemplates[template]; }
     const element = template;
+    console.log(self.cardTemplates);
     var params = {};
     if(element.mapping){
       element.mapping.forEach(function(kv){
@@ -55,7 +59,20 @@ module.exports = class Helpers {
           var styles = {}
           styleKeys.forEach(function(styleKey) {
             var style = element.attr.style[styleKey];
-            styles[styleKey] = style.var ? self.getObjectPathProperty(data, style.var) : style; //'var' MUST use dot notation, not []
+            var styleValue;
+            console.log("STYLE")
+            console.log(style)
+            if(style.var) {
+              styleValue = self.getObjectPathProperty(data, style.var);
+            } else if (style.func) {
+              console.log(style);
+              console.log(params);
+              console.log(self.getObjectPathProperty(params, style.func[0]));
+              styleValue = self.getObjectPathProperty(params, style.func[0]).apply(null,style.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
+            } else {
+              styleValue = style;
+            }
+            styles[styleKey] = styleValue;
             if (styleKey == "background-image" && style.var) {
               styles[styleKey] = 'url("' + styles[styleKey] + '")'
             }
@@ -96,6 +113,7 @@ module.exports = class Helpers {
   loadTemplates(templateUrl){
     const self = this;
     return new Promise(function(resolve,reject){
+      console.log(self.http)
       self.http.get(templateUrl)
       .then(function (res) {
         resolve(res.body);
@@ -148,6 +166,18 @@ module.exports = class Helpers {
       obj[key] = objUpdates[key];
     })
     return obj;
+  }
+
+  rerender(){
+    const self = this;
+    const params = {};
+    location.search.substr(1).split("&").forEach(function(kv){
+      const _kv = kv.split("=");
+      params[_kv[0]] = _kv[1];
+    });
+    if(!params.v){params.v=0}
+    params.v++;
+    self.router.route(location.pathname)(params).replace();;
   }
 
 }

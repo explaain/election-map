@@ -66,9 +66,11 @@ class Map {
           if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
           }
+          info.update(layer.feature.properties);
         }
         function resetHighlight(e) {
           self.constituencyFeatures.resetStyle(e.target);
+          info.update();
         }
         self.findConstituency = function(key) {
           var feature = this.constituencyFeatures.eachLayer(function(layer) {
@@ -106,12 +108,26 @@ class Map {
         self.findConstituency("E14000885");
         self.findConstituency("E14000577");
 
+        var info = L.control();
 
-        //Saving for when we do events
-        function onMapClick(e) {
-          // alert("You clicked the map at " + e.latlng);
-        }
-        ukMap.on('click', onMapClick);
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+            this.update();
+            return this._div;
+        };
+
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (props) {
+          console.log(props);
+            this._div.innerHTML = (props ?
+                '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + props.currentParty.name + '</b></p>'
+                : 'Hover over a constituency');
+        };
+
+        info.addTo(ukMap);
+
+
+
       },1000);
     });
   }

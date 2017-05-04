@@ -5,7 +5,7 @@ const http = require('httpism');
 const router = require('hyperdom-router');
 const model = require('../models/model');
 const Helpers = require("../includes/Helpers"),
-helpers = new Helpers(model, h, http)
+helpers = new Helpers(model, h, CardTemplates, http, router)
 
 var self;
 
@@ -23,6 +23,8 @@ class Card {
   }
 
   render() {
+    console.log('this.data');
+    console.log(this.data);
     return h('div',helpers.assembleCards(this.data, 'card'));
   }
 }
