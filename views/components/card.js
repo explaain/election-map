@@ -7,6 +7,8 @@ const model = require('../models/model');
 const Helpers = require("../includes/Helpers"),
 helpers = new Helpers(model, h, CardTemplates, http, router)
 
+// var self;
+
 var self;
 
 class Card {
@@ -16,7 +18,7 @@ class Card {
     self = this;
 
     // model.data.summary.resultsDeclared = 3;
-    // helpers.rerender();
+    // self.refresh();
   }
   updateData(data) {
     var dataKeys = Object.keys(data);
@@ -26,10 +28,17 @@ class Card {
   }
 
   render() {
+    const self = this;
     console.log('this.data');
     console.log(this.data);
     return h('div',helpers.assembleCards(this.data, 'card'));
   }
 }
+
+
+setTimeout(function() {
+  model.data.summary.resultsDeclared = 3;
+  self.refresh();
+}, 5000)
 
 module.exports = Card;

@@ -12,23 +12,23 @@ module.exports = {
     selectedConstituency: {
 
     },
-    parties: [
+    detailsByParty: [
       {
         partyResults: [
           {
-            name: "name",
+            name: "Name",
             value: "Conservatives"
           },
           {
-            name: "seats",
+            name: "Seats",
             value: 326
           },
           {
-            name: "gains",
+            name: "Gains",
             value: 60
           },
           {
-            name: "losses",
+            name: "Losses",
             value: 11
           }
         ]
@@ -36,19 +36,19 @@ module.exports = {
       {
         partyResults: [
           {
-            name: "name",
+            name: "Name",
             value: "Labour"
           },
           {
-            name: "seats",
+            name: "Seats",
             value: 230
           },
           {
-            name: "gains",
+            name: "Gains",
             value: 6
           },
           {
-            name: "losses",
+            name: "Losses",
             value: 79
           }
         ]
@@ -56,19 +56,19 @@ module.exports = {
       {
         partyResults: [
           {
-            name: "name",
+            name: "Name",
             value: "Scottish National Party"
           },
           {
-            name: "seats",
+            name: "Seats",
             value: 56
           },
           {
-            name: "gains",
+            name: "Gains",
             value: 37
           },
           {
-            name: "losses",
+            name: "Losses",
             value: 0
           }
         ]

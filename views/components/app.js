@@ -43,7 +43,7 @@ class App {
     ];
 
 
-    var summary = [
+    var summaryRows = [
       {
         cells: [
           { value: 'No. of Results:' },
@@ -70,20 +70,32 @@ class App {
       }
     ];
 
-    var latest = [
+    var latestItems = [
       {
-        value: "Conservatives take Vauxhall"
+        value: "Conservatives hold Westminster"
       },
       {
         value: "Lib Dems take Vauxhall"
       },
       {
-        value: "Conservatives take Vauxhall"
+        value: "Conservatives take Lambeth"
       },
       {
-        value: "Conservatives take Vauxhall"
+        value: "Labour hold Islington North"
       }
     ]
+
+    function partiesToTable() {
+      var parties = model.data.detailsByParty;
+      var rows = parties.map(function(party) {
+        return {cells: party.partyResults}
+      })
+      var headerRow = parties[0].partyResults.map(function(data) {
+        return { value: data.name };
+      })
+      rows.unshift({ cells: headerRow })
+      return rows;
+    }
 
     const selectConstituency = function(constituency) {
       return implementSelectConstituency(constituency)
@@ -92,9 +104,9 @@ class App {
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
     const seatsCard = new Card({ name: "Seats at a Glance", parties: partySeats, getWidth: getSeatsWidth, type: "votes" });
-    const summaryCard = new Card({ name: "Voting Summary", rows: summary, type: "stats" });
-    const latestCard = new Card({ name: "Latest Results", description: "Conservatives, Labour, Lib Dems", type: "Organization" });
-    // const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", "parties": model.data.detailsByParty });
+    const summaryCard = new Card({ name: "Voting Summary", rows: summaryRows, type: "stats" });
+    const latestCard = new Card({ name: "Latest Results", items: latestItems, type: "list" });
+    const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() });
 
 
 
@@ -119,9 +131,12 @@ class App {
         seatsCard,
         summaryCard,
         latestCard
-      )
-      // tableCard
+      ),
+      tableCard
     );
+
+    // model.data.summary.resultsDeclared = 3;
+    // summaryCard.refresh();
     return returnable;
   }
 }
