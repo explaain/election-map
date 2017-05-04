@@ -45,35 +45,45 @@ class App {
 
     var summary = [
       {
-        "cells": [
+        cells: [
           { value: 'No. of Results:' },
           { value: model.data.summary.resultsDeclared }
         ]
       },
       {
-        "cells": [
+        cells: [
           { value: 'Total Votes:' },
           { value: model.data.summary.totalVotesCounted }
         ]
       },
       {
-        "cells": [
+        cells: [
           { value: 'Forecast Winner:' },
           { value: model.data.summary.forecastWinner }
         ]
       },
       {
-        "cells": [
+        cells: [
           { value: 'Forecast Majority:' },
           { value: model.data.summary.forecastMajority }
         ]
       }
-    ]
+    ];
 
-    // var summary = 'No. of Results: ' + model.data.summary.resultsDeclared + '\n'
-    //             + 'Total Votes: ' + model.data.summary.totalVotesCounted + '\n'
-    //             + 'Forecast Winner: ' + model.data.summary.forecastWinner + '\n'
-    //             + 'Forecast Majority: ' + model.data.summary.forecastMajority;
+    var latest = [
+      {
+        value: "Conservatives take Vauxhall"
+      },
+      {
+        value: "Lib Dems take Vauxhall"
+      },
+      {
+        value: "Conservatives take Vauxhall"
+      },
+      {
+        value: "Conservatives take Vauxhall"
+      }
+    ]
 
     const selectConstituency = function(constituency) {
       return implementSelectConstituency(constituency)
@@ -82,7 +92,7 @@ class App {
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
     const seatsCard = new Card({ name: "Seats at a Glance", parties: partySeats, getWidth: getSeatsWidth, type: "votes" });
-    const summaryCard = new Card({ name: "Voting Summary", "rows": summary, type: "stats" });
+    const summaryCard = new Card({ name: "Voting Summary", rows: summary, type: "stats" });
     const latestCard = new Card({ name: "Latest Results", description: "Conservatives, Labour, Lib Dems", type: "Organization" });
     // const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", "parties": model.data.detailsByParty });
 

@@ -14,6 +14,9 @@ class Card {
   constructor(data) {
     this.data = data;
     self = this;
+
+    // model.data.summary.resultsDeclared = 3;
+    // helpers.rerender();
   }
   updateData(data) {
     var dataKeys = Object.keys(data);
