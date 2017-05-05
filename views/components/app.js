@@ -136,7 +136,7 @@ class App {
       })
 
       model.seatsCard.parties = newData.parties;
-      self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
+      // self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
       // todo: change this to something real
     }
 

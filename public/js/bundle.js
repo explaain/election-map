@@ -4307,7 +4307,7 @@ class App {
       })
 
       model.seatsCard.parties = newData.parties;
-      self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
+      // self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
       // todo: change this to something real
     }
 
@@ -4376,6 +4376,7 @@ class App {
 }
 
 module.exports = App;
+
 },{"../models/model":70,"./card":65,"./map":66,"./search":67,"hyperdom":19}],65:[function(require,module,exports){
 //Services
 const hyperdom = require('hyperdom');
