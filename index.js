@@ -27,8 +27,8 @@ app.get('/pa/:folder/list', function(request, response) {
           }
         })
         response.send(result)
-        c.end();
       }
+      c.end();
     });
   })
 });
@@ -51,26 +51,10 @@ app.get("/pa/:folder/get/:file", function(request, response){
           });
         });
       }
+      c.end();
     })
   })
 })
-
-app.get('/pa/results/list', function(request, response) {
-  connectToPA(function(c){
-    c.list('/results',function(err, list) {
-      var result = {
-        nominations: []
-      };
-      list.forEach(function(item){
-        if(item.name.match(/\.xml$/i)){
-          result.nominations.push(item.name.replace(/\.xml$/i,""));
-        }
-      })
-      response.send(result)
-      c.end();
-    });
-  })
-});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
@@ -86,6 +70,8 @@ function connectToPA(callback){
     host: "ftpout.pa.press.net",
     user: "lbc_elections",
     password: "pnpj5k7p",
+    connTimeout: 1000000,
+    pasvTimeout: 1000000
   });
 }
 
