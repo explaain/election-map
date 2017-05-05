@@ -4395,16 +4395,12 @@ class Card {
     // self.refresh();
   }
   updateData(data) {
-    console.log('this.data')
-    console.log(this.data)
     const self = this;
     var dataKeys = Object.keys(data);
     dataKeys.forEach(function(dataKey) {
-      self.data[dataKey] = data[dataKey];
+      model.cardsData[self.data.id][dataKey] = data[dataKey];
     })
-    this.data = self.data;
-    console.log('self.data')
-    console.log(self.data)
+    self.refresh();
   }
 
   render() {
