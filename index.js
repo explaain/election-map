@@ -15,7 +15,7 @@ app.get('/', function(request, response) {
 
 app.get('/pa/:folder/list', function(request, response) {
   connectToPA(function(c){
-    c.list('/'+request.params.folder,function(err, list) {
+    c.list('/'+(request.query.test?"test/":"")+request.params.folder,function(err, list) {
       if(err){
         response.send({error: "Folder not found"});
       } else {
@@ -35,7 +35,7 @@ app.get('/pa/:folder/list', function(request, response) {
 
 app.get("/pa/:folder/get/:file", function(request, response){
   connectToPA(function(c){
-    c.get('/'+request.params.folder+'/'+request.params.file+".xml", function(err, stream) {
+    c.get('/'+(request.query.test?"test/":"")+request.params.folder+'/'+request.params.file+".xml", function(err, stream) {
       if(err){
         response.send({error: "File not found"});
       } else {
