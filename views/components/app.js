@@ -18,16 +18,16 @@ class App {
   render() {
 
     var getSeatsWidth = function(seats) {
-      return (seats/5 + '%');
+      return (seats/4.5 + '%');
     }
 
 
     model.data.detailsByParty = testData.detailsByParty;
     model.data.summary = testData.summary;
 
-    model.data.summary = PaData.Ge2017_SOP.$;
+    model.data.summary = AlgoliaData.summary;; //This should come from Algolia instead
+    model.data.detailsByParty = AlgoliaData.parties;
 
-    console.log(PaData.Ge2017_SOP.$)
 
 
     var summaryRows = [
@@ -75,16 +75,25 @@ class App {
     function partiesToTable() {
       var parties = model.data.detailsByParty;
       var rows = parties.map(function(party) {
-        party.partyResults = party.partyResults.map(function(result) {
+        var partyKeys = Object.keys(party);
+        var newParty = [];
+        partyKeys.forEach(function(partyKey) {
+          newParty.push({
+            name: partyKey,
+            value: party[partyKey]
+          })
+        })
+        newParty = newParty.map(function(result) {
           result.value = result.value.toString();
           return result;
         })
-        return {cells: party.partyResults}
+        return {cells: newParty}
       })
-      var headerRow = parties[0].partyResults.map(function(data) {
-        return { value: data.name };
-      })
-      rows.unshift({ cells: headerRow })
+      //THE HEADER ROW STUFF NEEDS SORTING
+      // var headerRow = partyKeys.map(function(partyKey) {
+      //   return { value: partyKey };
+      // })
+      // rows.unshift({ cells: headerRow })
       return rows;
     }
 

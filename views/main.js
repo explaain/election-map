@@ -6,12 +6,15 @@ const h = hyperdom.html;
 const model = require('./models/model');
 const Helpers = require("./includes/Helpers");
 
-
 helpers = new Helpers(model, h, CardTemplates, http, router);
 
 //Components
 const App = require('./components/app');
 
+var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+var index1 = client.initIndex('ge2017-pa');
+var index2 = client.initIndex('ge2017-parties');
+var index3 = client.initIndex('constituencies');
 
 const templatesUrl = '//explaain-api.herokuapp.com/templates';
 helpers.loadTemplates(templatesUrl).then(function(templates){
@@ -21,19 +24,49 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
   console.log(CardTemplates);
 
-  var paDataUrl = '/pa/results/list?test=yes';
-  var paDataUrl = '/pa/results/get/Test_Snap_General_Election_All_SOP_102?test=yes';
-  http.get(paDataUrl)
-  .then(function(res) {
-    console.log(res.body);
-    PaData.Ge2017_SOP = res.body.FirstPastThePostStateOfParties;
-    PaData.constituencyData = {};
-    return http.get('pa/results/get/Test_Snap_General_Election_result_Aberavon_1?test=yes')
-  }).then(function(res) {
-    console.log(res.body)
-    var election = res.body.FirstPastThePostResult.Election[0];
-    PaData.constituencyData[election.Constituency[0].$.number] = election.Constituency;
+  // var paDataUrl = '/pa/results/list?test=yes';
+  // var paDataUrl = '/pa/results/get/Test_Snap_General_Election_All_SOP_102?test=yes';
+  index1.search('', function searchDone(err, content) {
+    if (err) {
+      console.error(err);
+      return;
+    }
 
-    hyperdom.append(document.body, new App());
-  })
+    AlgoliaData.summary = content.hits[0];
+
+    for (var h in content.hits) {
+      console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+    }
+
+    index2.search('', function searchDone(err, content) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      AlgoliaData.parties = content.hits;
+
+      for (var h in content.hits) {
+        console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+      }
+
+
+      console.log('AlgoliaData');
+      console.log(AlgoliaData);
+      hyperdom.append(document.body, new App());
+    });
+  });
+  // http.get(paDataUrl)
+  // .then(function(res) {
+  //   console.log(res.body);
+  //   PaData.Ge2017_SOP = res.body.FirstPastThePostStateOfParties;
+  //   PaData.constituencyData = {};
+  //   return http.get('pa/results/get/Test_Snap_General_Election_result_Aberavon_1?test=yes')
+  // }).then(function(res) {
+  //   console.log(res.body)
+  //   var election = res.body.FirstPastThePostResult.Election[0];
+  //   PaData.constituencyData[election.Constituency[0].$.number] = election.Constituency;
+  //
+  //   hyperdom.append(document.body, new App());
+  // })
 });
