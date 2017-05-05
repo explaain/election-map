@@ -27,17 +27,16 @@ class Card {
   }
   updateData(data) {
     const self = this;
-    console.log("DATA")
-    console.log(data)
-    var dataKeys = Object.keys(data);
-    console.log(model.cardsData[self.data.id])
-    dataKeys.forEach(function(dataKey) {
-      console.log(dataKey + " changing to " + data[dataKey])
-      model.cardsData[self.data.id][dataKey] = data[dataKey];
-    })
-    console.log("MODEL")
-    console.log(model)
-    self.refresh();
+    if(self.data.id){
+      var dataKeys = Object.keys(data);
+      dataKeys.forEach(function(dataKey) {
+        model.cardsData[self.data.id][dataKey] = data[dataKey];
+      })
+      self.refresh();
+    } else {
+      console.log("This card doesn't have a reference to a model!")
+    }
+
   }
 
   render() {
