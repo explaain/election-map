@@ -123,19 +123,46 @@ class App {
       return self.implementSelectConstituency(constituency)
     }
 
+    var getParty = function(key) {
+      console.log(key);
+      var party = allParties.filter(function(party) {
+        return party.key == key;
+      })[0];
+      console.log(party);
+      if (!party) {
+        party = {key: key, name: key, color: 'lightgray'}
+      }
+      if (!party.key) {party.key = key}
+      if (!party.name) {party.name = party.key}
+      if (!party.color) {party.color = 'lightgray'}
+      return party;
+    }
+
     self.implementSelectConstituency = function(constituency) {
       self.ukMap.selectConstituency(constituency.objectID);
       var newData = {
         parties: constituency.ge2015Results
       }
-      newData.parties.map(function(party) {
-        party.seats = party.share;
-        party.name = party.party;
-        party.getWidth = self.getSeatsWidth
-        return party
+      newData.parties = newData.parties.map(function(party) {
+        console.log('party');
+        console.log(party);
+        var newParty = getParty(party.party);
+        console.log(party);
+        newParty.seats = party.seats || party.share;
+        // party.name = party.party;
+        newParty.getWidth = self.getSeatsWidth
+        console.log('self.getSeatsWidth');
+        console.log(self.getSeatsWidth);
+        console.log(newParty);
+        return newParty
       })
 
+      console.log('newData.parties');
+      console.log(newData.parties);
+
+
       model.seatsCard.parties = newData.parties;
+      self.seatsCard.refresh();
       // self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
       // todo: change this to something real
     }

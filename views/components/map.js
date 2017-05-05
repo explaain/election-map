@@ -199,7 +199,7 @@ class Map {
     console.log(self.findConstituency(key));
     console.log(self.findConstituency(key).getBounds());
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
-      padding: [100,100]
+      padding: [200,200]
     });
     self.specialHighlightFeature(self.findConstituency(key));
     // console.log(self.findConstituency(key));

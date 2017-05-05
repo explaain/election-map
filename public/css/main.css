@@ -87,7 +87,7 @@ div.map {
 }
 .progress-bar {
   background-color: lightgray;
-  transition: width 0.5s;
+  transition: width 0.5s, color 0.5s;
 }
 
 
@@ -95,6 +95,9 @@ div.map {
   margin: 20px;
   padding: 0px;
   text-align: left;
+}
+.card, .card-visible, .content, .body-content {
+  transition: height: 0.5s;
 }
 .slick-container .card {
   width: 380px;

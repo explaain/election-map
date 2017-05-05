@@ -18,7 +18,7 @@ var allParties = [
   {
     key: "lib-dem",
     name: "Liberal Democrats",
-    color: "#e0aa15",
+    color: "#ffc524",
     colorLight: "#ffe75d",
     description: "Have promised to ‘accept the will of the people’ with both UK and EU citizens having [guaranteed rights](http://api.explaain.com/Detail/5901bfd2fcb4070011e4de52), retaining access to the [single market](http://api.explaain.com/Organization/58987dc975ce1100114b63ed) AND a [second public vote](http://api.explaain.com/Detail/5901c186fcb4070011e4de55) on the terms of the Brexit deal.",
     image: "lib-dem.jpg"
@@ -88,12 +88,12 @@ var allParties = [
   {
     key: "welsh-liberal-democrats---democratiaid-rhyddfrydol-cymru",
     name: "Welsh Liberal Democrats",
-    color: "#e0aa15"
+    color: "#ffc524"
   },
   {
     key: "scottish-liberal-democrats",
     name: "Scottish Liberal Democrats",
-    color: "#e0aa15"
+    color: "#ffc524"
   },
   {
     key: "plaid-cymru---carmarthenshire's-voice",
@@ -104,5 +104,10 @@ var allParties = [
     key: "the-speaker-seeking-re-election",
     name: "Conservative Party",
     color: "#204eb7"
+  },
+  {
+    key: "independent",
+    name: "Independent",
+    color: "lightgray"
   }
 ];
