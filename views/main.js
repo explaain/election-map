@@ -25,14 +25,17 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
   console.log(CardTemplates);
 
   // var paDataUrl = '/pa/results/list?test=yes';
-  // var paDataUrl = '/pa/results/get/Test_Snap_General_Election_All_SOP_102?test=yes';
+
+  var paDataUrl = '/pa-update?test=yes';
+  http.get(paDataUrl);
+
   index1.search('', function searchDone(err, content) {
     if (err) {
       console.error(err);
       return;
     }
 
-    AlgoliaData.summary = content.hits[0];
+    model.data.summary = content.hits[0];
 
     for (var h in content.hits) {
       console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
@@ -44,15 +47,15 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
         return;
       }
 
-      AlgoliaData.parties = content.hits;
+      model.data.detailsByParty = content.hits;
 
       for (var h in content.hits) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
       }
 
 
-      console.log('AlgoliaData');
-      console.log(AlgoliaData);
+      console.log('model');
+      console.log(model);
       hyperdom.append(document.body, new App());
     });
   });

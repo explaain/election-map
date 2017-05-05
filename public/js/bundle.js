@@ -4193,11 +4193,8 @@ class App {
     }
 
 
-    model.data.detailsByParty = testData.detailsByParty;
-    model.data.summary = testData.summary;
-
-    model.data.summary = AlgoliaData.summary;; //This should come from Algolia instead
-    model.data.detailsByParty = AlgoliaData.parties;
+    // model.data.detailsByParty = testData.detailsByParty;
+    // model.data.summary = testData.summary;
 
 
 
@@ -4241,30 +4238,46 @@ class App {
       {
         value: "Labour hold Islington North"
       }
-    ]
+    ];
+
+
+    var tableKeysToHeadings = {
+      // abbreviation: "Abbreviation",
+      name: "Party",
+      // objectID: "objectID",
+      // paId: "paId",
+      totalVotes: "Votes",
+      percentageChange: "% Change",
+      percentageShare: "% Share",
+    }
 
     function partiesToTable() {
       var parties = model.data.detailsByParty;
       var rows = parties.map(function(party) {
         var partyKeys = Object.keys(party);
         var newParty = [];
-        partyKeys.forEach(function(partyKey) {
+        var keys = Object.keys(tableKeysToHeadings);
+        keys.forEach(function(key) {
           newParty.push({
-            name: partyKey,
-            value: party[partyKey]
+            name: key,
+            value: party[key]
           })
         })
+        console.log(newParty);
         newParty = newParty.map(function(result) {
-          result.value = result.value.toString();
+          if (result.value) {result.value = result.value.toString();}
           return result;
         })
         return {cells: newParty}
       })
       //THE HEADER ROW STUFF NEEDS SORTING
-      // var headerRow = partyKeys.map(function(partyKey) {
-      //   return { value: partyKey };
-      // })
-      // rows.unshift({ cells: headerRow })
+      var headerKeys = Object.keys(tableKeysToHeadings);
+      var headerRow = headerKeys.map(function(headerKey) {
+        return { value: tableKeysToHeadings[headerKey] };
+      })
+      rows.unshift({ cells: headerRow })
+      console.log('rows');
+      console.log(rows);
       return rows;
     }
 
@@ -4309,6 +4322,8 @@ class App {
         getWidth: getSeatsWidth
       }
     ];
+
+    // function get
 
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
@@ -4840,14 +4855,17 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
   console.log(CardTemplates);
 
   // var paDataUrl = '/pa/results/list?test=yes';
-  // var paDataUrl = '/pa/results/get/Test_Snap_General_Election_All_SOP_102?test=yes';
+
+  var paDataUrl = '/pa-update?test=yes';
+  http.get(paDataUrl);
+
   index1.search('', function searchDone(err, content) {
     if (err) {
       console.error(err);
       return;
     }
 
-    AlgoliaData.summary = content.hits[0];
+    model.data.summary = content.hits[0];
 
     for (var h in content.hits) {
       console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
@@ -4859,15 +4877,15 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
         return;
       }
 
-      AlgoliaData.parties = content.hits;
+      model.data.detailsByParty = content.hits;
 
       for (var h in content.hits) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
       }
 
 
-      console.log('AlgoliaData');
-      console.log(AlgoliaData);
+      console.log('model');
+      console.log(model);
       hyperdom.append(document.body, new App());
     });
   });

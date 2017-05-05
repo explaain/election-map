@@ -22,11 +22,8 @@ class App {
     }
 
 
-    model.data.detailsByParty = testData.detailsByParty;
-    model.data.summary = testData.summary;
-
-    model.data.summary = AlgoliaData.summary;; //This should come from Algolia instead
-    model.data.detailsByParty = AlgoliaData.parties;
+    // model.data.detailsByParty = testData.detailsByParty;
+    // model.data.summary = testData.summary;
 
 
 
@@ -70,30 +67,46 @@ class App {
       {
         value: "Labour hold Islington North"
       }
-    ]
+    ];
+
+
+    var tableKeysToHeadings = {
+      // abbreviation: "Abbreviation",
+      name: "Party",
+      // objectID: "objectID",
+      // paId: "paId",
+      totalVotes: "Votes",
+      percentageChange: "% Change",
+      percentageShare: "% Share",
+    }
 
     function partiesToTable() {
       var parties = model.data.detailsByParty;
       var rows = parties.map(function(party) {
         var partyKeys = Object.keys(party);
         var newParty = [];
-        partyKeys.forEach(function(partyKey) {
+        var keys = Object.keys(tableKeysToHeadings);
+        keys.forEach(function(key) {
           newParty.push({
-            name: partyKey,
-            value: party[partyKey]
+            name: key,
+            value: party[key]
           })
         })
+        console.log(newParty);
         newParty = newParty.map(function(result) {
-          result.value = result.value.toString();
+          if (result.value) {result.value = result.value.toString();}
           return result;
         })
         return {cells: newParty}
       })
       //THE HEADER ROW STUFF NEEDS SORTING
-      // var headerRow = partyKeys.map(function(partyKey) {
-      //   return { value: partyKey };
-      // })
-      // rows.unshift({ cells: headerRow })
+      var headerKeys = Object.keys(tableKeysToHeadings);
+      var headerRow = headerKeys.map(function(headerKey) {
+        return { value: tableKeysToHeadings[headerKey] };
+      })
+      rows.unshift({ cells: headerRow })
+      console.log('rows');
+      console.log(rows);
       return rows;
     }
 
@@ -138,6 +151,8 @@ class App {
         getWidth: getSeatsWidth
       }
     ];
+
+    // function get
 
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
