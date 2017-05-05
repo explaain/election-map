@@ -54,9 +54,23 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
       }
 
 
-      console.log('model');
-      console.log(model);
-      hyperdom.append(document.body, new App());
+
+      index3.search('', {
+        hitsPerPage: 650
+      }, function searchDone(err, content) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        model.data.constituencies = content.hits;
+
+        for (var h in content.hits) {
+          console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+        }
+
+        hyperdom.append(document.body, new App());
+      });
     });
   });
   // http.get(paDataUrl)

@@ -8,10 +8,11 @@ class Map {
 
 
   constructor(outboundSelectConstituency) {
-    self = this;
+    const self = this;
     $('#ukMap').ready(function() {
       self.constituencies = {};
       self.constituencyFeatures;
+      self.findConstituency;
 
       setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
         try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
@@ -98,24 +99,50 @@ class Map {
               }
               info.update(layer.feature.properties);
             }
+            self.specialHighlightFeature = function(layer) {
+              // var layer = e.target;
+
+              layer.setStyle({
+                weight: 6,
+                color: '#0044aa',
+                dashArray: '',
+                fillOpacity: 0.3,
+                // fillColor: 'white'
+              });
+
+              if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+              }
+              info.update(layer.feature.properties);
+            }
             function resetHighlight(e) {
+              console.log(e);
               self.constituencyFeatures.resetStyle(e.target);
               info.update();
             }
             self.findConstituency = function(key) {
-              var feature = self.constituencyFeatures.eachLayer(function(layer) {
-                if (layer.feature.properties.pcon16cd == key) {
-                  return layer
-                }
-              })
-              return feature;
+              var layers = self.constituencyFeatures._layers;
+              var layerKeys = Object.keys(layers);
+              var myFeatureKey = layerKeys.filter(function(layerKey) {
+                return layers[layerKey].feature.properties.pcon16cd == key;
+              })[0];
+              var myFeature = layers[myFeatureKey];
+              return myFeature;
+              // var feature = self.constituencyFeatures.eachLayer(function(layer) {
+              //   if (layer.feature.properties.pcon16cd == key) {
+              //     return layer
+              //   }
+              // })
+              // return feature;
             }
 
             function zoomToFeature(e) {
               // ukMap.fitBounds(e.target.getBounds(), {
               //   padding: [100,100]
               // });
-              outboundSelectConstituency("E14001014")
+              console.log(e);
+              console.log(e.target.feature.properties.pcon16cd);
+              outboundSelectConstituency(e.target.feature.properties.pcon16cd)
             }
             function onEachFeature(feature, layer) {
               var key = feature.properties.pcon16cd;
@@ -134,6 +161,7 @@ class Map {
               onEachFeature: onEachFeature,
               zoomSnap: 0.5
             }).addTo(ukMap);
+
 
             var info = L.control();
 
@@ -165,12 +193,18 @@ class Map {
 
   selectConstituency(key) {
     const self = this;
+    console.log('hi');
+    console.log(self);
+    console.log(key);
+    console.log(self.findConstituency(key));
+    console.log(self.findConstituency(key).getBounds());
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]
     });
-    console.log(self.findConstituency(key));
-    var bounds = [self.findConstituency(key).getBounds()];
-    L.rectangle(bounds, {color: "#ff7800", weight: 1}).addTo(ukMap);
+    self.specialHighlightFeature(self.findConstituency(key));
+    // console.log(self.findConstituency(key));
+    // var bounds = [self.findConstituency(key).getBounds()];
+    // L.rectangle(bounds, {color: "#ff7800", weight: 1}).addTo(ukMap);
 
   }
 

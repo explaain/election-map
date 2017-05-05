@@ -111,15 +111,18 @@ class App {
     }
 
     const getConstituencyData = function(key) {
-      //Algolia stuff here!
-      //for now - return example:
-      return {"ge2015Results":[{"party":"labour-and-cooperative-party","rank":1,"votes":18447,"voteMargin":6686,"share":45,"shareMargin":16.3,"shareChange":5.4},{"party":"conservative","rank":2,"votes":11761,"voteMargin":-6686,"share":28.7,"shareMargin":-16.3,"shareChange":-4.2},{"party":"ukip","rank":3,"votes":7720,"voteMargin":null,"share":18.8,"shareMargin":null,"shareChange":15.5},{"party":"green","rank":4,"votes":1850,"voteMargin":null,"share":4.5,"shareMargin":null,"shareChange":2.9},{"party":"lib-dem","rank":5,"votes":1256,"voteMargin":null,"share":3.1,"shareMargin":null,"shareChange":-14}],"name":"Stoke-on-Trent Central","objectID":"E14000967","_highlightResult":{"ge2015Results":[{"party":{"value":"labour-<em>a</em>nd-cooperative-party","matchLevel":"full","fullyHighlighted":false,"matchedWords":["a"]}},{"party":{"value":"conservative","matchLevel":"none","matchedWords":[]}},{"party":{"value":"ukip","matchLevel":"none","matchedWords":[]}},{"party":{"value":"green","matchLevel":"none","matchedWords":[]}},{"party":{"value":"lib-dem","matchLevel":"none","matchedWords":[]}}],"name":{"value":"Stoke-on-Trent Central","matchLevel":"none","matchedWords":[]}}}
+
+      return model.data.constituencies.filter(function(constituency) {
+        return constituency.objectID == key;
+      })[0];
     }
 
     const selectConstituency = function(constituency) {
+      console.log(constituency);
       if (typeof constituency === 'string') {
         constituency = getConstituencyData(constituency);
       }
+      console.log(constituency.objectID);
       return implementSelectConstituency(constituency)
     }
 
@@ -164,6 +167,7 @@ class App {
 
 
     const implementSelectConstituency = function(constituency) {
+      console.log(constituency.objectID);
       ukMap.selectConstituency(constituency.objectID);
       var newData = {
         parties: constituency.ge2015Results

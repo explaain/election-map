@@ -4282,15 +4282,18 @@ class App {
     }
 
     const getConstituencyData = function(key) {
-      //Algolia stuff here!
-      //for now - return example:
-      return {"ge2015Results":[{"party":"labour-and-cooperative-party","rank":1,"votes":18447,"voteMargin":6686,"share":45,"shareMargin":16.3,"shareChange":5.4},{"party":"conservative","rank":2,"votes":11761,"voteMargin":-6686,"share":28.7,"shareMargin":-16.3,"shareChange":-4.2},{"party":"ukip","rank":3,"votes":7720,"voteMargin":null,"share":18.8,"shareMargin":null,"shareChange":15.5},{"party":"green","rank":4,"votes":1850,"voteMargin":null,"share":4.5,"shareMargin":null,"shareChange":2.9},{"party":"lib-dem","rank":5,"votes":1256,"voteMargin":null,"share":3.1,"shareMargin":null,"shareChange":-14}],"name":"Stoke-on-Trent Central","objectID":"E14000967","_highlightResult":{"ge2015Results":[{"party":{"value":"labour-<em>a</em>nd-cooperative-party","matchLevel":"full","fullyHighlighted":false,"matchedWords":["a"]}},{"party":{"value":"conservative","matchLevel":"none","matchedWords":[]}},{"party":{"value":"ukip","matchLevel":"none","matchedWords":[]}},{"party":{"value":"green","matchLevel":"none","matchedWords":[]}},{"party":{"value":"lib-dem","matchLevel":"none","matchedWords":[]}}],"name":{"value":"Stoke-on-Trent Central","matchLevel":"none","matchedWords":[]}}}
+
+      return model.data.constituencies.filter(function(constituency) {
+        return constituency.objectID == key;
+      })[0];
     }
 
     const selectConstituency = function(constituency) {
+      console.log(constituency);
       if (typeof constituency === 'string') {
         constituency = getConstituencyData(constituency);
       }
+      console.log(constituency.objectID);
       return implementSelectConstituency(constituency)
     }
 
@@ -4335,6 +4338,7 @@ class App {
 
 
     const implementSelectConstituency = function(constituency) {
+      console.log(constituency.objectID);
       ukMap.selectConstituency(constituency.objectID);
       var newData = {
         parties: constituency.ge2015Results
@@ -4433,10 +4437,11 @@ class Map {
 
 
   constructor(outboundSelectConstituency) {
-    self = this;
+    const self = this;
     $('#ukMap').ready(function() {
       self.constituencies = {};
       self.constituencyFeatures;
+      self.findConstituency;
 
       setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
         try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
@@ -4523,24 +4528,50 @@ class Map {
               }
               info.update(layer.feature.properties);
             }
+            self.specialHighlightFeature = function(layer) {
+              // var layer = e.target;
+
+              layer.setStyle({
+                weight: 6,
+                color: '#0044aa',
+                dashArray: '',
+                fillOpacity: 0.3,
+                // fillColor: 'white'
+              });
+
+              if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+              }
+              info.update(layer.feature.properties);
+            }
             function resetHighlight(e) {
+              console.log(e);
               self.constituencyFeatures.resetStyle(e.target);
               info.update();
             }
             self.findConstituency = function(key) {
-              var feature = self.constituencyFeatures.eachLayer(function(layer) {
-                if (layer.feature.properties.pcon16cd == key) {
-                  return layer
-                }
-              })
-              return feature;
+              var layers = self.constituencyFeatures._layers;
+              var layerKeys = Object.keys(layers);
+              var myFeatureKey = layerKeys.filter(function(layerKey) {
+                return layers[layerKey].feature.properties.pcon16cd == key;
+              })[0];
+              var myFeature = layers[myFeatureKey];
+              return myFeature;
+              // var feature = self.constituencyFeatures.eachLayer(function(layer) {
+              //   if (layer.feature.properties.pcon16cd == key) {
+              //     return layer
+              //   }
+              // })
+              // return feature;
             }
 
             function zoomToFeature(e) {
               // ukMap.fitBounds(e.target.getBounds(), {
               //   padding: [100,100]
               // });
-              outboundSelectConstituency("E14001014")
+              console.log(e);
+              console.log(e.target.feature.properties.pcon16cd);
+              outboundSelectConstituency(e.target.feature.properties.pcon16cd)
             }
             function onEachFeature(feature, layer) {
               var key = feature.properties.pcon16cd;
@@ -4559,6 +4590,7 @@ class Map {
               onEachFeature: onEachFeature,
               zoomSnap: 0.5
             }).addTo(ukMap);
+
 
             var info = L.control();
 
@@ -4590,12 +4622,18 @@ class Map {
 
   selectConstituency(key) {
     const self = this;
+    console.log('hi');
+    console.log(self);
+    console.log(key);
+    console.log(self.findConstituency(key));
+    console.log(self.findConstituency(key).getBounds());
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]
     });
-    console.log(self.findConstituency(key));
-    var bounds = [self.findConstituency(key).getBounds()];
-    L.rectangle(bounds, {color: "#ff7800", weight: 1}).addTo(ukMap);
+    self.specialHighlightFeature(self.findConstituency(key));
+    // console.log(self.findConstituency(key));
+    // var bounds = [self.findConstituency(key).getBounds()];
+    // L.rectangle(bounds, {color: "#ff7800", weight: 1}).addTo(ukMap);
 
   }
 
@@ -4884,9 +4922,23 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
       }
 
 
-      console.log('model');
-      console.log(model);
-      hyperdom.append(document.body, new App());
+
+      index3.search('', {
+        hitsPerPage: 650
+      }, function searchDone(err, content) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        model.data.constituencies = content.hits;
+
+        for (var h in content.hits) {
+          console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+        }
+
+        hyperdom.append(document.body, new App());
+      });
     });
   });
   // http.get(paDataUrl)
