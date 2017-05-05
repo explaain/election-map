@@ -9,13 +9,10 @@ module.exports = class Helpers {
   }
 
   assembleCards(data, template) {
-    console.log('data, template');
-    console.log(data, template);
     const self = this;
     if (typeof data === 'object') {data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');}
     if (typeof template === 'string') { template = self.cardTemplates[template]; }
     const element = template;
-    console.log(self.cardTemplates);
     var params = {};
     if(element.mapping){
       element.mapping.forEach(function(kv){
@@ -60,14 +57,9 @@ module.exports = class Helpers {
           styleKeys.forEach(function(styleKey) {
             var style = element.attr.style[styleKey];
             var styleValue;
-            console.log("STYLE")
-            console.log(style)
             if(style.var) {
               styleValue = self.getObjectPathProperty(data, style.var);
             } else if (style.func) {
-              console.log(style);
-              console.log(params);
-              console.log(self.getObjectPathProperty(params, style.func[0]));
               styleValue = self.getObjectPathProperty(params, style.func[0]).apply(null,style.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
             } else {
               styleValue = style;
@@ -113,7 +105,6 @@ module.exports = class Helpers {
   loadTemplates(templateUrl){
     const self = this;
     return new Promise(function(resolve,reject){
-      console.log(self.http)
       self.http.get(templateUrl)
       .then(function (res) {
         resolve(res.body);

@@ -19,7 +19,9 @@
     color: #777;
 }
 
-
+.progress-bar {
+  background-color: lightgray;
+}
 
 
 .card {

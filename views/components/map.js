@@ -6,24 +6,16 @@ var selectConstituency,
     self;
 
 class Map {
-  constructor() {
 
-  }
 
-  selectConstituency(key) {
-    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
-      padding: [100,100]
-    });
-  }
+  constructor(outboundSelectConstituency) {
+    $('#ukMap').ready(function() {
+      self = this;
+      self.constituencies = {};
+      self.constituencyFeatures;
 
-  onload() {
-    try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
-      $('#ukMap').ready(function() {
-        self = this;
-        self.constituencies = {};
-        self.constituencyFeatures;
-
-        setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
+      setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
+        try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
 
           this.ukMap = L.map('ukMap', {
             center: [54.505, -4.09],
@@ -37,103 +29,150 @@ class Map {
             id: 'mapbox.light'
           }).addTo(ukMap);
 
-          constituencyData.features.forEach(function(feature) {
-            feature.properties.currentParty = {
-              key: 'labour',
-              name: 'Labour',
-              color: 'red'
-            };
-          })
 
-          function style(feature) {
-            return {
-              fillColor: feature.properties.currentParty.color,
-              weight: 1,
-              opacity: 1,
-              color: 'white',
-              fillOpacity: 0.7
-            };
-          }
-          function highlightFeature(e) {
-            var layer = e.target;
+          var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+          var index = client.initIndex('constituencies');
 
-            layer.setStyle({
-              weight: 3,
-              color: '#0044aa',
-              dashArray: '',
-              fillOpacity: 0.7
-            });
+          var searchData = [];
 
-            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-              layer.bringToFront();
+          index.search('', {
+            // attributesToRetrieve: ['winningParty'],
+            hitsPerPage: 650
+          }, function searchDone(err, content) {
+            if (err) {
+              console.error(err);
+              return;
             }
-            info.update(layer.feature.properties);
-          }
-          function resetHighlight(e) {
-            self.constituencyFeatures.resetStyle(e.target);
-            info.update();
-          }
-          self.findConstituency = function(key) {
-            var feature = this.constituencyFeatures.eachLayer(function(layer) {
-              if (layer.feature.properties.pcon16cd == key) {
-                return layer
+            searchData = content.hits;
+            // content.hits.forEach(function(hit) {
+            //   constituencyData.features
+            // })
+
+            var getParty = function(key) {
+              var party = allParties.filter(function(party) {
+                return party.key == key;
+              })[0];
+              if (!party) {
+                party = {key: key, name: key, color: 'lightgray'}
               }
+              return party;
+            }
+
+            var collectParties = [];
+
+            constituencyData.features.forEach(function(feature) {
+              var data = searchData.filter(function(item){
+                return item.objectID == feature.properties.pcon16cd;
+              })[0];
+              var partyKey = data.ge2015Results[0].party;
+              if (collectParties.indexOf(partyKey) == -1) {collectParties.push(partyKey)}
+              var party = getParty(partyKey);
+              feature.properties.currentParty = {
+                key: partyKey,
+                name: party.name,
+                color: party.color
+              };
             })
-            return feature;
-          }
+            console.log(collectParties)
 
-          function zoomToFeature(e) {
-            ukMap.fitBounds(e.target.getBounds(), {
-              padding: [100,100]
-            });
-          }
-          function onEachFeature(feature, layer) {
-            // console.log(feature);
-            var key = feature.properties.pcon16cd;
-            self.constituencies[key] = feature;
-            self.constituencies[key].getBounds = feature.getBounds;
-            layer.on({
-              mouseover: highlightFeature,
-              mouseout: resetHighlight,
-              click: zoomToFeature
-            });
-          }
+            function style(feature) {
+              return {
+                fillColor: feature.properties.currentParty.color,
+                weight: 1,
+                opacity: 1,
+                color: 'white',
+                fillOpacity: 0.7
+              };
+            }
+            function highlightFeature(e) {
+              var layer = e.target;
+
+              layer.setStyle({
+                weight: 3,
+                color: '#0044aa',
+                dashArray: '',
+                fillOpacity: 0.7
+              });
+
+              if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+              }
+              info.update(layer.feature.properties);
+            }
+            function resetHighlight(e) {
+              self.constituencyFeatures.resetStyle(e.target);
+              info.update();
+            }
+            self.findConstituency = function(key) {
+              var feature = self.constituencyFeatures.eachLayer(function(layer) {
+                if (layer.feature.properties.pcon16cd == key) {
+                  return layer
+                }
+              })
+              return feature;
+            }
+
+            function zoomToFeature(e) {
+              ukMap.fitBounds(e.target.getBounds(), {
+                padding: [100,100]
+              });
+              outboundSelectConstituency("E14001014")
+            }
+            function onEachFeature(feature, layer) {
+              var key = feature.properties.pcon16cd;
+              self.constituencies[key] = feature;
+              self.constituencies[key].getBounds = feature.getBounds;
+              layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+              });
+            }
 
 
-          self.constituencyFeatures = L.geoJson(constituencyData, {
-            style: style,
-            onEachFeature: onEachFeature,
-            zoomSnap: 0.5
-          }).addTo(ukMap);
+            self.constituencyFeatures = L.geoJson(constituencyData, {
+              style: style,
+              onEachFeature: onEachFeature,
+              zoomSnap: 0.5
+            }).addTo(ukMap);
 
-          self.findConstituency("E14000885");
-          self.findConstituency("E14000577");
+            var info = L.control();
 
-          var info = L.control();
+            info.onAdd = function (map) {
+              this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+              this.update();
+              return this._div;
+            };
 
-          info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-            this.update();
-            return this._div;
-          };
+            // method that we will use to update the control based on feature properties passed
+            info.update = function (props) {
+              this._div.innerHTML = (props ?
+                '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + props.currentParty.name + '</b></p>'
+                : 'Hover over a constituency');
+              };
 
-          // method that we will use to update the control based on feature properties passed
-          info.update = function (props) {
-            console.log(props);
-            this._div.innerHTML = (props ?
-              '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + props.currentParty.name + '</b></p>'
-              : 'Hover over a constituency');
-          };
-
-          info.addTo(ukMap);
+              info.addTo(ukMap);
+          });
 
 
 
-        },1000);
-      });
-    } catch(e) {
+        } catch(e) {
 
-    }
+        }
+
+      },1000);
+    });
+  }
+
+  selectConstituency(key) {
+    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
+      padding: [100,100]
+    });
+
+  }
+
+  onload() {
+
   }
 
   render() {

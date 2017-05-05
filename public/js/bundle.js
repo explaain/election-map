@@ -4192,26 +4192,8 @@ class App {
       return (seats/5 + '%');
     }
 
-    var partySeats = [
-      {
-        name: "Conservatives",
-        seats: 326,
-        color: "blue",
-        getWidth: getSeatsWidth
-      },
-      {
-        name: "Labour",
-        seats: 230,
-        color: "red",
-        getWidth: getSeatsWidth
-      },
-      {
-        name: "Scottish National Party",
-        seats: 56,
-        color: "yellow",
-        getWidth: getSeatsWidth
-      }
-    ];
+
+
 
 
     var summaryRows = [
@@ -4259,6 +4241,10 @@ class App {
     function partiesToTable() {
       var parties = model.data.detailsByParty;
       var rows = parties.map(function(party) {
+        party.partyResults = party.partyResults.map(function(result) {
+          result.value = result.value.toString();
+          return result;
+        })
         return {cells: party.partyResults}
       })
       var headerRow = parties[0].partyResults.map(function(data) {
@@ -4268,13 +4254,45 @@ class App {
       return rows;
     }
 
+    const getConstituencyData = function(key) {
+      //Algolia stuff here!
+      //for now - return example:
+      return {"ge2015Results":[{"party":"labour-and-cooperative-party","rank":1,"votes":18447,"voteMargin":6686,"share":45,"shareMargin":16.3,"shareChange":5.4},{"party":"conservative","rank":2,"votes":11761,"voteMargin":-6686,"share":28.7,"shareMargin":-16.3,"shareChange":-4.2},{"party":"ukip","rank":3,"votes":7720,"voteMargin":null,"share":18.8,"shareMargin":null,"shareChange":15.5},{"party":"green","rank":4,"votes":1850,"voteMargin":null,"share":4.5,"shareMargin":null,"shareChange":2.9},{"party":"lib-dem","rank":5,"votes":1256,"voteMargin":null,"share":3.1,"shareMargin":null,"shareChange":-14}],"name":"Stoke-on-Trent Central","objectID":"E14000967","_highlightResult":{"ge2015Results":[{"party":{"value":"labour-<em>a</em>nd-cooperative-party","matchLevel":"full","fullyHighlighted":false,"matchedWords":["a"]}},{"party":{"value":"conservative","matchLevel":"none","matchedWords":[]}},{"party":{"value":"ukip","matchLevel":"none","matchedWords":[]}},{"party":{"value":"green","matchLevel":"none","matchedWords":[]}},{"party":{"value":"lib-dem","matchLevel":"none","matchedWords":[]}}],"name":{"value":"Stoke-on-Trent Central","matchLevel":"none","matchedWords":[]}}}
+    }
+
     const selectConstituency = function(constituency) {
+      if (typeof constituency === 'string') {
+        constituency = getConstituencyData(constituency);
+      }
       return implementSelectConstituency(constituency)
     }
 
+    model.seatsCard = { name: "Seats at a Glance", getWidth: getSeatsWidth, type: "votes" }
+
+    model.seatsCard.parties = [
+      {
+        name: "Conservatives",
+        seats: 326,
+        color: "blue",
+        getWidth: getSeatsWidth
+      },
+      {
+        name: "Labour",
+        seats: 230,
+        color: "red",
+        getWidth: getSeatsWidth
+      },
+      {
+        name: "Scottish National Party",
+        seats: 56,
+        color: "yellow",
+        getWidth: getSeatsWidth
+      }
+    ];
+
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
-    const seatsCard = new Card({ name: "Seats at a Glance", parties: partySeats, getWidth: getSeatsWidth, type: "votes" });
+    const seatsCard = new Card('seatsCard');
     const summaryCard = new Card({ name: "Voting Summary", rows: summaryRows, type: "stats" });
     const latestCard = new Card({ name: "Latest Results", items: latestItems, type: "list" });
     const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() });
@@ -4287,13 +4305,20 @@ class App {
         parties: constituency.ge2015Results
       }
       newData.parties.map(function(party) {
-        party.seats = party.share
+        party.seats = party.share;
+        party.name = party.party;
+        party.getWidth = getSeatsWidth
         return party
       })
-      seatsCard.updateData(newData);
-      setTimeout(function(){
-        // seatsCard.refresh();
-      },1000);
+
+      model.seatsCard.parties = newData.parties;
+
+      setTimeout(function() {
+        summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
+        setTimeout(function() {
+          summaryCard.refresh();
+        },1000)
+      },1000)
     }
 
     var returnable = h('div.app',
@@ -4324,39 +4349,41 @@ const model = require('../models/model');
 const Helpers = require("../includes/Helpers"),
 helpers = new Helpers(model, h, CardTemplates, http, router)
 
-// var self;
-
-var self;
-
 class Card {
 
+  getMyData() {
+
+  }
+
   constructor(data) {
-    this.data = data;
-    self = this;
+    if (typeof data === "string") {
+      this.data = model[data];
+    } else {
+      this.data = data;
+    }
+    const self = this;
 
     // model.data.summary.resultsDeclared = 3;
     // self.refresh();
   }
   updateData(data) {
+    console.log('this.data')
+    console.log(this.data)
+    const self = this;
     var dataKeys = Object.keys(data);
     dataKeys.forEach(function(dataKey) {
       self.data[dataKey] = data[dataKey];
     })
+    this.data = self.data;
+    console.log('self.data')
+    console.log(self.data)
   }
 
   render() {
     const self = this;
-    console.log('this.data');
-    console.log(this.data);
     return h('div',helpers.assembleCards(this.data, 'card'));
   }
 }
-
-
-setTimeout(function() {
-  model.data.summary.resultsDeclared = 3;
-  self.refresh();
-}, 5000)
 
 module.exports = Card;
 
@@ -4369,24 +4396,16 @@ var selectConstituency,
     self;
 
 class Map {
-  constructor() {
 
-  }
 
-  selectConstituency(key) {
-    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
-      padding: [100,100]
-    });
-  }
+  constructor(outboundSelectConstituency) {
+    $('#ukMap').ready(function() {
+      self = this;
+      self.constituencies = {};
+      self.constituencyFeatures;
 
-  onload() {
-    try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
-      $('#ukMap').ready(function() {
-        self = this;
-        self.constituencies = {};
-        self.constituencyFeatures;
-
-        setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
+      setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
+        try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
 
           this.ukMap = L.map('ukMap', {
             center: [54.505, -4.09],
@@ -4400,103 +4419,150 @@ class Map {
             id: 'mapbox.light'
           }).addTo(ukMap);
 
-          constituencyData.features.forEach(function(feature) {
-            feature.properties.currentParty = {
-              key: 'labour',
-              name: 'Labour',
-              color: 'red'
-            };
-          })
 
-          function style(feature) {
-            return {
-              fillColor: feature.properties.currentParty.color,
-              weight: 1,
-              opacity: 1,
-              color: 'white',
-              fillOpacity: 0.7
-            };
-          }
-          function highlightFeature(e) {
-            var layer = e.target;
+          var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+          var index = client.initIndex('constituencies');
 
-            layer.setStyle({
-              weight: 3,
-              color: '#0044aa',
-              dashArray: '',
-              fillOpacity: 0.7
-            });
+          var searchData = [];
 
-            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-              layer.bringToFront();
+          index.search('', {
+            // attributesToRetrieve: ['winningParty'],
+            hitsPerPage: 650
+          }, function searchDone(err, content) {
+            if (err) {
+              console.error(err);
+              return;
             }
-            info.update(layer.feature.properties);
-          }
-          function resetHighlight(e) {
-            self.constituencyFeatures.resetStyle(e.target);
-            info.update();
-          }
-          self.findConstituency = function(key) {
-            var feature = this.constituencyFeatures.eachLayer(function(layer) {
-              if (layer.feature.properties.pcon16cd == key) {
-                return layer
+            searchData = content.hits;
+            // content.hits.forEach(function(hit) {
+            //   constituencyData.features
+            // })
+
+            var getParty = function(key) {
+              var party = allParties.filter(function(party) {
+                return party.key == key;
+              })[0];
+              if (!party) {
+                party = {key: key, name: key, color: 'lightgray'}
               }
+              return party;
+            }
+
+            var collectParties = [];
+
+            constituencyData.features.forEach(function(feature) {
+              var data = searchData.filter(function(item){
+                return item.objectID == feature.properties.pcon16cd;
+              })[0];
+              var partyKey = data.ge2015Results[0].party;
+              if (collectParties.indexOf(partyKey) == -1) {collectParties.push(partyKey)}
+              var party = getParty(partyKey);
+              feature.properties.currentParty = {
+                key: partyKey,
+                name: party.name,
+                color: party.color
+              };
             })
-            return feature;
-          }
+            console.log(collectParties)
 
-          function zoomToFeature(e) {
-            ukMap.fitBounds(e.target.getBounds(), {
-              padding: [100,100]
-            });
-          }
-          function onEachFeature(feature, layer) {
-            // console.log(feature);
-            var key = feature.properties.pcon16cd;
-            self.constituencies[key] = feature;
-            self.constituencies[key].getBounds = feature.getBounds;
-            layer.on({
-              mouseover: highlightFeature,
-              mouseout: resetHighlight,
-              click: zoomToFeature
-            });
-          }
+            function style(feature) {
+              return {
+                fillColor: feature.properties.currentParty.color,
+                weight: 1,
+                opacity: 1,
+                color: 'white',
+                fillOpacity: 0.7
+              };
+            }
+            function highlightFeature(e) {
+              var layer = e.target;
+
+              layer.setStyle({
+                weight: 3,
+                color: '#0044aa',
+                dashArray: '',
+                fillOpacity: 0.7
+              });
+
+              if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+              }
+              info.update(layer.feature.properties);
+            }
+            function resetHighlight(e) {
+              self.constituencyFeatures.resetStyle(e.target);
+              info.update();
+            }
+            self.findConstituency = function(key) {
+              var feature = self.constituencyFeatures.eachLayer(function(layer) {
+                if (layer.feature.properties.pcon16cd == key) {
+                  return layer
+                }
+              })
+              return feature;
+            }
+
+            function zoomToFeature(e) {
+              ukMap.fitBounds(e.target.getBounds(), {
+                padding: [100,100]
+              });
+              outboundSelectConstituency("E14001014")
+            }
+            function onEachFeature(feature, layer) {
+              var key = feature.properties.pcon16cd;
+              self.constituencies[key] = feature;
+              self.constituencies[key].getBounds = feature.getBounds;
+              layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+              });
+            }
 
 
-          self.constituencyFeatures = L.geoJson(constituencyData, {
-            style: style,
-            onEachFeature: onEachFeature,
-            zoomSnap: 0.5
-          }).addTo(ukMap);
+            self.constituencyFeatures = L.geoJson(constituencyData, {
+              style: style,
+              onEachFeature: onEachFeature,
+              zoomSnap: 0.5
+            }).addTo(ukMap);
 
-          self.findConstituency("E14000885");
-          self.findConstituency("E14000577");
+            var info = L.control();
 
-          var info = L.control();
+            info.onAdd = function (map) {
+              this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+              this.update();
+              return this._div;
+            };
 
-          info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-            this.update();
-            return this._div;
-          };
+            // method that we will use to update the control based on feature properties passed
+            info.update = function (props) {
+              this._div.innerHTML = (props ?
+                '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + props.currentParty.name + '</b></p>'
+                : 'Hover over a constituency');
+              };
 
-          // method that we will use to update the control based on feature properties passed
-          info.update = function (props) {
-            console.log(props);
-            this._div.innerHTML = (props ?
-              '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + props.currentParty.name + '</b></p>'
-              : 'Hover over a constituency');
-          };
-
-          info.addTo(ukMap);
+              info.addTo(ukMap);
+          });
 
 
 
-        },1000);
-      });
-    } catch(e) {
+        } catch(e) {
 
-    }
+        }
+
+      },1000);
+    });
+  }
+
+  selectConstituency(key) {
+    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
+      padding: [100,100]
+    });
+
+  }
+
+  onload() {
+
   }
 
   render() {
@@ -4555,13 +4621,10 @@ module.exports = class Helpers {
   }
 
   assembleCards(data, template) {
-    console.log('data, template');
-    console.log(data, template);
     const self = this;
     if (typeof data === 'object') {data.type = data.type || (data["@type"] ? data["@type"].split('/')[data["@type"].split('/').length-1] : 'Detail');}
     if (typeof template === 'string') { template = self.cardTemplates[template]; }
     const element = template;
-    console.log(self.cardTemplates);
     var params = {};
     if(element.mapping){
       element.mapping.forEach(function(kv){
@@ -4606,14 +4669,9 @@ module.exports = class Helpers {
           styleKeys.forEach(function(styleKey) {
             var style = element.attr.style[styleKey];
             var styleValue;
-            console.log("STYLE")
-            console.log(style)
             if(style.var) {
               styleValue = self.getObjectPathProperty(data, style.var);
             } else if (style.func) {
-              console.log(style);
-              console.log(params);
-              console.log(self.getObjectPathProperty(params, style.func[0]));
               styleValue = self.getObjectPathProperty(params, style.func[0]).apply(null,style.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
             } else {
               styleValue = style;
@@ -4659,7 +4717,6 @@ module.exports = class Helpers {
   loadTemplates(templateUrl){
     const self = this;
     return new Promise(function(resolve,reject){
-      console.log(self.http)
       self.http.get(templateUrl)
       .then(function (res) {
         resolve(res.body);
