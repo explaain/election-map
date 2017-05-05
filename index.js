@@ -38,6 +38,7 @@ app.get("/pa/:folder/get/:file", function(request, response){
     c.get('/'+(request.query.test?"test/":"")+request.params.folder+'/'+request.params.file+".xml", function(err, stream) {
       if(err){
         response.send({error: "File not found"});
+        c.end();
       } else {
         const chunks = [];
         stream.on('data', (chunk) => {
@@ -48,10 +49,10 @@ app.get("/pa/:folder/get/:file", function(request, response){
           const parseString = require('xml2js').parseString;
           parseString(xml, function (err, result) {
             response.send(result);
+            c.end();
           });
         });
       }
-      c.end();
     })
   })
 })
@@ -69,9 +70,14 @@ function connectToPA(callback){
   c.connect({
     host: "ftpout.pa.press.net",
     user: "lbc_elections",
-    password: "pnpj5k7p",
-    connTimeout: 1000000,
-    pasvTimeout: 1000000
+    password: "pnpj5k7p"
   });
 }
+
+function updateFromPA(callback){
+  connectToPA(function(c){
+    // todo
+  });
+}
+
 
