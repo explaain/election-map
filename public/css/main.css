@@ -65,21 +65,26 @@ div.map {
     color: #777;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 600px) {
   div.map {
     float: left;
-/*     display: inline-block; */
-    width: 60%;
+    width: calc(100% - 300px);
   }
   #ukMap {
     height: 760px;
   }
-  div.side-cards {
-/*     display: inline-block; */
-/*     width: calc(25% - 120px); */
+}
+@media (min-width: 900px) {
+  div.map {
+    width: calc(100% - 400px);
   }
 }
 
+.progress {
+  height: 12px;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
 .progress-bar {
   background-color: lightgray;
 }
@@ -147,13 +152,16 @@ div.map {
   font-weight: bold;
 }
 
-.card.table {
-  width: calc(100% - 40px) !important;
+.card table {
+  width: 100%;
 }
 .card table tr td {
   padding: 5px 10px;
 }
-
+.card.stats table {
+  margin-left: -10px;
+  margin-right: -10px;
+}
 .card.stats table tr td:nth-child(2) {
   font-weight: bold;
 }
@@ -162,19 +170,32 @@ div.map {
   list-style: none;
   padding: 5px 0
 }
-.card.list li:before {    
+.card.list li:before {
   font-family: 'FontAwesome';
   content: '\f0a1';
   margin:0 10px 0 -40px;
   color: rgba(255, 102, 120, 0.7);
 }
 
+.card.table .content .body-content {
+  overflow-x: scroll;
+}
+
+.card.table {
+  clear: left;
+  width: calc(100% - 40px);
+}
 
 .card.table table {
-  width: calc(100% - 40px);
-  margin-left: -10px;
-  margin-right: -10px;
+  min-width: 800px;
+}
+.card.table table tr:nth-child(odd) {
+  background-color: #f4f4f4;
 }
 .card.table table tr:nth-child(1) {
   font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  background-color: transparent;
+}
+ound-color: transparent;
 }

@@ -4273,19 +4273,25 @@ class App {
       {
         name: "Conservatives",
         seats: 326,
-        color: "blue",
+        color: "#204eb7",
         getWidth: getSeatsWidth
       },
       {
         name: "Labour",
         seats: 230,
-        color: "red",
+        color: "#e43b2c",
         getWidth: getSeatsWidth
       },
       {
         name: "Scottish National Party",
         seats: 56,
-        color: "yellow",
+        color: "#f3df00",
+        getWidth: getSeatsWidth
+      },
+      {
+        name: "Liberal Democrats",
+        seats: 8,
+        color: "#e0aa15",
         getWidth: getSeatsWidth
       }
     ];
@@ -4805,7 +4811,7 @@ helpers = new Helpers(model, h, CardTemplates, http, router);
 const App = require('./components/app');
 
 
-const templatesUrl = 'http://localhost:5002/templates';
+const templatesUrl = '//explaain-api.herokuapp.com/templates';
 helpers.loadTemplates(templatesUrl).then(function(templates){
   for(var key in templates){
     CardTemplates[key] = templates[key];
@@ -4849,6 +4855,22 @@ module.exports = {
           {
             name: "Losses",
             value: 11
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
           }
         ]
       },
@@ -4869,6 +4891,22 @@ module.exports = {
           {
             name: "Losses",
             value: 79
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
           }
         ]
       },
@@ -4889,6 +4927,58 @@ module.exports = {
           {
             name: "Losses",
             value: 0
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
+          }
+        ]
+      },
+      {
+        partyResults: [
+          {
+            name: "Name",
+            value: "Liberal Democrat"
+          },
+          {
+            name: "Seats",
+            value: 8
+          },
+          {
+            name: "Gains",
+            value: 0
+          },
+          {
+            name: "Losses",
+            value: 47
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
           }
         ]
       }

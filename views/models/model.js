@@ -30,6 +30,22 @@ module.exports = {
           {
             name: "Losses",
             value: 11
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
           }
         ]
       },
@@ -50,6 +66,22 @@ module.exports = {
           {
             name: "Losses",
             value: 79
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
           }
         ]
       },
@@ -70,6 +102,58 @@ module.exports = {
           {
             name: "Losses",
             value: 0
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
+          }
+        ]
+      },
+      {
+        partyResults: [
+          {
+            name: "Name",
+            value: "Liberal Democrat"
+          },
+          {
+            name: "Seats",
+            value: 8
+          },
+          {
+            name: "Gains",
+            value: 0
+          },
+          {
+            name: "Losses",
+            value: 47
+          },
+          {
+            name: "Total Votes",
+            value: 1000000
+          },
+          {
+            name: "% Share",
+            value: 36.88
+          },
+          {
+            name: "% Change",
+            value: "+0.42"
+          },
+          {
+            name: "Forecast Seats",
+            value: "300"
           }
         ]
       }

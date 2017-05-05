@@ -13,7 +13,7 @@ helpers = new Helpers(model, h, CardTemplates, http, router);
 const App = require('./components/app');
 
 
-const templatesUrl = 'http://localhost:5002/templates';
+const templatesUrl = '//explaain-api.herokuapp.com/templates';
 helpers.loadTemplates(templatesUrl).then(function(templates){
   for(var key in templates){
     CardTemplates[key] = templates[key];
