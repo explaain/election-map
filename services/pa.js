@@ -51,6 +51,8 @@ module.exports = function(app){
     })
   })
   
+  // todo: this also needs a reasonable timeout, let's say 10 secs, otherwise we will pollute PA with useless requests
+  
   app.get("/pa-update", function(req, res){
     if(req.query.test){console.log("Warning! You are using TEST query")}
     const parseString = require('xml2js').parseString;
