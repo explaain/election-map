@@ -2,15 +2,14 @@ const hyperdom = require('hyperdom');
 const h = hyperdom.html;
 
 var selectConstituency,
-    findConstituency,
-    self;
+    findConstituency;
 
 class Map {
 
 
   constructor(outboundSelectConstituency) {
+    self = this;
     $('#ukMap').ready(function() {
-      self = this;
       self.constituencies = {};
       self.constituencyFeatures;
 
@@ -165,6 +164,7 @@ class Map {
   }
 
   selectConstituency(key) {
+    const self = this;
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]
     });

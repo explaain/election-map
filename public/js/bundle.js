@@ -4194,16 +4194,16 @@ class App {
   render() {
 
     var getSeatsWidth = function(seats) {
-      return (seats/5 + '%');
+      return (seats/4.5 + '%');
     }
 
 
     model.data.detailsByParty = testData.detailsByParty;
     model.data.summary = testData.summary;
 
-    model.data.summary = PaData.Ge2017_SOP.$;
+    model.data.summary = AlgoliaData.summary;; //This should come from Algolia instead
+    model.data.detailsByParty = AlgoliaData.parties;
 
-    console.log(PaData.Ge2017_SOP.$)
 
 
     var summaryRows = [
@@ -4251,16 +4251,25 @@ class App {
     function partiesToTable() {
       var parties = model.data.detailsByParty;
       var rows = parties.map(function(party) {
-        party.partyResults = party.partyResults.map(function(result) {
+        var partyKeys = Object.keys(party);
+        var newParty = [];
+        partyKeys.forEach(function(partyKey) {
+          newParty.push({
+            name: partyKey,
+            value: party[partyKey]
+          })
+        })
+        newParty = newParty.map(function(result) {
           result.value = result.value.toString();
           return result;
         })
-        return {cells: party.partyResults}
+        return {cells: newParty}
       })
-      var headerRow = parties[0].partyResults.map(function(data) {
-        return { value: data.name };
-      })
-      rows.unshift({ cells: headerRow })
+      //THE HEADER ROW STUFF NEEDS SORTING
+      // var headerRow = partyKeys.map(function(partyKey) {
+      //   return { value: partyKey };
+      // })
+      // rows.unshift({ cells: headerRow })
       return rows;
     }
 
@@ -4408,15 +4417,14 @@ const hyperdom = require('hyperdom');
 const h = hyperdom.html;
 
 var selectConstituency,
-    findConstituency,
-    self;
+    findConstituency;
 
 class Map {
 
 
   constructor(outboundSelectConstituency) {
+    self = this;
     $('#ukMap').ready(function() {
-      self = this;
       self.constituencies = {};
       self.constituencyFeatures;
 
@@ -4571,6 +4579,7 @@ class Map {
   }
 
   selectConstituency(key) {
+    const self = this;
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]
     });
@@ -4817,12 +4826,15 @@ const h = hyperdom.html;
 const model = require('./models/model');
 const Helpers = require("./includes/Helpers");
 
-
 helpers = new Helpers(model, h, CardTemplates, http, router);
 
 //Components
 const App = require('./components/app');
 
+var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+var index1 = client.initIndex('ge2017-pa');
+var index2 = client.initIndex('ge2017-parties');
+var index3 = client.initIndex('constituencies');
 
 const templatesUrl = '//explaain-api.herokuapp.com/templates';
 helpers.loadTemplates(templatesUrl).then(function(templates){
@@ -4832,21 +4844,51 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
   console.log(CardTemplates);
 
-  var paDataUrl = '/pa/results/list?test=yes';
-  var paDataUrl = '/pa/results/get/Test_Snap_General_Election_All_SOP_102?test=yes';
-  http.get(paDataUrl)
-  .then(function(res) {
-    console.log(res.body);
-    PaData.Ge2017_SOP = res.body.FirstPastThePostStateOfParties;
-    PaData.constituencyData = {};
-    return http.get('pa/results/get/Test_Snap_General_Election_result_Aberavon_1?test=yes')
-  }).then(function(res) {
-    console.log(res.body)
-    var election = res.body.FirstPastThePostResult.Election[0];
-    PaData.constituencyData[election.Constituency[0].$.number] = election.Constituency;
+  // var paDataUrl = '/pa/results/list?test=yes';
+  // var paDataUrl = '/pa/results/get/Test_Snap_General_Election_All_SOP_102?test=yes';
+  index1.search('', function searchDone(err, content) {
+    if (err) {
+      console.error(err);
+      return;
+    }
 
-    hyperdom.append(document.body, new App());
-  })
+    AlgoliaData.summary = content.hits[0];
+
+    for (var h in content.hits) {
+      console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+    }
+
+    index2.search('', function searchDone(err, content) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      AlgoliaData.parties = content.hits;
+
+      for (var h in content.hits) {
+        console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
+      }
+
+
+      console.log('AlgoliaData');
+      console.log(AlgoliaData);
+      hyperdom.append(document.body, new App());
+    });
+  });
+  // http.get(paDataUrl)
+  // .then(function(res) {
+  //   console.log(res.body);
+  //   PaData.Ge2017_SOP = res.body.FirstPastThePostStateOfParties;
+  //   PaData.constituencyData = {};
+  //   return http.get('pa/results/get/Test_Snap_General_Election_result_Aberavon_1?test=yes')
+  // }).then(function(res) {
+  //   console.log(res.body)
+  //   var election = res.body.FirstPastThePostResult.Election[0];
+  //   PaData.constituencyData[election.Constituency[0].$.number] = election.Constituency;
+  //
+  //   hyperdom.append(document.body, new App());
+  // })
 });
 
 },{"./components/app":64,"./includes/Helpers":68,"./models/model":70,"httpism":5,"hyperdom":19,"hyperdom-router":13}],70:[function(require,module,exports){
