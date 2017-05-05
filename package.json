@@ -19,6 +19,7 @@
   "dependencies": {
     "ejs": "2.5.6",
     "express": "4.15.2",
+    "ftp": "^0.3.10",
     "httpism": "^2.7.0",
     "hyperdom": "^0.5.0",
     "hyperdom-router": "^2.18.0"
