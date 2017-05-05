@@ -44,7 +44,7 @@ module.exports = function(app){
             parseString(xml, function (err, result) {
               res.send(result);
             });
-            c.destroy()();
+            c.destroy();
           });
         }
       })
