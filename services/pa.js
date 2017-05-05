@@ -1,0 +1,167 @@
+module.exports = function(app){
+  
+  const paDB = require("./pa-db.js");
+  
+  var lastFetchedSopn = 0;
+  var lastUpdateedFromPA;
+  
+  app.get('/pa/:folder/list', function(req, res) {
+    if(req.query.test){console.log("Warning! You are using TEST query")}
+    connectToPA(function(c){
+      c.list('/'+(req.query.test?"test/":"")+req.params.folder,function(err, list) {
+        if(err){
+          res.send({error: "Folder not found"});
+        } else {
+          const result = {};
+          result[req.params.folder] = [];
+          list.forEach(function(item){
+            if(item.name.match(/\.xml$/i)){
+              result[req.params.folder].push(item.name.replace(/\.xml$/i,""));
+            }
+          })
+          res.send(result)
+        }
+        c.destroy();
+      });
+    })
+  });
+
+  app.get("/pa/:folder/get/:file", function(req, res){
+    if(req.query.test){console.log("Warning! You are using TEST query")}
+    connectToPA(function(c){
+      c.get('/'+(req.query.test?"test/":"")+req.params.folder+'/'+req.params.file+".xml", function(err, stream) {
+        if(err){
+          res.send({error: "File not found"});
+          c.destroy();
+        } else {
+          const chunks = [];
+          stream.on('data', (chunk) => {
+            chunks.push(chunk.toString());
+          });
+          stream.on('end', () => {
+            const xml = chunks.join('');
+            const parseString = require('xml2js').parseString;
+            parseString(xml, function (err, result) {
+              res.send(result);
+            });
+            c.destroy()();
+          });
+        }
+      })
+    })
+  })
+  
+  app.get("/pa-update", function(req, res){
+    if(req.query.test){console.log("Warning! You are using TEST query")}
+    const parseString = require('xml2js').parseString;
+    var lastObservedSop;
+    var lastObservedSopn = 0;
+    const SopRegExp = new RegExp(!req.query.test?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
+    connectToPA(function(c){
+      const folder = !req.query.test?'/results':'/test/results';
+      c.list(folder, function(err, list) {
+        if(err){
+          res.send({error: err});
+          c.destroy();
+        } else {
+          list.forEach(function(file){
+            var Sopmatch = file.name.match(SopRegExp);
+            if(Sopmatch){
+              const Sopn = parseInt(Sopmatch[1]);
+              if(lastObservedSopn < Sopn){
+                lastObservedSopn = Sopn;
+                lastObservedSop = file.name;
+              }
+            }
+          })
+          if(lastObservedSopn>lastFetchedSopn){
+            lastFetchedSopn = lastObservedSopn;
+            console.log("New Sop published. Fetching...")
+            c.get(folder+'/'+lastObservedSop, function(err, stream) {
+              if(err){
+                res.send({error: "File not found"});
+                c.destroy();
+              } else {
+                const chunks = [];
+                stream.on('data', (chunk) => {
+                  chunks.push(chunk.toString());
+                });
+                stream.on('end', () => {
+                  const xml = chunks.join('');
+                  const parseString = require('xml2js').parseString;
+                  parseString(xml, function (err, sopJSON) {
+                    traverseSop(sopJSON,c,folder,req,res);
+                  });
+                });
+              }
+            })
+          } else {
+            console.log("No new Sop published. No fetch needed.");
+            res.send({ok: true, updated: false})
+            c.destroy();
+          }
+        }
+      });
+    });
+  });
+  
+  function connectToPA(callback){
+    var Client = require('ftp');
+    var c = new Client();
+    c.on('ready', function() {
+      callback(c);
+    });
+    c.connect({
+      host: "ftpout.pa.press.net",
+      user: "lbc_elections",
+      password: "pnpj5k7p"
+    });
+  }
+  
+  function traverseSop(sopJSON,c,folder,req,res){
+    const sopNumber = "1" /*lastFetchedSopn*/; // todo: once the data is live, change it!
+    const async = require("async");
+    const callAsyncLimit = 10;
+    const constituencyFilePrefix = !req.query.test?"todo: PREFIX":"Test_Snap_General_Election_result_";
+    async.parallel([
+      function(sopUpdated){
+        paDB.updateSop(sopJSON,sopUpdated);
+      },
+      function(constituenciesUpdated){
+        async.eachLimit(sopJSON.FirstPastThePostStateOfParties.ConstituenciesIncluded[0].Constituency,callAsyncLimit,function(constituency,constituencyUpdated){
+          const fileName = folder+'/'+constituencyFilePrefix+constituency.$.name.replace(/&/g,"and").replace(/\s/g,"_")+"_"+sopNumber+".xml";
+          c.get(fileName, function(err, stream) {
+            if(err){
+              console.log("Error: '"+fileName+"' not found on FTP server");
+            } else {
+              const chunks = [];
+              stream.on('data', (chunk) => {
+                chunks.push(chunk.toString());
+              });
+              stream.on('end', () => {
+                console.log("Fetched: '"+fileName+"'");
+                const xml = chunks.join('');
+                const parseString = require('xml2js').parseString;
+                parseString(xml, function (err, constituencyJSON) {
+                  paDB.updateConstituency(constituencyJSON,constituencyUpdated);
+                });
+              });
+            }
+          });
+        },function(){
+          constituenciesUpdated();
+        })
+      }
+    ],function(err){
+      c.destroy()
+      if(err){
+        res.send({error: err});
+      } else {
+        console.log("Done!")
+        res.send({ok: true, updated: true});
+      }
+    });
+    
+  }
+  
+}
