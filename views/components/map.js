@@ -113,9 +113,9 @@ class Map {
             }
 
             function zoomToFeature(e) {
-              ukMap.fitBounds(e.target.getBounds(), {
-                padding: [100,100]
-              });
+              // ukMap.fitBounds(e.target.getBounds(), {
+              //   padding: [100,100]
+              // });
               outboundSelectConstituency("E14001014")
             }
             function onEachFeature(feature, layer) {
@@ -168,6 +168,9 @@ class Map {
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]
     });
+    console.log(self.findConstituency(key));
+    var bounds = [self.findConstituency(key).getBounds()];
+    L.rectangle(bounds, {color: "#ff7800", weight: 1}).addTo(ukMap);
 
   }
 
