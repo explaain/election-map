@@ -12,7 +12,12 @@ const Card = require('./card');
 
 class App {
   constructor() {
-
+    model.cards = {
+      'seatsCard': { },
+      'summaryCard': { name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" },
+      'latestCard': { name: "Latest Results", items: latestItems, type: "list" },
+      'tableCard': { name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() }
+    }
   }
 
   render() {
