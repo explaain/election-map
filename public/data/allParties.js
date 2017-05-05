@@ -100,4 +100,9 @@ var allParties = [
     name: "Plaid Cymru",
     color: "#f7c023"
   },
+  {
+    key: "the-speaker-seeking-re-election",
+    name: "Conservative Party",
+    color: "#204eb7"
+  }
 ];

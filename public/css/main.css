@@ -1,8 +1,54 @@
+span.algolia-autocomplete {
+  display: block;
+  width: 100%;
+}
+
+input#search-input {
+  margin: 20px 20px 0 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  display: block;
+  width: calc(100% - 40px);
+  background-image: url('/img/search.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding-left: 40px;
+  font-family: 'Lato';
+}
+
+.aa-dropdown-menu {
+  margin-top: -20px;
+  margin-left: 20px;
+  background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 10000;
+  border: 1px solid #ddd;
+  min-width: 300px;
+/*   position: absolute; */
+}
+
+.aa-dropdown-menu > div > span > div {
+  padding:7px 40px;
+  cursor: pointer;
+}
+.aa-dropdown-menu > div > span > div:hover {
+  background: #eee;
+}
+
+div.map {
+  margin: 0 20px 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
 #ukMap {
-  margin-top: 200px;
-  height: 580px;
-  width: 50%;
-  min-width: 600px;
+  height: 500px;
+  width: calc(100%-40px);
+  /* min-width: 600px; */
 }
 
 .info {
@@ -19,13 +65,29 @@
     color: #777;
 }
 
+@media (min-width: 800px) {
+  div.map {
+    float: left;
+/*     display: inline-block; */
+    width: 60%;
+  }
+  #ukMap {
+    height: 760px;
+  }
+  div.side-cards {
+/*     display: inline-block; */
+/*     width: calc(25% - 120px); */
+  }
+}
+
 .progress-bar {
   background-color: lightgray;
 }
 
 
 .card {
-  margin: 30px;
+  margin: 20px;
+  padding: 0px;
   text-align: left;
 }
 .slick-container .card {
@@ -36,7 +98,10 @@
 }
 
 .card .card-visible {
-  padding: 0;
+  padding: 5px 0;
+}
+.card .card-visible h2 {
+  font-family: "Oswald"
 }
 .card .card-visible .close {
   display: none !important; /*Temporary */
@@ -62,6 +127,9 @@
 .card .content {
   margin: 0;
 }
+.card .content .body-content {
+  margin-bottom: 10px;
+}
 .card .content h2 {
   margin: 1em 0;
   font-weight: 700;
@@ -73,6 +141,40 @@
 .card .content .card-image img {
   transform: inherit;
 }
+
+.card.votes .content div.seats {
+  float: right;
+  font-weight: bold;
+}
+
+.card.table {
+  width: calc(100% - 40px) !important;
+}
 .card table tr td {
   padding: 5px 10px;
+}
+
+.card.stats table tr td:nth-child(2) {
+  font-weight: bold;
+}
+
+.card.list li {
+  list-style: none;
+  padding: 5px 0
+}
+.card.list li:before {    
+  font-family: 'FontAwesome';
+  content: '\f0a1';
+  margin:0 10px 0 -40px;
+  color: rgba(255, 102, 120, 0.7);
+}
+
+
+.card.table table {
+  width: calc(100% - 40px);
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.card.table table tr:nth-child(1) {
+  font-weight: bold;
 }

@@ -4566,7 +4566,9 @@ class Map {
   }
 
   render() {
-    return h('div#ukMap', '');
+    return h('div.map',
+      h('div#ukMap', '')
+    );
   }
 }
 
