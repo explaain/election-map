@@ -12,12 +12,9 @@ const Card = require('./card');
 
 class App {
   constructor() {
+    const self = this;
 
-  }
-
-  render() {
-
-    var getSeatsWidth = function(seats) {
+    self.getSeatsWidth = function(seats) {
       return (seats/4.5 + '%');
     }
 
@@ -27,7 +24,7 @@ class App {
 
 
 
-    var summaryRows = [
+    self.summaryRows = [
       {
         cells: [
           { value: 'No. of Results:' },
@@ -54,7 +51,7 @@ class App {
       // }
     ];
 
-    var latestItems = [
+    self.latestItems = [
       {
         value: "Conservatives hold Westminster"
       },
@@ -70,7 +67,7 @@ class App {
     ];
 
 
-    var tableKeysToHeadings = {
+    self.tableKeysToHeadings = {
       // abbreviation: "Abbreviation",
       name: "Party",
       // objectID: "objectID",
@@ -80,12 +77,12 @@ class App {
       percentageShare: "% Share",
     }
 
-    function partiesToTable() {
+    self.partiesToTable = function() {
       var parties = model.data.detailsByParty;
       var rows = parties.map(function(party) {
         var partyKeys = Object.keys(party);
         var newParty = [];
-        var keys = Object.keys(tableKeysToHeadings);
+        var keys = Object.keys(self.tableKeysToHeadings);
         keys.forEach(function(key) {
           newParty.push({
             name: key,
@@ -100,9 +97,9 @@ class App {
         return {cells: newParty}
       })
       //THE HEADER ROW STUFF NEEDS SORTING
-      var headerKeys = Object.keys(tableKeysToHeadings);
+      var headerKeys = Object.keys(self.tableKeysToHeadings);
       var headerRow = headerKeys.map(function(headerKey) {
-        return { value: tableKeysToHeadings[headerKey] };
+        return { value: self.tableKeysToHeadings[headerKey] };
       })
       rows.unshift({ cells: headerRow })
       console.log('rows');
@@ -110,97 +107,99 @@ class App {
       return rows;
     }
 
-    const getConstituencyData = function(key) {
+
+    self.getConstituencyData = function(key) {
 
       return model.data.constituencies.filter(function(constituency) {
         return constituency.objectID == key;
       })[0];
     }
 
-    const selectConstituency = function(constituency) {
+    self.selectConstituency = function(constituency) {
       console.log(constituency);
       if (typeof constituency === 'string') {
-        constituency = getConstituencyData(constituency);
+        constituency = self.getConstituencyData(constituency);
       }
-      console.log(constituency.objectID);
-      return implementSelectConstituency(constituency)
+      return self.implementSelectConstituency(constituency)
     }
 
-    model.seatsCard = { name: "Seats at a Glance", getWidth: getSeatsWidth, type: "votes" }
-
-    model.seatsCard.parties = [
-      {
-        name: "Conservatives",
-        seats: 326,
-        color: "#204eb7",
-        getWidth: getSeatsWidth
-      },
-      {
-        name: "Labour",
-        seats: 230,
-        color: "#e43b2c",
-        getWidth: getSeatsWidth
-      },
-      {
-        name: "Scottish National Party",
-        seats: 56,
-        color: "#f3df00",
-        getWidth: getSeatsWidth
-      },
-      {
-        name: "Liberal Democrats",
-        seats: 8,
-        color: "#e0aa15",
-        getWidth: getSeatsWidth
-      }
-    ];
-
-    // function get
-
-    const searchBar = new Search(selectConstituency);
-    const ukMap = new ClickMap(selectConstituency);
-    const seatsCard = new Card('seatsCard');
-    const summaryCard = new Card({ name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" });
-    const latestCard = new Card({ name: "Latest Results", items: latestItems, type: "list" });
-    const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() });
-
-
-
-    const implementSelectConstituency = function(constituency) {
-      console.log(constituency.objectID);
-      ukMap.selectConstituency(constituency.objectID);
+    self.implementSelectConstituency = function(constituency) {
+      self.ukMap.selectConstituency(constituency.objectID);
       var newData = {
         parties: constituency.ge2015Results
       }
       newData.parties.map(function(party) {
         party.seats = party.share;
         party.name = party.party;
-        party.getWidth = getSeatsWidth
+        party.getWidth = self.getSeatsWidth
         return party
       })
 
       model.seatsCard.parties = newData.parties;
-
-      setTimeout(function() {
-        summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
-        setTimeout(function() {
-          summaryCard.refresh();
-        },1000)
-      },1000)
+      self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
+      // todo: change this to something real
     }
 
+
+    model.seatsCard = { name: "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes" }
+
+    model.seatsCard.parties = [
+      {
+        name: "Conservatives",
+        seats: 326,
+        color: "#204eb7",
+        getWidth: self.getSeatsWidth
+      },
+      {
+        name: "Labour",
+        seats: 230,
+        color: "#e43b2c",
+        getWidth: self.getSeatsWidth
+      },
+      {
+        name: "Scottish National Party",
+        seats: 56,
+        color: "#f3df00",
+        getWidth: self.getSeatsWidth
+      },
+      {
+        name: "Liberal Democrats",
+        seats: 8,
+        color: "#e0aa15",
+        getWidth: self.getSeatsWidth
+      }
+    ];
+
+
+    model.cardsData = {
+      'seatsCard': "seatsCard",
+      'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
+      'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: self.partiesToTable() }
+    }
+
+    self.searchBar = new Search(self.selectConstituency);
+    self.ukMap = new ClickMap(self.selectConstituency);
+    self.seatsCard = new Card(model.cardsData["seatsCard"]);
+    self.summaryCard = new Card(model.cardsData["summaryCard"]);
+    self.latestCard = new Card(model.cardsData["latestCard"]);
+    self.tableCard = new Card(model.cardsData["tableCard"]);
+  }
+
+  render() {
+
+    const self = this;
+
     var returnable = h('div.app',
-      ukMap,
+      self.ukMap,
       h('div.side-cards',
-        seatsCard,
-        summaryCard,
-        latestCard
+        self.seatsCard,
+        self.summaryCard,
+        self.latestCard
       ),
-      tableCard
+      self.tableCard
     );
 
-    // model.data.summary.resultsDeclared = 3;
-    // summaryCard.refresh();
     return returnable;
   }
 }

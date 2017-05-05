@@ -20,21 +20,23 @@ class Card {
       this.data = data;
     }
     const self = this;
+    console.log(data)
 
     // model.data.summary.resultsDeclared = 3;
     // self.refresh();
   }
   updateData(data) {
-    console.log('this.data')
-    console.log(this.data)
     const self = this;
-    var dataKeys = Object.keys(data);
-    dataKeys.forEach(function(dataKey) {
-      self.data[dataKey] = data[dataKey];
-    })
-    this.data = self.data;
-    console.log('self.data')
-    console.log(self.data)
+    if(self.data.id){
+      var dataKeys = Object.keys(data);
+      dataKeys.forEach(function(dataKey) {
+        model.cardsData[self.data.id][dataKey] = data[dataKey];
+      })
+      self.refresh();
+    } else {
+      console.log("This card doesn't have a reference to a model!")
+    }
+
   }
 
   render() {
