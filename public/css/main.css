@@ -46,6 +46,7 @@ div.map {
   height: 500px;
   width: calc(100%-40px);
   z-index: 0;
+  background: white;
   /* min-width: 600px; */
 }
 
@@ -86,6 +87,7 @@ div.map {
 }
 .progress-bar {
   background-color: lightgray;
+  transition: width 0.5s;
 }
 
 
@@ -157,6 +159,7 @@ div.map {
 }
 .card table tr td {
   padding: 5px 10px;
+  line-height: 1.4;
 }
 .card.stats table {
   margin-left: -10px;
