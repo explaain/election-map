@@ -8,7 +8,7 @@ class Map {
 
 
   constructor(outboundSelectConstituency) {
-    self = this;
+    const self = this;
     $('#ukMap').ready(function() {
       self.constituencies = {};
       self.constituencyFeatures;
@@ -99,7 +99,7 @@ class Map {
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
-              self.constituencyFeatures.resetStyle(e.target);
+              //self.constituencyFeatures.resetStyle(e.target);
               info.update();
             }
             self.findConstituency = function(key) {

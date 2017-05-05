@@ -4311,19 +4311,19 @@ class App {
     ];
 
 
-    model.cards = {
-      'seatsCard': { },
-      'summaryCard': { name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" },
-      'latestCard': { name: "Latest Results", items: latestItems, type: "list" },
-      'tableCard': { name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() }
+    model.cardsData = {
+      'seatsCard': { id: "seatsCard" },
+      'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" },
+      'latestCard': { id: "latestCard", name: "Latest Results", items: latestItems, type: "list" },
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() }
     }
 
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
-    const seatsCard = new Card('seatsCard');
-    const summaryCard = new Card({ name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" });
-    const latestCard = new Card({ name: "Latest Results", items: latestItems, type: "list" });
-    const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() });
+    const seatsCard = new Card(model.cardsData["seatsCard"]);
+    const summaryCard = new Card(model.cardsData["summaryCard"]);
+    const latestCard = new Card(model.cardsData["latestCard"]);
+    const tableCard = new Card(model.cardsData["tableCard"]);
 
 
 
@@ -4340,13 +4340,8 @@ class App {
       })
 
       model.seatsCard.parties = newData.parties;
-
-      setTimeout(function() {
-        summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
-        setTimeout(function() {
-          summaryCard.refresh();
-        },1000)
-      },1000)
+      //summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
+      summaryCard.updateData({name: "Hello World!"});
     }
 
     var returnable = h('div.app',
@@ -4390,16 +4385,23 @@ class Card {
       this.data = data;
     }
     const self = this;
+    console.log(data)
 
     // model.data.summary.resultsDeclared = 3;
     // self.refresh();
   }
   updateData(data) {
     const self = this;
+    console.log("DATA")
+    console.log(data)
     var dataKeys = Object.keys(data);
+    console.log(model.cardsData[self.data.id])
     dataKeys.forEach(function(dataKey) {
+      console.log(dataKey + " changing to " + data[dataKey])
       model.cardsData[self.data.id][dataKey] = data[dataKey];
     })
+    console.log("MODEL")
+    console.log(model)
     self.refresh();
   }
 
@@ -4422,7 +4424,7 @@ class Map {
 
 
   constructor(outboundSelectConstituency) {
-    self = this;
+    const self = this;
     $('#ukMap').ready(function() {
       self.constituencies = {};
       self.constituencyFeatures;
@@ -4513,7 +4515,7 @@ class Map {
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
-              self.constituencyFeatures.resetStyle(e.target);
+              //self.constituencyFeatures.resetStyle(e.target);
               info.update();
             }
             self.findConstituency = function(key) {

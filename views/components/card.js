@@ -20,16 +20,23 @@ class Card {
       this.data = data;
     }
     const self = this;
+    console.log(data)
 
     // model.data.summary.resultsDeclared = 3;
     // self.refresh();
   }
   updateData(data) {
     const self = this;
+    console.log("DATA")
+    console.log(data)
     var dataKeys = Object.keys(data);
+    console.log(model.cardsData[self.data.id])
     dataKeys.forEach(function(dataKey) {
+      console.log(dataKey + " changing to " + data[dataKey])
       model.cardsData[self.data.id][dataKey] = data[dataKey];
     })
+    console.log("MODEL")
+    console.log(model)
     self.refresh();
   }
 

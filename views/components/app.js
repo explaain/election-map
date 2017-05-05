@@ -140,19 +140,19 @@ class App {
     ];
 
 
-    model.cards = {
-      'seatsCard': { },
-      'summaryCard': { name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" },
-      'latestCard': { name: "Latest Results", items: latestItems, type: "list" },
-      'tableCard': { name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() }
+    model.cardsData = {
+      'seatsCard': { id: "seatsCard" },
+      'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" },
+      'latestCard': { id: "latestCard", name: "Latest Results", items: latestItems, type: "list" },
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() }
     }
 
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
-    const seatsCard = new Card('seatsCard');
-    const summaryCard = new Card({ name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" });
-    const latestCard = new Card({ name: "Latest Results", items: latestItems, type: "list" });
-    const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() });
+    const seatsCard = new Card(model.cardsData["seatsCard"]);
+    const summaryCard = new Card(model.cardsData["summaryCard"]);
+    const latestCard = new Card(model.cardsData["latestCard"]);
+    const tableCard = new Card(model.cardsData["tableCard"]);
 
 
 
@@ -169,13 +169,8 @@ class App {
       })
 
       model.seatsCard.parties = newData.parties;
-
-      setTimeout(function() {
-        summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
-        setTimeout(function() {
-          summaryCard.refresh();
-        },1000)
-      },1000)
+      //summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
+      summaryCard.updateData({name: "Hello World!"});
     }
 
     var returnable = h('div.app',
