@@ -4193,34 +4193,39 @@ class App {
     }
 
 
+    model.data.detailsByParty = testData.detailsByParty;
+    model.data.summary = testData.summary;
 
+    model.data.summary = PaData.Ge2017_SOP.$;
+
+    console.log(PaData.Ge2017_SOP.$)
 
 
     var summaryRows = [
       {
         cells: [
           { value: 'No. of Results:' },
-          { value: model.data.summary.resultsDeclared }
+          { value: model.data.summary.numberOfResults + ' / ' + model.data.summary.totalNumberOfConstituencies  }
         ]
       },
       {
         cells: [
           { value: 'Total Votes:' },
-          { value: model.data.summary.totalVotesCounted }
+          { value: model.data.summary.totalVotes }
         ]
       },
       {
         cells: [
           { value: 'Forecast Winner:' },
-          { value: model.data.summary.forecastWinner }
+          { value: model.data.summary.forecastWinningParty }
         ]
       },
-      {
-        cells: [
-          { value: 'Forecast Majority:' },
-          { value: model.data.summary.forecastMajority }
-        ]
-      }
+      // {
+      //   cells: [
+      //     { value: 'Forecast Majority:' },
+      //     { value: model.data.summary.forecastMajority }
+      //   ]
+      // }
     ];
 
     var latestItems = [
@@ -4299,7 +4304,7 @@ class App {
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
     const seatsCard = new Card('seatsCard');
-    const summaryCard = new Card({ name: "Voting Summary", rows: summaryRows, type: "stats" });
+    const summaryCard = new Card({ name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" });
     const latestCard = new Card({ name: "Latest Results", items: latestItems, type: "list" });
     const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() });
 
@@ -4419,10 +4424,10 @@ class Map {
             scrollWheelZoom: false
           });
 
-          L.tileLayer('https://api.mapbox.com/styles/v1/jeremynevans/cj27w58m8001t2smzpntviyhw/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamVyZW15bmV2YW5zIiwiYSI6ImNqMjd3MGl2azAwNmsyd25zOW5zYWFtbncifQ.p0EZjsWStzknkgEyBOHrfA', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+          L.tileLayer('', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>' /* + ', Imagery © <a href="http://mapbox.com">Mapbox</a>'*/,
             maxZoom: 18,
-            id: 'mapbox.light'
+            // id: 'mapbox.light'
           }).addTo(ukMap);
 
 
@@ -4820,172 +4825,36 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
     CardTemplates[key] = templates[key];
   };
 
-  console.log(CardTemplates)
+  console.log(CardTemplates);
 
-  hyperdom.append(document.body, new App());
+  var paDataUrl = '/pa/results/list?test=yes';
+  var paDataUrl = '/pa/results/get/Test_Snap_General_Election_All_SOP_102?test=yes';
+  http.get(paDataUrl)
+  .then(function(res) {
+    console.log(res.body);
+    PaData.Ge2017_SOP = res.body.FirstPastThePostStateOfParties;
+    PaData.constituencyData = {};
+    return http.get('pa/results/get/Test_Snap_General_Election_result_Aberavon_1?test=yes')
+  }).then(function(res) {
+    console.log(res.body)
+    var election = res.body.FirstPastThePostResult.Election[0];
+    PaData.constituencyData[election.Constituency[0].$.number] = election.Constituency;
+
+    hyperdom.append(document.body, new App());
+  })
 });
 
 },{"./components/app":64,"./includes/Helpers":68,"./models/model":70,"httpism":5,"hyperdom":19,"hyperdom-router":13}],70:[function(require,module,exports){
 module.exports = {
   data: {
-    summary: {
-      resultsDeclared: 643,
-      totalVotesCounted: 30388065,
-      forecastWinner: "Conservatives",
-      forecastMajority: 12
-    },
+    summary: {},
     national: {
 
     },
     selectedConstituency: {
 
     },
-    detailsByParty: [
-      {
-        partyResults: [
-          {
-            name: "Name",
-            value: "Conservatives"
-          },
-          {
-            name: "Seats",
-            value: 326
-          },
-          {
-            name: "Gains",
-            value: 60
-          },
-          {
-            name: "Losses",
-            value: 11
-          },
-          {
-            name: "Total Votes",
-            value: 1000000
-          },
-          {
-            name: "% Share",
-            value: 36.88
-          },
-          {
-            name: "% Change",
-            value: "+0.42"
-          },
-          {
-            name: "Forecast Seats",
-            value: "300"
-          }
-        ]
-      },
-      {
-        partyResults: [
-          {
-            name: "Name",
-            value: "Labour"
-          },
-          {
-            name: "Seats",
-            value: 230
-          },
-          {
-            name: "Gains",
-            value: 6
-          },
-          {
-            name: "Losses",
-            value: 79
-          },
-          {
-            name: "Total Votes",
-            value: 1000000
-          },
-          {
-            name: "% Share",
-            value: 36.88
-          },
-          {
-            name: "% Change",
-            value: "+0.42"
-          },
-          {
-            name: "Forecast Seats",
-            value: "300"
-          }
-        ]
-      },
-      {
-        partyResults: [
-          {
-            name: "Name",
-            value: "Scottish National Party"
-          },
-          {
-            name: "Seats",
-            value: 56
-          },
-          {
-            name: "Gains",
-            value: 37
-          },
-          {
-            name: "Losses",
-            value: 0
-          },
-          {
-            name: "Total Votes",
-            value: 1000000
-          },
-          {
-            name: "% Share",
-            value: 36.88
-          },
-          {
-            name: "% Change",
-            value: "+0.42"
-          },
-          {
-            name: "Forecast Seats",
-            value: "300"
-          }
-        ]
-      },
-      {
-        partyResults: [
-          {
-            name: "Name",
-            value: "Liberal Democrat"
-          },
-          {
-            name: "Seats",
-            value: 8
-          },
-          {
-            name: "Gains",
-            value: 0
-          },
-          {
-            name: "Losses",
-            value: 47
-          },
-          {
-            name: "Total Votes",
-            value: 1000000
-          },
-          {
-            name: "% Share",
-            value: 36.88
-          },
-          {
-            name: "% Change",
-            value: "+0.42"
-          },
-          {
-            name: "Forecast Seats",
-            value: "300"
-          }
-        ]
-      }
-    ]
+    detailsByParty: []
   }
 }
 

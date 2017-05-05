@@ -22,34 +22,39 @@ class App {
     }
 
 
+    model.data.detailsByParty = testData.detailsByParty;
+    model.data.summary = testData.summary;
 
+    model.data.summary = PaData.Ge2017_SOP.$;
+
+    console.log(PaData.Ge2017_SOP.$)
 
 
     var summaryRows = [
       {
         cells: [
           { value: 'No. of Results:' },
-          { value: model.data.summary.resultsDeclared }
+          { value: model.data.summary.numberOfResults + ' / ' + model.data.summary.totalNumberOfConstituencies  }
         ]
       },
       {
         cells: [
           { value: 'Total Votes:' },
-          { value: model.data.summary.totalVotesCounted }
+          { value: model.data.summary.totalVotes }
         ]
       },
       {
         cells: [
           { value: 'Forecast Winner:' },
-          { value: model.data.summary.forecastWinner }
+          { value: model.data.summary.forecastWinningParty }
         ]
       },
-      {
-        cells: [
-          { value: 'Forecast Majority:' },
-          { value: model.data.summary.forecastMajority }
-        ]
-      }
+      // {
+      //   cells: [
+      //     { value: 'Forecast Majority:' },
+      //     { value: model.data.summary.forecastMajority }
+      //   ]
+      // }
     ];
 
     var latestItems = [
@@ -128,7 +133,7 @@ class App {
     const searchBar = new Search(selectConstituency);
     const ukMap = new ClickMap(selectConstituency);
     const seatsCard = new Card('seatsCard');
-    const summaryCard = new Card({ name: "Voting Summary", rows: summaryRows, type: "stats" });
+    const summaryCard = new Card({ name: "Voting Summary", icon: "fa-bar-chart", rows: summaryRows, type: "stats" });
     const latestCard = new Card({ name: "Latest Results", items: latestItems, type: "list" });
     const tableCard = new Card({ name: "State of the Parties: Which Party is Winning", type: "table", rows: partiesToTable() });
 
