@@ -33,9 +33,17 @@ app.get('/pa/nominations/list', function(request, response) {
 app.get("/pa/nominations/get/:file", function(request, response){
   connectToPA(function(c){
     c.get('/nominations/'+request.params.file+".xml", function(err, stream) {
-      if (err) throw err;
-      stream.once('close', function() { c.end(); });
-      stream.pipe(fs.createWriteStream('test.xml'));
+      const chunks = [];
+      stream.on('data', (chunk) => {
+        chunks.push(chunk.toString());
+      });
+      stream.on('end', () => {
+        const xml = chunks.join('');
+        const parseString = require('xml2js').parseString;
+        parseString(xml, function (err, result) {
+          response.send(result);
+        });
+      });
     })
   })
 })

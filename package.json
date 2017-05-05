@@ -22,7 +22,8 @@
     "ftp": "^0.3.10",
     "httpism": "^2.7.0",
     "hyperdom": "^0.5.0",
-    "hyperdom-router": "^2.18.0"
+    "hyperdom-router": "^2.18.0",
+    "xml2js": "^0.4.17"
   },
   "repository": {
     "type": "git",
