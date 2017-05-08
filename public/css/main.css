@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 span.algolia-autocomplete {
   display: block;
   width: 100%;
@@ -34,11 +38,24 @@ input#search-input {
   background: #eee;
 }
 
-div.map {
+.map {
   margin: 20px 0;
   overflow: hidden;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
+  background-image: url(/img/loading.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:80px;
+  position: relative;
+}
+
+.map-overlay {
+  z-index:2;
+  position: absolute;
+  width:100%;
+  height:100%;
+  background-color: rgba(255,255,255,0.1);
 }
 
 #ukMap {
@@ -46,7 +63,15 @@ div.map {
   width: 100%;
   z-index: 0;
   background: white;
+  opacity:0;
+  -webkit-transition: opacity 1s;
+  position: relative;
+  z-index:1;
   /* min-width: 600px; */
+}
+
+#ukMap.initialized {
+  opacity:1;
 }
 
 .info {
@@ -219,3 +244,30 @@ div.map {
 .leaflet-interactive.hover {
   fill-opacity: 0.5;
 }
+
+/* Animation */
+
+.votes .progress,.seats,.name,.card-visible {
+  animation-name: piecespop;
+  animation-duration: .4s;
+  transform: scale(0,0) rotate(-5deg);
+  animation-fill-mode: forwards;
+}
+
+@keyframes piecespop {
+  0% {transform: scale(0,0);}
+  80%  {transform: scale(1.1,1.1);}
+  100%  {transform: scale(1,1);}
+}
+
+.votes .progress:nth-of-type(2){animation-delay: .1s}
+.votes .progress:nth-of-type(4){animation-delay: .2s}
+.votes .progress:nth-of-type(6){animation-delay: .3s}
+.votes .progress:nth-of-type(8){animation-delay: .4s}
+.votes .progress:nth-of-type(10){animation-delay: .5s}
+.votes .progress:nth-of-type(12){animation-delay: .6s}
+.votes .progress:nth-of-type(14){animation-delay: .7s}
+.votes .progress:nth-of-type(16){animation-delay: .8s}
+.votes .progress:nth-of-type(18){animation-delay: .9s}
+.votes .progress:nth-of-type(20){animation-delay: 1s}
+.votes .progress:nth-of-type(22){animation-delay: 1.1s}

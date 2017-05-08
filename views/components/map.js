@@ -23,6 +23,8 @@ class Map {
             scrollWheelZoom: false
           });
 
+          $('#ukMap').addClass("initialized");
+
           L.tileLayer('', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>' /* + ', Imagery © <a href="http://mapbox.com">Mapbox</a>'*/,
             maxZoom: 18,
@@ -119,6 +121,8 @@ class Map {
               if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
                 layer.bringToFront();
               }
+              $(".progress,.seats,.name").hide();
+              setTimeout(function(){$(".progress,.seats,.name").show();})
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
