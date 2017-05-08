@@ -35,16 +35,15 @@ input#search-input {
 }
 
 div.map {
-  margin: 20px;
-  border-radius: 10px;
+  margin: 20px 0;
   overflow: hidden;
-  border: 1px solid #ddd;
-  padding: 10px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 #ukMap {
-  height: 500px;
-  width: calc(100%-40px);
+  height: calc(100vh - 240px);
+  width: 100%;
   z-index: 0;
   background: white;
   /* min-width: 600px; */
@@ -66,9 +65,13 @@ div.map {
 
 @media (min-width: 600px) {
   div.map {
+    margin:20px;
     margin-top: 0;
     float: left;
     width: calc(100% - 300px);
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
   }
   #ukMap {
     height: 760px;
