@@ -203,5 +203,16 @@ div.map {
   border-bottom: 1px solid #ddd;
   background-color: transparent;
 }
-ound-color: transparent;
+
+
+/* Map */
+
+.leaflet-interactive.selected{
+  stroke: #0044aa;
+  stroke-width: 6;
+  fill-opacity: 0.3;
+}
+
+.leaflet-interactive.hover {
+  fill-opacity: 0.5;
 }
