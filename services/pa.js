@@ -1,10 +1,11 @@
 module.exports = function(app){
-  
+
   const paDB = require("./pa-db.js");
-  
+
+  var lastFetchedSopt = new Date();
   var lastFetchedSopn = 0;
   var lastUpdateedFromPA;
-  
+
   app.get('/pa/:folder/list', function(req, res) {
     if(req.query.test){console.log("Warning! You are using TEST query")}
     connectToPA(function(c){
@@ -50,63 +51,68 @@ module.exports = function(app){
       })
     })
   })
-  
+
   // todo: this also needs a reasonable timeout, let's say 10 secs, otherwise we will pollute PA with useless requests
-  
+
   app.get("/pa-update", function(req, res){
     if(req.query.test){console.log("Warning! You are using TEST query")}
-    const parseString = require('xml2js').parseString;
-    var lastObservedSop;
-    var lastObservedSopn = 0;
-    const SopRegExp = new RegExp(!req.query.test?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
-    connectToPA(function(c){
-      const folder = !req.query.test?'/results':'/test/results';
-      c.list(folder, function(err, list) {
-        if(err){
-          res.send({error: err});
-          c.destroy();
-        } else {
-          list.forEach(function(file){
-            var Sopmatch = file.name.match(SopRegExp);
-            if(Sopmatch){
-              const Sopn = parseInt(Sopmatch[1]);
-              if(lastObservedSopn < Sopn){
-                lastObservedSopn = Sopn;
-                lastObservedSop = file.name;
-              }
-            }
-          })
-          if(lastObservedSopn>lastFetchedSopn){
-            lastFetchedSopn = lastObservedSopn;
-            console.log("New Sop published. Fetching...")
-            c.get(folder+'/'+lastObservedSop, function(err, stream) {
-              if(err){
-                res.send({error: "File not found"});
-                c.destroy();
-              } else {
-                const chunks = [];
-                stream.on('data', (chunk) => {
-                  chunks.push(chunk.toString());
-                });
-                stream.on('end', () => {
-                  const xml = chunks.join('');
-                  const parseString = require('xml2js').parseString;
-                  parseString(xml, function (err, sopJSON) {
-                    traverseSop(sopJSON,c,folder,req,res);
-                  });
-                });
+    if((new Date())-lastFetchedSopt>10*1000){ // 10 seconds
+      lastFetchedSopt = new Date();
+      const parseString = require('xml2js').parseString;
+      var lastObservedSop;
+      var lastObservedSopn = 0;
+      const SopRegExp = new RegExp(!req.query.test?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
+      connectToPA(function(c){
+        const folder = !req.query.test?'/results':'/test/results';
+        c.list(folder, function(err, list) {
+          if(err){
+            res.send({error: err});
+            c.destroy();
+          } else {
+            list.forEach(function(file){
+              var Sopmatch = file.name.match(SopRegExp);
+              if(Sopmatch){
+                const Sopn = parseInt(Sopmatch[1]);
+                if(lastObservedSopn < Sopn){
+                  lastObservedSopn = Sopn;
+                  lastObservedSop = file.name;
+                }
               }
             })
-          } else {
-            console.log("No new Sop published. No fetch needed.");
-            res.send({ok: true, updated: false})
-            c.destroy();
+            if(lastObservedSopn>lastFetchedSopn){
+              lastFetchedSopn = lastObservedSopn;
+              console.log("New Sop published. Fetching...")
+              c.get(folder+'/'+lastObservedSop, function(err, stream) {
+                if(err){
+                  res.send({error: "File not found"});
+                  c.destroy();
+                } else {
+                  const chunks = [];
+                  stream.on('data', (chunk) => {
+                    chunks.push(chunk.toString());
+                  });
+                  stream.on('end', () => {
+                    const xml = chunks.join('');
+                    const parseString = require('xml2js').parseString;
+                    parseString(xml, function (err, sopJSON) {
+                      traverseSop(sopJSON,c,folder,req,res);
+                    });
+                  });
+                }
+              })
+            } else {
+              console.log("No new Sop published. No fetch needed.");
+              res.send({ok: true, updated: false})
+              c.destroy();
+            }
           }
-        }
+        });
       });
-    });
+    } else {
+      console.log("Not going to check for a new Sop right now");
+    }
   });
-  
+
   function connectToPA(callback){
     var Client = require('ftp');
     var c = new Client();
@@ -119,7 +125,7 @@ module.exports = function(app){
       password: "pnpj5k7p"
     });
   }
-  
+
   function traverseSop(sopJSON,c,folder,req,res){
     const sopNumber = "1" /*lastFetchedSopn*/; // todo: once the data is live, change it!
     const async = require("async");
@@ -163,7 +169,7 @@ module.exports = function(app){
         res.send({ok: true, updated: true});
       }
     });
-    
+
   }
-  
+
 }
