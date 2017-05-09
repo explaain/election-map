@@ -156,6 +156,10 @@ div.map {
   float: right;
   font-weight: bold;
 }
+.card.votes .content .name {
+  text-transform: capitalize;
+}
+
 
 .card table {
   width: 100%;

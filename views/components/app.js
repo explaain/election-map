@@ -17,6 +17,9 @@ class App {
     self.getSeatsWidth = function(seats) {
       return (seats/4.5 + '%');
     }
+    self.getShareWidth = function(seats) {
+      return (seats/0.85) + '%';
+    }
 
 
     // model.data.detailsByParty = testData.detailsByParty;
@@ -130,11 +133,14 @@ class App {
       })[0];
       console.log(party);
       if (!party) {
-        party = {key: key, name: key, color: 'lightgray'}
+        party = {key: key, name: key.replace(/-/g, ' '), color: 'lightgray'}
       }
       if (!party.key) {party.key = key}
-      if (!party.name) {party.name = party.key}
+      if (!party.name) {party.name = party.key.replace(/-/g, ' ')}
       if (!party.color) {party.color = 'lightgray'}
+      if (party.name == "no description") {
+        party.name = "Other"
+      }
       return party;
     }
 
@@ -143,6 +149,7 @@ class App {
       var newData = {
         parties: constituency.ge2015Results
       }
+      newData.name = constituency.name + " - Results";
       newData.parties = newData.parties.map(function(party) {
         console.log('party');
         console.log(party);
@@ -150,9 +157,9 @@ class App {
         console.log(party);
         newParty.seats = party.seats || party.share;
         // party.name = party.party;
-        newParty.getWidth = self.getSeatsWidth
-        console.log('self.getSeatsWidth');
-        console.log(self.getSeatsWidth);
+        newParty.getWidth = self.getShareWidth
+        console.log('self.getShareWidth');
+        console.log(self.getShareWidth);
         console.log(newParty);
         return newParty
       })
@@ -161,6 +168,7 @@ class App {
       console.log(newData.parties);
 
 
+      model.seatsCard.name = newData.name;
       model.seatsCard.parties = newData.parties;
       self.seatsCard.refresh();
       // self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
