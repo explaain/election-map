@@ -4488,6 +4488,8 @@ class Map {
             scrollWheelZoom: false
           });
 
+          $('#ukMap').addClass("initialized");
+
           L.tileLayer('', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>' /* + ', Imagery © <a href="http://mapbox.com">Mapbox</a>'*/,
             maxZoom: 18,
@@ -4551,38 +4553,49 @@ class Map {
             }
             function highlightFeature(e) {
               var layer = e.target;
-
-              layer.setStyle({
+              /*layer.setStyle({
                 weight: 3,
                 color: '#0044aa',
                 dashArray: '',
                 fillOpacity: 0.7
-              });
-
-              if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                layer.bringToFront();
+              });*/
+              $(".leaflet-interactive.hover").attr("class","leaflet-interactive")
+              if(!$(layer.getElement()).attr("class").match(/selected/)){
+                $(layer.getElement()).attr("class","leaflet-interactive hover")
               }
+              /*if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+              }*/
               info.update(layer.feature.properties);
+
             }
             self.specialHighlightFeature = function(layer) {
               // var layer = e.target;
-
-              layer.setStyle({
+              console.log("LAYER")
+              console.log(layer)
+              /*layer.setStyle({
                 weight: 6,
                 color: '#0044aa',
                 dashArray: '',
-                fillOpacity: 0.3,
+                fillOpacity: 0.3
                 // fillColor: 'white'
-              });
+              });*/
+              $(".leaflet-interactive.selected").attr("class","leaflet-interactive")
+              $(layer.getElement()).attr("class","leaflet-interactive selected")
 
               if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
                 layer.bringToFront();
               }
+              $(".progress,.seats,.name").hide();
+              setTimeout(function(){$(".progress,.seats,.name").show();})
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
               console.log(e);
-              self.constituencyFeatures.resetStyle(e.target);
+              //self.constituencyFeatures.resetStyle(e.target);
+              if(!$(e.target.getElement()).attr("class").match(/selected/)){
+                $(e.target.getElement()).attr("class","leaflet-interactive")
+              }
               info.update();
             }
             self.findConstituency = function(key) {
