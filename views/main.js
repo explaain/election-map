@@ -37,10 +37,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
     model.data.summary = content.hits[0];
 
-    for (var h in content.hits) {
-      console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-    }
-
     index2.search('', function searchDone(err, content) {
       if (err) {
         console.error(err);
@@ -48,12 +44,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
       }
 
       model.data.detailsByParty = content.hits;
-
-      for (var h in content.hits) {
-        console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-      }
-
-
 
       index3.search('', {
         hitsPerPage: 650
@@ -64,10 +54,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
         }
 
         model.data.constituencies = content.hits;
-
-        for (var h in content.hits) {
-          console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-        }
 
         hyperdom.append(document.body, new App());
       });

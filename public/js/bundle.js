@@ -4477,7 +4477,8 @@ class Map {
           this.ukMap = L.map('ukMap', {
             center: [54.505, -4.09],
             zoom: 6,
-            scrollWheelZoom: false
+            scrollWheelZoom: false,
+            zoomAnimationThreshold: 10
           });
 
           L.tileLayer('', {
@@ -4573,7 +4574,6 @@ class Map {
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
-              console.log(e);
               self.constituencyFeatures.resetStyle(e.target);
               info.update();
             }
@@ -4597,6 +4597,7 @@ class Map {
               // ukMap.fitBounds(e.target.getBounds(), {
               //   padding: [100,100]
               // });
+              console.log('testing1');
               console.log(e);
               console.log(e.target.feature.properties.pcon16cd);
               outboundSelectConstituency(e.target.feature.properties.pcon16cd)
@@ -4934,10 +4935,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
     model.data.summary = content.hits[0];
 
-    for (var h in content.hits) {
-      console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-    }
-
     index2.search('', function searchDone(err, content) {
       if (err) {
         console.error(err);
@@ -4945,12 +4942,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
       }
 
       model.data.detailsByParty = content.hits;
-
-      for (var h in content.hits) {
-        console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-      }
-
-
 
       index3.search('', {
         hitsPerPage: 650
@@ -4961,10 +4952,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
         }
 
         model.data.constituencies = content.hits;
-
-        for (var h in content.hits) {
-          console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-        }
 
         hyperdom.append(document.body, new App());
       });
