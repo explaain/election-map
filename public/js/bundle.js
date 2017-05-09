@@ -4485,8 +4485,7 @@ class Map {
           this.ukMap = L.map('ukMap', {
             center: [54.505, -4.09],
             zoom: 6,
-            scrollWheelZoom: false,
-            zoomAnimationThreshold: 10
+            scrollWheelZoom: false
           });
 
           L.tileLayer('', {
@@ -4582,6 +4581,7 @@ class Map {
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
+              console.log(e);
               self.constituencyFeatures.resetStyle(e.target);
               info.update();
             }
@@ -4605,7 +4605,6 @@ class Map {
               // ukMap.fitBounds(e.target.getBounds(), {
               //   padding: [100,100]
               // });
-              console.log('testing1');
               console.log(e);
               console.log(e.target.feature.properties.pcon16cd);
               outboundSelectConstituency(e.target.feature.properties.pcon16cd)
