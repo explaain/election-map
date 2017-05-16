@@ -60,7 +60,6 @@ module.exports = class Helpers {
             if(style.var) {
               styleValue = self.getObjectPathProperty(data, style.var);
             } else if (style.func) {
-              console.log(params, style.func[0])
               styleValue = self.getObjectPathProperty(params, style.func[0]).apply(null,style.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
             } else {
               styleValue = style;

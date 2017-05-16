@@ -89,7 +89,6 @@ class App {
             value: party[key]
           })
         })
-        console.log(newParty);
         newParty = newParty.map(function(result) {
           if (result.value) {result.value = result.value.toString();}
           return result;
@@ -102,8 +101,6 @@ class App {
         return { value: self.tableKeysToHeadings[headerKey] };
       })
       rows.unshift({ cells: headerRow })
-      console.log('rows');
-      console.log(rows);
       return rows;
     }
 
@@ -116,7 +113,6 @@ class App {
     }
 
     self.selectConstituency = function(constituency) {
-      console.log(constituency);
       if (typeof constituency === 'string') {
         constituency = self.getConstituencyData(constituency);
       }
@@ -124,11 +120,9 @@ class App {
     }
 
     var getParty = function(key) {
-      console.log(key);
       var party = allParties.filter(function(party) {
         return party.key == key;
       })[0];
-      console.log(party);
       if (!party) {
         party = {key: key, name: key, color: 'lightgray'}
       }
@@ -144,27 +138,13 @@ class App {
         parties: constituency.ge2015Results
       }
       newData.parties = newData.parties.map(function(party) {
-        console.log('party');
-        console.log(party);
         var newParty = getParty(party.party);
-        console.log(party);
         newParty.seats = party.seats || party.share;
-        // party.name = party.party;
         newParty.getWidth = self.getSeatsWidth
-        console.log('self.getSeatsWidth');
-        console.log(self.getSeatsWidth);
-        console.log(newParty);
         return newParty
       })
-
-      console.log('newData.parties');
-      console.log(newData.parties);
-
-
       model.seatsCard.parties = newData.parties;
       self.seatsCard.refresh();
-      // self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
-      // todo: change this to something real
     }
 
 

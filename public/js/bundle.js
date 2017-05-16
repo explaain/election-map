@@ -4260,7 +4260,6 @@ class App {
             value: party[key]
           })
         })
-        console.log(newParty);
         newParty = newParty.map(function(result) {
           if (result.value) {result.value = result.value.toString();}
           return result;
@@ -4273,8 +4272,6 @@ class App {
         return { value: self.tableKeysToHeadings[headerKey] };
       })
       rows.unshift({ cells: headerRow })
-      console.log('rows');
-      console.log(rows);
       return rows;
     }
 
@@ -4287,7 +4284,6 @@ class App {
     }
 
     self.selectConstituency = function(constituency) {
-      console.log(constituency);
       if (typeof constituency === 'string') {
         constituency = self.getConstituencyData(constituency);
       }
@@ -4295,11 +4291,9 @@ class App {
     }
 
     var getParty = function(key) {
-      console.log(key);
       var party = allParties.filter(function(party) {
         return party.key == key;
       })[0];
-      console.log(party);
       if (!party) {
         party = {key: key, name: key, color: 'lightgray'}
       }
@@ -4315,27 +4309,13 @@ class App {
         parties: constituency.ge2015Results
       }
       newData.parties = newData.parties.map(function(party) {
-        console.log('party');
-        console.log(party);
         var newParty = getParty(party.party);
-        console.log(party);
         newParty.seats = party.seats || party.share;
-        // party.name = party.party;
         newParty.getWidth = self.getSeatsWidth
-        console.log('self.getSeatsWidth');
-        console.log(self.getSeatsWidth);
-        console.log(newParty);
         return newParty
       })
-
-      console.log('newData.parties');
-      console.log(newData.parties);
-
-
       model.seatsCard.parties = newData.parties;
       self.seatsCard.refresh();
-      // self.summaryCard.updateData({rows: [{cells: [{value:"1"}]}]});
-      // todo: change this to something real
     }
 
 
@@ -4427,10 +4407,6 @@ class Card {
       this.data = data;
     }
     const self = this;
-    console.log(data)
-
-    // model.data.summary.resultsDeclared = 3;
-    // self.refresh();
   }
   updateData(data) {
     const self = this;
@@ -4495,18 +4471,13 @@ class Map {
           var searchData = [];
 
           index.search('', {
-            // attributesToRetrieve: ['winningParty'],
-            hitsPerPage: 650
+            hitsPerPage: 650 //TODO: looks like a hardcore
           }, function searchDone(err, content) {
             if (err) {
               console.error(err);
               return;
             }
             searchData = content.hits;
-            // content.hits.forEach(function(hit) {
-            //   constituencyData.features
-            // })
-
             var getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;
@@ -4532,7 +4503,6 @@ class Map {
                 color: party.color
               };
             })
-            console.log(collectParties)
 
             function style(feature) {
               return {
@@ -4562,16 +4532,6 @@ class Map {
 
             }
             self.specialHighlightFeature = function(layer) {
-              // var layer = e.target;
-              console.log("LAYER")
-              console.log(layer)
-              /*layer.setStyle({
-                weight: 6,
-                color: '#0044aa',
-                dashArray: '',
-                fillOpacity: 0.3
-                // fillColor: 'white'
-              });*/
               $(".leaflet-interactive.selected").attr("class","leaflet-interactive")
               $(layer.getElement()).attr("class","leaflet-interactive selected")
 
@@ -4583,8 +4543,6 @@ class Map {
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
-              console.log(e);
-              //self.constituencyFeatures.resetStyle(e.target);
               if(!$(e.target.getElement()).attr("class").match(/selected/)){
                 $(e.target.getElement()).attr("class","leaflet-interactive")
               }
@@ -4598,20 +4556,9 @@ class Map {
               })[0];
               var myFeature = layers[myFeatureKey];
               return myFeature;
-              // var feature = self.constituencyFeatures.eachLayer(function(layer) {
-              //   if (layer.feature.properties.pcon16cd == key) {
-              //     return layer
-              //   }
-              // })
-              // return feature;
             }
 
             function zoomToFeature(e) {
-              // ukMap.fitBounds(e.target.getBounds(), {
-              //   padding: [100,100]
-              // });
-              console.log(e);
-              console.log(e.target.feature.properties.pcon16cd);
               outboundSelectConstituency(e.target.feature.properties.pcon16cd)
             }
             function onEachFeature(feature, layer) {
@@ -4662,20 +4609,11 @@ class Map {
   }
 
   selectConstituency(key) {
-    const self = this;
-    console.log('hi');
-    console.log(self);
-    console.log(key);
-    console.log(self.findConstituency(key));
-    console.log(self.findConstituency(key).getBounds());
+    console.log("Finding requested constituency by key: " + key)
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]
     });
     self.specialHighlightFeature(self.findConstituency(key));
-    // console.log(self.findConstituency(key));
-    // var bounds = [self.findConstituency(key).getBounds()];
-    // L.rectangle(bounds, {color: "#ff7800", weight: 1}).addTo(ukMap);
-
   }
 
   onload() {
@@ -4791,7 +4729,6 @@ module.exports = class Helpers {
             if(style.var) {
               styleValue = self.getObjectPathProperty(data, style.var);
             } else if (style.func) {
-              console.log(params, style.func[0])
               styleValue = self.getObjectPathProperty(params, style.func[0]).apply(null,style.func.slice(1).map(function(p){return self.getObjectPathProperty(params, p)}));
             } else {
               styleValue = style;
@@ -4983,19 +4920,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
       });
     });
   });
-  // http.get(paDataUrl)
-  // .then(function(res) {
-  //   console.log(res.body);
-  //   PaData.Ge2017_SOP = res.body.FirstPastThePostStateOfParties;
-  //   PaData.constituencyData = {};
-  //   return http.get('pa/results/get/Test_Snap_General_Election_result_Aberavon_1?test=yes')
-  // }).then(function(res) {
-  //   console.log(res.body)
-  //   var election = res.body.FirstPastThePostResult.Election[0];
-  //   PaData.constituencyData[election.Constituency[0].$.number] = election.Constituency;
-  //
-  //   hyperdom.append(document.body, new App());
-  // })
 });
 
 },{"./components/app":64,"./includes/Helpers":68,"./models/model":70,"httpism":5,"hyperdom":19,"hyperdom-router":13}],70:[function(require,module,exports){

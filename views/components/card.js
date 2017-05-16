@@ -20,10 +20,6 @@ class Card {
       this.data = data;
     }
     const self = this;
-    console.log(data)
-
-    // model.data.summary.resultsDeclared = 3;
-    // self.refresh();
   }
   updateData(data) {
     const self = this;

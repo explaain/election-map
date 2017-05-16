@@ -73,17 +73,4 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
       });
     });
   });
-  // http.get(paDataUrl)
-  // .then(function(res) {
-  //   console.log(res.body);
-  //   PaData.Ge2017_SOP = res.body.FirstPastThePostStateOfParties;
-  //   PaData.constituencyData = {};
-  //   return http.get('pa/results/get/Test_Snap_General_Election_result_Aberavon_1?test=yes')
-  // }).then(function(res) {
-  //   console.log(res.body)
-  //   var election = res.body.FirstPastThePostResult.Election[0];
-  //   PaData.constituencyData[election.Constituency[0].$.number] = election.Constituency;
-  //
-  //   hyperdom.append(document.body, new App());
-  // })
 });

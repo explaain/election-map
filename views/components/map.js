@@ -38,18 +38,13 @@ class Map {
           var searchData = [];
 
           index.search('', {
-            // attributesToRetrieve: ['winningParty'],
-            hitsPerPage: 650
+            hitsPerPage: 650 //TODO: looks like a hardcore
           }, function searchDone(err, content) {
             if (err) {
               console.error(err);
               return;
             }
             searchData = content.hits;
-            // content.hits.forEach(function(hit) {
-            //   constituencyData.features
-            // })
-
             var getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;
@@ -75,7 +70,6 @@ class Map {
                 color: party.color
               };
             })
-            console.log(collectParties)
 
             function style(feature) {
               return {
@@ -105,16 +99,6 @@ class Map {
 
             }
             self.specialHighlightFeature = function(layer) {
-              // var layer = e.target;
-              console.log("LAYER")
-              console.log(layer)
-              /*layer.setStyle({
-                weight: 6,
-                color: '#0044aa',
-                dashArray: '',
-                fillOpacity: 0.3
-                // fillColor: 'white'
-              });*/
               $(".leaflet-interactive.selected").attr("class","leaflet-interactive")
               $(layer.getElement()).attr("class","leaflet-interactive selected")
 
@@ -126,8 +110,6 @@ class Map {
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
-              console.log(e);
-              //self.constituencyFeatures.resetStyle(e.target);
               if(!$(e.target.getElement()).attr("class").match(/selected/)){
                 $(e.target.getElement()).attr("class","leaflet-interactive")
               }
@@ -141,20 +123,9 @@ class Map {
               })[0];
               var myFeature = layers[myFeatureKey];
               return myFeature;
-              // var feature = self.constituencyFeatures.eachLayer(function(layer) {
-              //   if (layer.feature.properties.pcon16cd == key) {
-              //     return layer
-              //   }
-              // })
-              // return feature;
             }
 
             function zoomToFeature(e) {
-              // ukMap.fitBounds(e.target.getBounds(), {
-              //   padding: [100,100]
-              // });
-              console.log(e);
-              console.log(e.target.feature.properties.pcon16cd);
               outboundSelectConstituency(e.target.feature.properties.pcon16cd)
             }
             function onEachFeature(feature, layer) {
@@ -205,20 +176,11 @@ class Map {
   }
 
   selectConstituency(key) {
-    const self = this;
-    console.log('hi');
-    console.log(self);
-    console.log(key);
-    console.log(self.findConstituency(key));
-    console.log(self.findConstituency(key).getBounds());
+    console.log("Finding requested constituency by key: " + key)
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]
     });
     self.specialHighlightFeature(self.findConstituency(key));
-    // console.log(self.findConstituency(key));
-    // var bounds = [self.findConstituency(key).getBounds()];
-    // L.rectangle(bounds, {color: "#ff7800", weight: 1}).addTo(ukMap);
-
   }
 
   onload() {
