@@ -1,5 +1,6 @@
+const conf = require("../conf/conf.js");
 const algoliasearch = require("algoliasearch");
-var client = algoliasearch("I2VKMNNAXI", "1a865896c07d9c08f3e2f14736e840bf");
+var client = algoliasearch(conf.algoliaId, conf.algoliaKey);
 var index1 = client.initIndex('ge2017-pa');
 var index2 = client.initIndex('ge2017-parties');
 var index3 = client.initIndex('constituencies');
