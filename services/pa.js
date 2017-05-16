@@ -1,9 +1,13 @@
+const conf = require("../conf/conf.js");
+
 module.exports = function(app){
 
   const paDB = require("./pa-db.js");
 
   var lastFetchedSopt = new Date();
   var lastFetchedSopn = 0;
+  var sopFetchStatus = "idle";
+  var sopFetchTimeout = sopFetchTimeout; // in seconds
   var lastUpdateedFromPA;
 
   app.get('/pa/:folder/list', function(req, res) {
@@ -56,7 +60,7 @@ module.exports = function(app){
 
   app.get("/pa-update", function(req, res){
     if(req.query.test){console.log("Warning! You are using TEST query")}
-    if((new Date())-lastFetchedSopt>10*1000){ // 10 seconds
+    if((new Date())-lastFetchedSopt>conf.sopFetchTimeout*1000 && sopFetchStatus!=="updating"){
       lastFetchedSopt = new Date();
       const parseString = require('xml2js').parseString;
       var lastObservedSop;
@@ -80,6 +84,7 @@ module.exports = function(app){
               }
             })
             if(lastObservedSopn>lastFetchedSopn){
+              sopFetchStatus = "updating"
               lastFetchedSopn = lastObservedSopn;
               console.log("New Sop published. Fetching...")
               c.get(folder+'/'+lastObservedSop, function(err, stream) {
@@ -127,20 +132,20 @@ module.exports = function(app){
   }
 
   function traverseSop(sopJSON,c,folder,req,res){
-    const sopNumber = "1" /*lastFetchedSopn*/; // todo: once the data is live, change it!
+    const sopNumber = "1" /*lastFetchedSopn*/; // not sure here, even at the LIVE TEST on 16 May 2017 they always had "1" suffix
     const async = require("async");
-    const callAsyncLimit = 10;
     const constituencyFilePrefix = !req.query.test?"todo: PREFIX":"Test_Snap_General_Election_result_";
     async.parallel([
       function(sopUpdated){
         paDB.updateSop(sopJSON,sopUpdated);
       },
-      function(constituenciesUpdated){
-        async.eachLimit(sopJSON.FirstPastThePostStateOfParties.ConstituenciesIncluded[0].Constituency,callAsyncLimit,function(constituency,constituencyUpdated){
+      function(allConstituenciesUpdated){
+        async.each(sopJSON.FirstPastThePostStateOfParties.ConstituenciesIncluded[0].Constituency,function(constituency,constituencyUpdated){
           const fileName = folder+'/'+constituencyFilePrefix+constituency.$.name.replace(/&/g,"and").replace(/\s/g,"_")+"_"+sopNumber+".xml";
           c.get(fileName, function(err, stream) {
             if(err){
               console.log("Error: '"+fileName+"' not found on FTP server");
+              constituencyUpdated();
             } else {
               const chunks = [];
               stream.on('data', (chunk) => {
@@ -154,10 +159,14 @@ module.exports = function(app){
                   paDB.updateConstituency(constituencyJSON,constituencyUpdated);
                 });
               });
+              stream.on('error', () => {
+                console.log("Stream error");
+                constituencyUpdated();
+              });
             }
           });
         },function(){
-          constituenciesUpdated();
+          allConstituenciesUpdated();
         })
       }
     ],function(err){
@@ -165,6 +174,7 @@ module.exports = function(app){
       if(err){
         res.send({error: err});
       } else {
+        sopFetchStatus = "idle";
         console.log("Done!")
         res.send({ok: true, updated: true});
       }
