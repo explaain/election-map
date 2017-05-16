@@ -167,11 +167,16 @@ class Map {
 
   selectConstituency(key) {
     const self = this;
-    console.log("Finding requested constituency by key: " + key)
-    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
-      padding: [100,100]
-    });
-    self.specialHighlightFeature(self.findConstituency(key));
+    const constituency = self.findConstituency(key);
+    if(constituency!==undefined){
+      ukMap.fitBounds(constituency.getBounds(), {
+        padding: [100,100]
+      });
+      self.specialHighlightFeature(constituency);
+    } else {
+      console.log("Constituency not found by a key " + key + ". This is probably a Northern Ireland one.")
+    }
+
   }
 
   onload() {

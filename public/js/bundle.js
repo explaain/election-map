@@ -4600,11 +4600,16 @@ class Map {
 
   selectConstituency(key) {
     const self = this;
-    console.log("Finding requested constituency by key: " + key)
-    ukMap.fitBounds(self.findConstituency(key).getBounds(), {
-      padding: [100,100]
-    });
-    self.specialHighlightFeature(self.findConstituency(key));
+    const constituency = self.findConstituency(key);
+    if(constituency!==undefined){
+      ukMap.fitBounds(constituency.getBounds(), {
+        padding: [100,100]
+      });
+      self.specialHighlightFeature(constituency);
+    } else {
+      console.log("Constituency not found by a key " + key + ". This is probably a Northern Ireland one.")
+    }
+
   }
 
   onload() {
@@ -4871,9 +4876,9 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
     model.data.summary = content.hits[0];
 
-    for (var h in content.hits) {
+    /*for (var h in content.hits) {
       console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-    }
+    }*/
 
     index2.search('', function searchDone(err, content) {
       if (err) {
@@ -4883,9 +4888,9 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
       model.data.detailsByParty = content.hits;
 
-      for (var h in content.hits) {
+      /*for (var h in content.hits) {
         console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-      }
+      }*/
 
 
 
@@ -4899,9 +4904,9 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
         model.data.constituencies = content.hits;
 
-        for (var h in content.hits) {
+        /*for (var h in content.hits) {
           console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].toString());
-        }
+        }*/
 
         hyperdom.append(document.body, new App());
       });
