@@ -28,17 +28,16 @@ class Map {
           L.tileLayer('', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>' /* + ', Imagery © <a href="http://mapbox.com">Mapbox</a>'*/,
             maxZoom: 18,
-            // id: 'mapbox.light'
           }).addTo(ukMap);
 
 
-          var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+          var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
           var index = client.initIndex('constituencies');
 
           var searchData = [];
 
           index.search('', {
-            hitsPerPage: 650 //TODO: looks like a hardcore
+            hitsPerPage: 650 //TODO: looks like a hardcode
           }, function searchDone(err, content) {
             if (err) {
               console.error(err);
@@ -82,19 +81,10 @@ class Map {
             }
             function highlightFeature(e) {
               var layer = e.target;
-              /*layer.setStyle({
-                weight: 3,
-                color: '#0044aa',
-                dashArray: '',
-                fillOpacity: 0.7
-              });*/
               $(".leaflet-interactive.hover").attr("class","leaflet-interactive")
               if(!$(layer.getElement()).attr("class").match(/selected/)){
                 $(layer.getElement()).attr("class","leaflet-interactive hover")
               }
-              /*if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                layer.bringToFront();
-              }*/
               info.update(layer.feature.properties);
 
             }
@@ -176,6 +166,7 @@ class Map {
   }
 
   selectConstituency(key) {
+    const self = this;
     console.log("Finding requested constituency by key: " + key)
     ukMap.fitBounds(self.findConstituency(key).getBounds(), {
       padding: [100,100]

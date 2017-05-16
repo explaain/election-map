@@ -11,7 +11,7 @@ helpers = new Helpers(model, h, CardTemplates, http, router);
 //Components
 const App = require('./components/app');
 
-var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
 var index1 = client.initIndex('ge2017-pa');
 var index2 = client.initIndex('ge2017-parties');
 var index3 = client.initIndex('constituencies');
@@ -21,10 +21,6 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
   for(var key in templates){
     CardTemplates[key] = templates[key];
   };
-
-  console.log(CardTemplates);
-
-  // var paDataUrl = '/pa/results/list?test=yes';
 
   var paDataUrl = '/pa-update?test=yes';
   http.get(paDataUrl);
