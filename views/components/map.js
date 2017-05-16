@@ -116,7 +116,8 @@ class Map {
             }
 
             function zoomToFeature(e) {
-              outboundSelectConstituency(e.target.feature.properties.pcon16cd)
+              $("#search-input").val(e.target.feature.properties.pcon16nm);
+              outboundSelectConstituency(e.target.feature.properties.pcon16cd);
             }
             function onEachFeature(feature, layer) {
               var key = feature.properties.pcon16cd;

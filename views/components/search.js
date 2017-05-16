@@ -7,8 +7,11 @@ class Search {
     const self = this;
     this.selectConstituency = selectConstituency;
 
-    var client = algoliasearch("I2VKMNNAXI", "2b8406f84cd4cc507da173032c46ee7b")
+    var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
     var index = client.initIndex('constituencies');
+    $('#search-input').on("click",function(){
+      $('#search-input').val("");
+    })
     autocomplete('#search-input', {hint: false}, [
       {
         source: autocomplete.sources.hits(index, {hitsPerPage: 5}),
