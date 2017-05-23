@@ -4442,6 +4442,7 @@ class Map {
 
   constructor(outboundSelectConstituency) {
     const self = this;
+    const resProp = conf.appMode==="PRE"?"ge2015Results":"ge2017Results";
     $('#ukMap').ready(function() {
       self.constituencies = {};
       self.constituencyFeatures;
@@ -4477,6 +4478,22 @@ class Map {
               return;
             }
             searchData = content.hits;
+            //TODO: all 2015 change to 2017 via conf.appMode!!!
+            if(conf.prodMode==="TEST"){
+              searchData.forEach(function(_data){
+                if(Math.random()>=0){
+                  _data.ge2015Results.forEach(function(_result){
+                    _result.rank = 0;
+                    _result.share = 0;
+                    _result.shareChange = 0;
+                    _result.shareMargin = 0;
+                    _result.voteMargin = 0;
+                    _result.votes = 0;
+                  })
+                }
+              })
+            }
+            console.log(searchData);
             var getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;
@@ -4493,14 +4510,26 @@ class Map {
               var data = searchData.filter(function(item){
                 return item.objectID == feature.properties.pcon16cd;
               })[0];
-              var partyKey = data.ge2015Results[0].party;
-              if (collectParties.indexOf(partyKey) == -1) {collectParties.push(partyKey)}
-              var party = getParty(partyKey);
-              feature.properties.currentParty = {
-                key: partyKey,
-                name: party.name,
-                color: party.color
-              };
+              // Checking if at least one party exists in the list
+              // and its share is greater than 0
+              if(data[resProp][0]&&data[resProp][0].share>0){
+                var partyKey = data[resProp][0].party;
+                if (collectParties.indexOf(partyKey) == -1) {
+                  collectParties.push(partyKey)
+                }
+                var party = getParty(partyKey);
+                feature.properties.currentParty = {
+                  key: partyKey,
+                  name: party.name,
+                  color: party.color
+                };
+              } else {
+                // Otherwise - no data
+                feature.properties.currentParty = {
+                  color: "lightgray"
+                };
+              }
+
             })
 
             function style(feature) {
@@ -4578,11 +4607,11 @@ class Map {
               this.update();
               return this._div;
             };
-
+            //TODO: Jeremy, please improve text "No results yet"
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
               this._div.innerHTML = (props ?
-                '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + props.currentParty.name + '</b></p>'
+                '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + (props.currentParty.name||"No results yet") + '</b></p>'
                 : 'Hover over a constituency');
               };
 
