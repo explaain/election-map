@@ -155,25 +155,29 @@ class App {
         name: "Conservatives",
         seats: 326,
         color: "#204eb7",
-        getWidth: self.getSeatsWidth
+        getWidth: self.getSeatsWidth,
+        code: "conservative"
       },
       {
         name: "Labour",
         seats: 230,
         color: "#e43b2c",
-        getWidth: self.getSeatsWidth
+        getWidth: self.getSeatsWidth,
+        code: "labour"
       },
       {
         name: "Scottish National Party",
         seats: 56,
         color: "#f3df00",
-        getWidth: self.getSeatsWidth
+        getWidth: self.getSeatsWidth,
+        code: "plaid"
       },
       {
         name: "Liberal Democrats",
         seats: 8,
         color: "#e0aa15",
-        getWidth: self.getSeatsWidth
+        getWidth: self.getSeatsWidth,
+        code: "lib-dem"
       }
     ];
 

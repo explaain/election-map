@@ -1,4 +1,5 @@
 const hyperdom = require('hyperdom');
+const partyReconciliation = require('../../public/data/partyReconciliation');
 const h = hyperdom.html;
 
 var selectConstituency,
@@ -58,7 +59,6 @@ class Map {
                 }
               })
             }
-            console.log(searchData);
             var getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;
@@ -70,14 +70,23 @@ class Map {
             }
 
             var collectParties = [];
-
+            const partySeats = {};
             constituencyData.features.forEach(function(feature) {
               var data = searchData.filter(function(item){
                 return item.objectID == feature.properties.pcon16cd;
               })[0];
               // Checking if at least one party exists in the list
               // and its share is greater than 0
+
               if(data[clientConf.resProp][0]&&data[clientConf.resProp][0].share>0){
+                //TODO: probably not the best place to populate the model
+                // Populating model
+                // console.log(data[clientConf.resProp][0])
+                if(!partySeats[partyReconciliation[data[clientConf.resProp][0].party]]){
+                  partySeats[partyReconciliation[data[clientConf.resProp][0].party]] = 0;
+                }
+                partySeats[partyReconciliation[data[clientConf.resProp][0].party]]++;
+                // Populating map
                 var partyKey = data[clientConf.resProp][0].party;
                 if (collectParties.indexOf(partyKey) == -1) {
                   collectParties.push(partyKey)
@@ -94,8 +103,15 @@ class Map {
                   color: "lightgray"
                 };
               }
-
             })
+            //TODO: Igor, you finished here. You also don't know why numbers are different here...
+            /*for(let partyCode in partySeats){
+              Model.seatsCard.parties.forEach(function(_party){
+                if(_party.code===partyCode){
+                  _party.seats = partySeats[partyCode];
+                }
+              });
+            }*/
 
             function style(feature) {
               return {

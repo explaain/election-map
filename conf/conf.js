@@ -4,5 +4,5 @@ module.exports = {
   algoliaPublic: process.env.ALGOLIA_PUBLIC || "2b8406f84cd4cc507da173032c46ee7b", // Algolia Public Key
   sopFetchTimeout: process.env.SOP_FETCH_TIMEOUT || 10, // SOP fetch timeout
   appMode: process.env.APP_MODE || "PRE", // App Mode: PRE/LIVE
-  prodMode: process.env.PROD_MODE || "TEST", // Prod Mode: REAL/TEST
+  prodMode: process.env.PROD_MODE || "REAL", // Prod Mode: REAL/TEST
 }

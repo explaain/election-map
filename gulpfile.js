@@ -19,6 +19,7 @@ watch = require('gulp-watch')
 const watchFiles = [
   'conf/*',
   'views/*',
+  'views/*/*',
   'services/*',
   'models/*',
   'services/*',
