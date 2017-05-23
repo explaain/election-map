@@ -4,7 +4,7 @@ const hyperdom = require('hyperdom');
 const router = require('hyperdom-router');
 const h = hyperdom.html;
 const model = require('./models/model');
-const Helpers = require("./includes/Helpers");
+const Helpers = require("./includes/helpers");
 
 helpers = new Helpers(model, h, CardTemplates, http, router);
 
