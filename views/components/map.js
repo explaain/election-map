@@ -9,7 +9,6 @@ class Map {
 
   constructor(outboundSelectConstituency) {
     const self = this;
-    const resProp = conf.appMode==="PRE"?"ge2015Results":"ge2017Results";
     $('#ukMap').ready(function() {
       self.constituencies = {};
       self.constituencyFeatures;
@@ -45,11 +44,10 @@ class Map {
               return;
             }
             searchData = content.hits;
-            //TODO: all 2015 change to 2017 via conf.appMode!!!
             if(conf.prodMode==="TEST"){
               searchData.forEach(function(_data){
                 if(Math.random()>=0){
-                  _data.ge2015Results.forEach(function(_result){
+                  _data[clientConf.resProp]forEach(function(_result){
                     _result.rank = 0;
                     _result.share = 0;
                     _result.shareChange = 0;
@@ -79,8 +77,8 @@ class Map {
               })[0];
               // Checking if at least one party exists in the list
               // and its share is greater than 0
-              if(data[resProp][0]&&data[resProp][0].share>0){
-                var partyKey = data[resProp][0].party;
+              if(data[clientConf.resProp][0]&&data[clientConf.resProp][0].share>0){
+                var partyKey = data[clientConf.resProp][0].party;
                 if (collectParties.indexOf(partyKey) == -1) {
                   collectParties.push(partyKey)
                 }

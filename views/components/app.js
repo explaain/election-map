@@ -135,7 +135,7 @@ class App {
     self.implementSelectConstituency = function(constituency) {
       self.ukMap.selectConstituency(constituency.objectID);
       var newData = {
-        parties: constituency.ge2015Results
+        parties: constituency[clientConf.resProp]
       }
       newData.parties = newData.parties.map(function(party) {
         var newParty = getParty(party.party);
