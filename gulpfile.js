@@ -49,7 +49,6 @@ const JSFiles = [
 const CSSFiles = [
   'public/css/normalize.css',
   'public/css/bootstrap.css',
-  'public/css/fontawesome.css',
   'public/css/explaain.css',
   'public/css/leaflet.css',
   'public/css/main.css',
