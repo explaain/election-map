@@ -47,7 +47,7 @@ class Map {
             if(conf.prodMode==="TEST"){
               searchData.forEach(function(_data){
                 if(Math.random()>=0){
-                  _data[clientConf.resProp]forEach(function(_result){
+                  _data[clientConf.resProp].forEach(function(_result){
                     _result.rank = 0;
                     _result.share = 0;
                     _result.shareChange = 0;

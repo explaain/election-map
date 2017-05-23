@@ -10,3 +10,8 @@ npm-debug.log
 # Docker
 Dockerfile
 docker-compose.yml
+
+tmp
+temp
+public/compiled.css
+public/compiled.js

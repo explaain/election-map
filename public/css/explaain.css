@@ -1,0 +1,539 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  padding: 0;
+  background: none;
+  font-family: Lato;
+  color: #333;
+}
+
+body.embed {
+  margin: 0;
+  padding: 0;
+}
+
+body.app {
+  background: #ddd;
+}
+
+body > .body-double {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 120px;
+}
+
+body.embed > .body-double, body.overlay > .body-double {
+  padding-top: 20px;
+}
+
+body.embed:not(.overlay) > .body-double {
+  position: static;
+  height: auto;
+}
+
+a:focus {
+  outline: 0;
+}
+
+.logo {
+  display: none;
+  background: #ddd;
+  text-align: center;
+  position: fixed;
+  z-index: 100000;
+  text-align: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 30px 0;
+  background: -webkit-linear-gradient(bottom, rgba(221,221,221,0), rgba(221,221,221,1) 40%); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom, rgba(221,221,221,0), rgba(221,221,221,1) 40%); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom, rgba(221,221,221,0), rgba(221,221,221,1) 40%); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to top, rgba(221,221,221,0), rgba(221,221,221,1) 40%); /* Standard syntax (must be last) */
+}
+
+.logo img {
+  position: relative;
+  margin: auto;
+  height: 55px;
+  margin: 0;
+}
+
+body.app .logo {
+  display: block;
+}
+
+
+.overlay-close-button {
+  display: none;
+  padding: 5px 10px;
+  margin: 30px auto;
+  max-width: 3.5em;
+  text-align: center;
+  color: #fff;
+  font-family: sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 50px;
+  border: 2px solid #fff;
+  background: #808080;
+}
+.overlay-close-button:hover {
+  color: #808080;
+  background: #fff;
+}
+body.embed.overlay .overlay-close-button {
+  display: block;
+}
+
+
+.cards {
+  margin: 0 auto;
+  max-width: 380px;
+}
+
+body.embed .cards {
+  margin: 10px auto;
+  max-width: 440px;
+}
+
+.layer, .card, .card .card-visible, .card .card-spacer {
+  -webkit-transition: -webkit-transform 0.5s, height 0.5s, margin 0.5s, opacity 0.5s; /* Safari */
+  transition: transform 0.5s, height 0.5s, margin 0.5s, opacity 0.5s;
+}
+
+.layer > div {
+  /*margin-top: -10px;*/
+}
+
+.card {
+  margin: 0px 0 30px 0;
+  padding: 0 5px;
+}
+
+.card.standalone {
+  margin: 20px 15px 10px 15px;
+}
+
+.card:focus {outline:0;}
+
+.card .card-spacer {
+  position: relative;
+  z-index: -100;
+  margin: 10px 0;
+  height: 100px;
+  /*border: solid red 2px;*/
+}
+
+.card .card-visible {
+  min-height: 120px;
+  padding-bottom: 18px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 1;
+  background: white;
+  transform: scale(1);
+}
+
+.card .card-grey {
+  display: none;
+  z-index: 20;
+  position: absolute;
+  float: left;
+  height: 100%;
+  width: 100%;
+  /*pointer-events: none;*/
+}
+
+.card.faded .card-grey {
+  display: block;
+  background: rgba(221,221,221,0.4);
+  -webkit-transition: background 0.5s; /* Safari */
+  transition: background 0.5s;
+}
+
+
+.card.opening .card-visible {
+  transform: scale(0,0);
+  /*height: 0;*/
+  opacity: 0;
+}
+
+.card.faded .card-visible {
+  /*z-index: -1;*/
+  /*transform: scale(0.95,0.95);*/
+  /*margin-top: 15px;*/
+  /*opacity: 0.4;*/
+}
+
+.layer.removed, .card.removed {
+  -moz-transform: scale(0.01);
+  -webkit-transform: scale(0.01);
+  -o-transform: scale(0.01);
+  -ms-transform: scale(0.01);
+  transform: scale(0.01);
+}
+.card.opening .card-spacer, .card.removed .card-spacer {
+  height: 0;
+}
+
+.card .card-visible > div.close {
+  z-index: 30;
+  position: relative;
+  float: right;
+  color: #bbb;
+  width: 36px;
+  height: 27px;
+  text-align: center;
+  padding-top: 9px;
+  display: none;
+}
+
+.card .card-visible > div.close:active i, .card .card-visible > div.close:hover i {
+  color: #ff6e73;
+}
+
+.cards .card-carousel:nth-last-child(1) .card.slick-current .card-visible > div.close {
+  display: block; /* Diplays only in last layer... */
+}
+.cards .card-carousel:nth-child(1) .card .card-visible > div.close {
+  display: none; /* ... but Never displays in first layer... */
+}
+body.overlay .cards .card-carousel:nth-last-child(1) .card .card-visible > div.close {
+  display: block; /* ... except in an overlay! */
+}
+
+.card .content {
+    margin: 1.7em 0;
+}
+
+.header-image {
+  height: 150px;
+  background: rgba(0,0,0,0.2);
+}
+
+.header-image img {
+  position: relative;
+  /*z-index: -1;*/
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-image h3 {
+  position: relative;
+  margin-top: -35px;
+  margin-left: 20px;
+  text-transform: uppercase;
+  color: white;
+}
+
+h2 {
+  padding: 0 20px;
+  margin: 1.05em 0 0 0;
+  font-size: 1.3em;
+}
+
+.card .card-image, .card .card-embed {
+  max-height: 250px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.card .card-image > div {
+  max-height: inherit;
+  transform: translateY(50%);
+}
+
+.card .card-image img {
+  max-width: 100%;
+  display: block;
+  transform: translateY(-50%);
+  margin: auto;
+}
+
+.card .card-embed iframe {
+  width: 100%;
+  height: auto;
+}
+
+.body-content {
+  margin: -4px 0;
+}
+.body-content, .more-detail {
+  padding: 0 20px;
+  line-height: 1.9;
+}
+
+.card .content a {
+  padding: 0 3px;
+  background: #ebebeb;
+  border: 2px solid #ebebeb;
+  text-decoration: none;
+  color: #333;
+}
+.card .content a.external:before {
+   font-family: FontAwesome;
+   content: "\f08e";
+   margin-right: 4px;
+   color: #777;
+   font-size: 0.9em;
+}
+
+.card .content a.active {
+  color: white;
+  background: #ff6e73;
+  border: 2px solid #ff6e73;
+}
+.card .content a.external.active:before {
+  color: white;
+}
+
+
+/*.body-content a, .more-detail a {
+  padding: 0 3px;
+  background: #ebebeb;
+  border: 2px solid #ebebeb;
+  text-decoration: none;
+  color: #333;
+}
+
+.body-content a:active, .body-content a.active, .more-detail a:active, .more-detail a.active {
+  color: white;
+  background: #ff6e73;
+  border: 2px solid #ff6e73;
+}*/
+
+.more-detail > p.label {
+  font-size: 14px;
+  margin-bottom: -20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.card .content.Question:not(.answered) a, .card .content.Question:not(.answered) a.explaain-link {
+  pointer-events: none;
+  cursor: default;
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  color: auto;
+}
+.card .content.Question:not(.answered) a:hover, .card .content.Question:not(.answered) a.explaain-link:hover {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  color: auto;
+}
+
+.card .answers {
+  text-align: center;
+  padding: 5px;
+}
+.card .answers .answer {
+  display: inline-block;
+  width: 49%;
+  margin: 5px 0;
+}
+.card .answers .answer p {
+  display: block;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+  margin: 0 5px;
+  padding: 0.5em 0;
+}
+.card .content:not(.answered) .answers .answer p:hover {
+  cursor: pointer;
+  background: #eee;
+}
+.card .answers .answer.selected p {
+  background: #dd0000;
+  color: white;
+}
+.card .answers .answer.correct p {
+  background: #00bb00;
+  color: white;
+}
+
+
+.card .card-icon {
+  position: absolute;
+  right:  9px;
+  bottom: 5px;
+  height: 30px;
+  width: 26px;
+  overflow: hidden;
+  transition: width 0.5s;
+  pointer-events: none;
+  cursor: default;
+}
+.card .card-icon:hover {
+  width: 104px;
+}
+.card .card-icon img {
+  height: 30px;
+  opacity: 0;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  transition: opacity 0.5s;
+}
+.cards .layer:last-child .card .card-icon {
+  pointer-events: all;
+  cursor: pointer;
+}
+.cards .layer:last-child .card .card-icon img {
+  opacity: 0.6;
+}
+.cards .layer:last-child .card .card-icon:hover img {
+  opacity: 1;
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
+}
+
+.card .edit-button {
+  display: none;
+  position: relative;
+  float: right;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 110, 115, 0.7);
+  background: #eee;
+  box-shadow: 1px 1px 1px -1px grey;
+  color: #999;
+  margin: -43px 8px 0 0px;
+  cursor: pointer;
+  outline: none;
+}
+/*.card:hover .edit-button {
+  display: block;
+}*/
+.card .edit-button:hover {
+  background: rgba(255, 110, 115, 1);
+  color: white;
+}
+.card .edit-button:active {
+  box-shadow: none;
+}
+
+.card-spacer {
+  height: 0;
+}
+
+.card .card-visible > div.close {
+  position: absolute !important;
+  right: 0;
+}
+.card .content.Headline {
+  margin-top: 0;
+}
+.card .content.Headline div.card-image {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  margin: 0;
+  width: 100%;
+  height: 300px;
+}
+
+
+body.desktop .content a:hover, body.desktop .card .content a:active {
+  color: white;
+  background: #ff6e73;
+  border: 2px solid #ff6e73;
+}
+body.desktop .card .content a.external:hover:before {
+   color: white;
+}
+
+body.desktop .card .card-visible > div.close {
+  opacity: 0;
+}
+body.desktop .card .card-visible:hover > div.close {
+  opacity: 1;
+}
+body.desktop .card .card-visible > div.close:hover {
+  cursor: pointer;
+}
+body.desktop .card .card-visible > div.close:hover i {
+  color: #ff6e73;
+}
+body.desktop .card.faded .card-grey > div {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0);
+}
+body.desktop .card.faded .card-grey:hover > div {
+  background: rgba(255,255,255,0.1);
+}
+
+
+
+
+
+@media (max-width: 320px) {
+  body.embed > .body-double, body.overlay > .body-double {
+    padding-top: 0;
+  }
+  .overlay-close-button {
+    margin: 20px auto;
+    font-size: 0.9em;
+  }
+
+  .card {
+    font-size: 0.8em;
+    line-height: 1.7;
+  }
+  .card .card-visible {
+    padding-bottom: 1.2em;
+  }
+  .card .content {
+    margin: 1.3em 0;
+  }
+  .card h2, .card .body-content {
+    padding: 0 15px;
+  }
+  .card h2 {
+    font-size: 1.2em;
+  }
+  .card .content a {
+    padding: 0 2px;
+    border: 1px solid #ebebeb;
+  }
+  .card .content a:hover, .card .content a:active, .card .content a.active {
+    border: 1px solid #ff6e73;
+  }
+
+  .card .card-icon {
+    right:  6px;
+    bottom: 1px;
+    height: 30px;
+    width: 26px;
+  }
+  .card .card-icon:hover {
+    width: 100px;
+  }
+  .card .card-icon img {
+    height: 28px;
+  }
+
+
+
+  body.desktop .body-content a:hover, body.desktop .more-detail a:hover {
+    border: 1px solid #ff6e73;
+  }
+}

@@ -1,1 +1,0 @@
-console.error("Error: Parsing file /Users/igorpavlov/Development/election-map/views/components/map.js: Unexpected token (50:43)");
