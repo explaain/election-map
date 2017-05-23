@@ -18,7 +18,8 @@ watch = require('gulp-watch')
 // Files and folders to be watched during development
 const watchFiles = [
   'conf/*',
-  'views/*',
+  'views/*/*',
+  'views/main.js',
   'services/*',
   'models/*',
   'services/*',
@@ -42,7 +43,7 @@ const JSFiles = [
   'public/data/boundaries.js',
   'public/data/allParties.js',
   'public/data/testdata.js',
-  'tmp/main.js',
+  'views/main.js.tmp',
 ];
 
 // CSS files to concat and compress
@@ -68,8 +69,8 @@ gulp.task('js-build-main-production', function(){
   .pipe(babel({
     presets: ['es2015']
   }))
-  .pipe(concat('main.js'))
-  .pipe(gulp.dest('tmp'));
+  .pipe(concat('main.js.tmp'))
+  .pipe(gulp.dest('views'));
 });
 
 // This task concats and compresses JS for production
@@ -106,8 +107,8 @@ gulp.task('build-production', function(done){
 gulp.task('js-build-main-development', function(){
   return gulp.src(JSIndex)
   .pipe(browserify())
-  .pipe(concat('main.js'))
-  .pipe(gulp.dest('tmp'));
+  .pipe(concat('main.js.tmp'))
+  .pipe(gulp.dest('views'));
 });
 
 // This task concats and compresses JS for production
