@@ -698,15 +698,16 @@ module.exports = {
 
     const constituency = constituencyJSON.FirstPastThePostResult.Election[0].Constituency[0];
     const objectID = numbersToIds[constituency.$.number];
-    //console.log(constituency.$.name);
-    const candidates = [constituency.Candidate]
+    /*console.log(constituency)
+    console.log(constituency.name);*/
+    const candidates = constituency.Candidate
     const parties = [];
     //console.log("CS")
-    //console.log(candidates)
+    //console.log(JSON.stringify(candidates))
     candidates.forEach(function(candidate){
-      //console.log("CDT")
-      //console.log(candidate)
-      const party = candidate[0].Party[0];
+      /*console.log("CDT")
+      console.log(candidate)*/
+      const party = candidate.Party[0];
       /*
       "paId": "9066",
                 "name": "Conservative",
@@ -727,7 +728,8 @@ module.exports = {
       //console.log("PRTY")
       //console.log(party)
       parties.push({
-        party: party.$.name.toLowerCase().replace(/\s/,"-"),
+        party: party.$.name.toLowerCase().replace(/\s/g,"-"),
+        rank: parties.length+1,
         votes: party.$.votes,
         share: party.$.percentageShare,
         shareChange: party.$.percentageShareChange,
@@ -737,10 +739,9 @@ module.exports = {
       objectID: objectID,
       name: constituency.$.name,
       ge2017Results: parties,
-      ge2017: {
-        test: "wow"
-      }
     };
+    /*console.log("SOS")
+    console.log(toUpdateObj)*/
 
     index3.partialUpdateObject( //TODO: Currently this isn't working for some reason!
       toUpdateObj, function(err, content) {
@@ -748,7 +749,7 @@ module.exports = {
         console.error(err);
         return;
       }
-      console.log(content);
+      //console.log(content);
     });
     done();
   }

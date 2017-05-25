@@ -196,7 +196,7 @@ class App {
     index.search('', {
       hitsPerPage: 650 //TODO: looks like a hardcode
     }, function searchDone(err, content) {
-      console.log(content)
+      //console.log(content)
     });
     // END: getting data
 

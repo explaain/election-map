@@ -45,6 +45,7 @@ class Map {
               return;
             }
             searchData = content.hits;
+            console.log(JSON.stringify(searchData[0]));
             if(conf.prodMode==="TEST"){
               searchData.forEach(function(_data){
                 if(Math.random()>=0){
