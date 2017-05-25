@@ -106,14 +106,6 @@ class Map {
                 };
               }
             })
-            //TODO: Igor, you finished here. You also don't know why numbers are different here...
-            /*for(let partyCode in partySeats){
-              Model.seatsCard.parties.forEach(function(_party){
-                if(_party.code===partyCode){
-                  _party.seats = partySeats[partyCode];
-                }
-              });
-            }*/
 
             function style(feature) {
               return {
