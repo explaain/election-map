@@ -3,7 +3,7 @@ const algoliasearch = require("algoliasearch");
 var client = algoliasearch(conf.algoliaId, conf.algoliaKey);
 var index1 = client.initIndex('ge2017-pa');
 var index2 = client.initIndex('ge2017-parties');
-var index3 = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
+var index3 = client.initIndex("constituencies2017");
 
 var numbersToIds = {
   "1": "W07000049",

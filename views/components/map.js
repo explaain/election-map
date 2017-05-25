@@ -59,35 +59,8 @@ class Map {
             }).addTo(map.ukMap);
 
 
-            //var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
-            //var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
 
-            //var searchData = [];
-
-            /*index.search('', {
-              hitsPerPage: 650 //TODO: looks like a hardcode
-            }, function searchDone(err, content) {
-              if (err) {
-                console.error(err);
-                return;
-              }
-
-            });*/
             const searchData = Model.constituencesData;
-            if(conf.prodMode==="TEST"){
-              searchData.forEach(function(_data){
-                if(Math.random()>=0){
-                  _data.results.forEach(function(_result){
-                    _result.rank = 0;
-                    _result.share = 0;
-                    _result.shareChange = 0;
-                    _result.shareMargin = 0;
-                    _result.voteMargin = 0;
-                    _result.votes = 0;
-                  })
-                }
-              })
-            }
             var getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;

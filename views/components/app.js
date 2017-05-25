@@ -37,7 +37,7 @@ class App {
     async.parallel([
       function(cb){
         if(SWITCH){
-          const index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
+          const index = client.initIndex("constituencies2017");
           index.search('', {
             hitsPerPage: 650 //TODO: looks like a hardcode
           }, function searchDone(err, content) {

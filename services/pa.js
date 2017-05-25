@@ -1,5 +1,4 @@
 const conf = require("../conf/conf.js");
-const SWITCH = new Date(conf.startDate)<new Date();
 
 module.exports = function(app){
 
@@ -12,6 +11,7 @@ module.exports = function(app){
   var lastUpdateedFromPA;
 
   app.get('/pa/:folder/list', function(req, res) {
+    const SWITCH = new Date(conf.startDate)<new Date();
     if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
     connectToPA(function(c){
       c.list('/'+(!SWITCH?"test/":"")+req.params.folder,function(err, list) {
@@ -33,6 +33,7 @@ module.exports = function(app){
   });
 
   app.get("/pa/:folder/get/:file", function(req, res){
+    const SWITCH = new Date(conf.startDate)<new Date();
     if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
     connectToPA(function(c){
       c.get('/'+(!SWITCH?"test/":"")+req.params.folder+'/'+req.params.file+".xml", function(err, stream) {
@@ -60,6 +61,7 @@ module.exports = function(app){
   // todo: this also needs a reasonable timeout, let's say 10 secs, otherwise we will pollute PA with useless requests
 
   app.get("/pa-update", function(req, res){
+    const SWITCH = new Date(conf.startDate)<new Date();
     if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
     if((new Date())-lastFetchedSopt>conf.sopFetchTimeout*1000 && sopFetchStatus!=="updating"){
       lastFetchedSopt = new Date();
