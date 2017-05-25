@@ -81,9 +81,6 @@ class Map {
               // and its share is greater than 0
 
               if(data&&data.results[0]&&data.results[0].share>0){
-                //TODO: probably not the best place to populate the model
-                // Populating model
-                // console.log(data.results[0])
                 if(!partySeats[partyReconciliation[data.results[0].party]]){
                   partySeats[partyReconciliation[data.results[0].party]] = 0;
                 }
