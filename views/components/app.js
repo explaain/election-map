@@ -4,7 +4,7 @@ const h = hyperdom.html;
 const model = require('../models/model');
 const async = require('async');
 Model = model;
-const SWITCH = true;
+const SWITCH = false;
 
 
 //Components
@@ -79,11 +79,17 @@ class App {
                 return b.share - a.share;
               })
 
+
             });
+            console.log(model.partiesData)
             cb();
           });
         } else {
-          model.partiesData = require("../../public/data/parties2015");
+          model.partiesData.results = require("../../public/data/parties2015");
+          console.log(model.partiesData)
+          setTimeout(function(){
+            cb();
+          })
         }
       }
     ],function(){
@@ -100,9 +106,9 @@ class App {
           getWidth: self.getSeatsWidth,
           code: partyCode,
         });
-        model.seatsCard.parties.sort(function(a,b){
-          return b.seats - a.seats;
-        })
+      })
+      model.seatsCard.parties.sort(function(a,b){
+        return b.seats - a.seats;
       })
 
       self.refresh();
