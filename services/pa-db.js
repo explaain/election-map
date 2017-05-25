@@ -738,7 +738,7 @@ module.exports = {
     const toUpdateObj = {
       objectID: objectID,
       name: constituency.$.name,
-      ge2017Results: parties,
+      results: parties,
     };
     /*console.log("SOS")
     console.log(toUpdateObj)*/

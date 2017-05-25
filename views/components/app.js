@@ -14,6 +14,25 @@ class App {
   constructor() {
     const self = this;
 
+    // Getting data
+    var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
+    var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
+    model.rawData = [];
+    index.search('', {
+      hitsPerPage: 650 //TODO: looks like a hardcode
+    }, function searchDone(err, content) {
+      model.rawData = content.hits;
+      model.rawData.totalVotes = 0;
+      model.rawData.forEach(function(_data){
+        _data[clientConf.resProp].forEach(function(party){
+          model.rawData.totalVotes+=parseInt(party.votes);
+        })
+      });
+      console.log(model.rawData.totalVotes)
+      self.refresh();
+    });
+    // END: getting data
+
     self.getSeatsWidth = function(seats) {
       return (seats/4.5 + '%');
     }
@@ -24,32 +43,7 @@ class App {
 
 
 
-    self.summaryRows = [
-      {
-        cells: [
-          { value: 'No. of Results:' },
-          { value: model.data.summary.numberOfResults + ' / ' + model.data.summary.totalNumberOfConstituencies  }
-        ]
-      },
-      {
-        cells: [
-          { value: 'Total Votes:' },
-          { value: model.data.summary.totalVotes }
-        ]
-      },
-      {
-        cells: [
-          { value: 'Forecast Winner:' },
-          { value: model.data.summary.forecastWinningParty }
-        ]
-      },
-      // {
-      //   cells: [
-      //     { value: 'Forecast Majority:' },
-      //     { value: model.data.summary.forecastMajority }
-      //   ]
-      // }
-    ];
+
 
     self.latestItems = [
       {
@@ -182,38 +176,54 @@ class App {
     ];
 
 
+
+
+
+
+    self.searchBar = new Search(self.selectConstituency);
+    self.ukMap = new ClickMap(self.selectConstituency);
+
+  }
+
+  render() {
+    console.log("REFRESH APP")
+    const self = this;
+    self.summaryRows = [
+      {
+        cells: [
+          { value: 'No. of Results:' },
+          { value: model.data.summary.numberOfResults + ' / ' + model.data.summary.totalNumberOfConstituencies  }
+        ]
+      },
+      {
+        cells: [
+          { value: 'Total Votes:' },
+          { value: model.rawData.totalVotes }
+        ]
+      },
+      {
+        cells: [
+          { value: 'Forecast Winner:' },
+          { value: model.data.summary.forecastWinningParty }
+        ]
+      },
+      // {
+      //   cells: [
+      //     { value: 'Forecast Majority:' },
+      //     { value: model.data.summary.forecastMajority }
+      //   ]
+      // }
+    ];
     model.cardsData = {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
       'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: self.partiesToTable() }
     }
-
-    // Getting data
-    var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
-    var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
-    model.rawData = [];
-    index.search('', {
-      hitsPerPage: 650 //TODO: looks like a hardcode
-    }, function searchDone(err, content) {
-      model.rawData = content.hits;
-      self.refresh();
-
-    });
-    // END: getting data
-
-    self.searchBar = new Search(self.selectConstituency);
-    self.ukMap = new ClickMap(self.selectConstituency);
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);
     self.latestCard = new Card(model.cardsData["latestCard"]);
     self.tableCard = new Card(model.cardsData["tableCard"]);
-  }
-
-  render() {
-    console.log("REFRESH APP")
-    const self = this;
-
     var returnable = h('div.app',
       self.ukMap,
       h('div.side-cards',
