@@ -672,9 +672,6 @@ module.exports = {
     summary.objectID = 'summary';
     var parties = sopJSON.FirstPastThePostStateOfParties.Parties[0].Party;
 
-    //console.log(JSON.stringify(summary));
-    //console.log(JSON.stringify(parties[0]));
-
     index1.saveObject(summary);
     index2.clearIndex(function(err) {
       if (err) {
@@ -694,39 +691,13 @@ module.exports = {
     // Call done() once done
 
     // console.log(constituencyJSON)
-    //var election = ;
 
     const constituency = constituencyJSON.FirstPastThePostResult.Election[0].Constituency[0];
     const objectID = numbersToIds[constituency.$.number];
-    /*console.log(constituency)
-    console.log(constituency.name);*/
     const candidates = constituency.Candidate
     const parties = [];
-    //console.log("CS")
-    //console.log(JSON.stringify(candidates))
     candidates.forEach(function(candidate){
-      /*console.log("CDT")
-      console.log(candidate)*/
       const party = candidate.Party[0];
-      /*
-      "paId": "9066",
-                "name": "Conservative",
-                "abbreviation": "C",
-                "votes": "19176",
-                "percentageShare": "43.96",
-                "percentageShareChange": "-8.09"
-      */
-      /*
-      "party": "conservative",
-      "rank": 1,
-      "votes": 23369,
-      "voteMargin": 14901,
-      "share": 50.6,
-      "shareMargin": 32.3,
-      "shareChange": 3.9
-      */
-      //console.log("PRTY")
-      //console.log(party)
       parties.push({
         party: party.$.name.toLowerCase().replace(/\s/g,"-"),
         rank: parties.length+1,
@@ -742,16 +713,13 @@ module.exports = {
       name: constituency.$.name,
       results: parties,
     };
-    /*console.log("SOS")
-    console.log(toUpdateObj)*/
 
-    index3.partialUpdateObject( //TODO: Currently this isn't working for some reason!
+    index3.partialUpdateObject(
       toUpdateObj, function(err, content) {
       if (err) {
         console.error(err);
         return;
       }
-      //console.log(content);
     });
     done();
   }
