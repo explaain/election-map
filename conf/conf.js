@@ -5,4 +5,5 @@ module.exports = {
   sopFetchTimeout: process.env.SOP_FETCH_TIMEOUT || 1, // SOP fetch timeout
   appMode: process.env.APP_MODE || "LIVE", // App Mode: PRE/LIVE
   prodMode: process.env.PROD_MODE || "REAL", // Prod Mode: REAL/TEST
+  startDate: process.env.START_DATE?process.env.START_DATE:"Wed Jun 7 2017 23:23:59 GMT+0100 (BST)"
 }

@@ -1,4 +1,5 @@
 const conf = require("../conf/conf.js");
+const SWITCH = new Date(conf.startDate)<new Date();
 
 module.exports = function(app){
 
@@ -11,9 +12,9 @@ module.exports = function(app){
   var lastUpdateedFromPA;
 
   app.get('/pa/:folder/list', function(req, res) {
-    if(req.query.test){console.log("Warning! You are using TEST query")}
+    if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
     connectToPA(function(c){
-      c.list('/'+(req.query.test?"test/":"")+req.params.folder,function(err, list) {
+      c.list('/'+(!SWITCH?"test/":"")+req.params.folder,function(err, list) {
         if(err){
           res.send({error: "Folder not found"});
         } else {
@@ -32,9 +33,9 @@ module.exports = function(app){
   });
 
   app.get("/pa/:folder/get/:file", function(req, res){
-    if(req.query.test){console.log("Warning! You are using TEST query")}
+    if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
     connectToPA(function(c){
-      c.get('/'+(req.query.test?"test/":"")+req.params.folder+'/'+req.params.file+".xml", function(err, stream) {
+      c.get('/'+(!SWITCH?"test/":"")+req.params.folder+'/'+req.params.file+".xml", function(err, stream) {
         if(err){
           res.send({error: "File not found"});
           c.destroy();
@@ -59,15 +60,15 @@ module.exports = function(app){
   // todo: this also needs a reasonable timeout, let's say 10 secs, otherwise we will pollute PA with useless requests
 
   app.get("/pa-update", function(req, res){
-    if(req.query.test){console.log("Warning! You are using TEST query")}
+    if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
     if((new Date())-lastFetchedSopt>conf.sopFetchTimeout*1000 && sopFetchStatus!=="updating"){
       lastFetchedSopt = new Date();
       const parseString = require('xml2js').parseString;
       var lastObservedSop;
       var lastObservedSopn = 0;
-      const SopRegExp = new RegExp(!req.query.test?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
+      const SopRegExp = new RegExp(!!SWITCH?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
       connectToPA(function(c){
-        const folder = !req.query.test?'/results':'/test/results';
+        const folder = !!SWITCH?'/results':'/test/results';
         c.list(folder, function(err, list) {
           if(err){
             res.send({error: err});
@@ -134,7 +135,7 @@ module.exports = function(app){
   function traverseSop(sopJSON,c,folder,req,res){
     const sopNumber = "1" /*lastFetchedSopn*/; // not sure here, even at the LIVE TEST on 16 May 2017 they always had "1" suffix
     const async = require("async");
-    const constituencyFilePrefix = !req.query.test?"todo: PREFIX":"Test_Snap_General_Election_result_";
+    const constituencyFilePrefix = !!SWITCH?"todo: PREFIX":"Test_Snap_General_Election_result_";
     async.parallel([
       function(sopUpdated){
         paDB.updateSop(sopJSON,sopUpdated);

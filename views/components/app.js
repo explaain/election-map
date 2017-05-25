@@ -4,7 +4,7 @@ const h = hyperdom.html;
 const model = require('../models/model');
 const async = require('async');
 Model = model;
-const SWITCH = false;
+const SWITCH = new Date(conf.startDate)<new Date();
 
 
 //Components
