@@ -135,9 +135,12 @@ module.exports = function(app){
   }
 
   function traverseSop(sopJSON,c,folder,req,res){
+    const SWITCH = new Date(conf.startDate)<new Date();
+    //TODO: sopNumber might be 2,3,4,5,6 etc!
     const sopNumber = "1" /*lastFetchedSopn*/; // not sure here, even at the LIVE TEST on 16 May 2017 they always had "1" suffix
     const async = require("async");
-    const constituencyFilePrefix = !!SWITCH?"todo: PREFIX":"Test_Snap_General_Election_result_";
+    //TODO: Make sure the prefix for LIVE data is CORRECT!
+    const constituencyFilePrefix = SWITCH?"Snap_General_Election_result_":"Test_Snap_General_Election_result_";
     async.parallel([
       function(sopUpdated){
         paDB.updateSop(sopJSON,sopUpdated);
