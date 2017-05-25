@@ -1,9 +1,9 @@
 const conf = require("../conf/conf.js");
 const algoliasearch = require("algoliasearch");
 var client = algoliasearch(conf.algoliaId, conf.algoliaKey);
-var index1 = client.initIndex('ge2017-pa');
-var index2 = client.initIndex('ge2017-parties');
-var index3 = client.initIndex("constituencies2017");
+var index1 = client.initIndex('map-pa-'+(conf.paFetchMode==="LIVE"?"live":"test"));
+var index2 = client.initIndex('map-parties-'+(conf.paFetchMode==="LIVE"?"live":"test"));
+var index3 = client.initIndex("map-constituencies-"+(conf.paFetchMode==="LIVE"?"live":"test"));
 
 var numbersToIds = {
   "1": "W07000049",

@@ -36,7 +36,7 @@ class Map {
 
   render() {
     const self = this;
-    if(Model.constituencesData.length>0){
+    if(Model.constituenciesData.length>0){
       $('#ukMap').ready(function() {
         const map = this;
 
@@ -60,7 +60,7 @@ class Map {
 
 
 
-            const searchData = Model.constituencesData;
+            const searchData = Model.constituenciesData;
             var getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;

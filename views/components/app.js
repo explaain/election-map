@@ -28,7 +28,7 @@ class App {
     }
 
     // Getting data
-    model.constituencesData = [];
+    model.constituenciesData = [];
     model.partiesData = {
       results: []
     };
@@ -37,17 +37,17 @@ class App {
     async.parallel([
       function(cb){
         if(SWITCH){
-          const index = client.initIndex("constituencies2017");
+          const index = client.initIndex("map-constituencies-"+(conf.paFetchMode==="LIVE"?"live":"test"));
           index.search('', {
             hitsPerPage: 650 //TODO: looks like a hardcode
           }, function searchDone(err, content) {
-            model.constituencesData = content.hits;
+            model.constituenciesData = content.hits;
 
             cb();
           });
         } else {
-          model.constituencesData = require("../../public/data/constituencies2015");
-          model.constituencesData.forEach(function(_constitiency){
+          model.constituenciesData = require("../../public/data/constituencies2015");
+          model.constituenciesData.forEach(function(_constitiency){
             _constitiency.results.forEach(function(_party){
               const partyFound = allParties.filter(function(__party) {
                 return __party.key == _party.party;
@@ -60,7 +60,7 @@ class App {
       },
       function(cb){
         if(SWITCH){
-          const index = client.initIndex("ge2017-parties");
+          const index = client.initIndex("map-parties-"+(conf.paFetchMode==="LIVE"?"live":"test"));
           index.search('', {
             hitsPerPage: 650 //TODO: looks like a hardcode
           }, function searchDone(err, content) {
@@ -93,9 +93,9 @@ class App {
         }
       }
     ],function(){
-      model.constituencesData.totalVotes = 0;
+      model.constituenciesData.totalVotes = 0;
       model.partiesData.results.forEach(function(_data){
-        model.constituencesData.totalVotes+=parseInt(_data.votes);
+        model.constituenciesData.totalVotes+=parseInt(_data.votes);
       });
       model.partiesData.results.forEach(function(party){
         const partyCode = party.name.toLowerCase().replace(/\s/g,"-");
@@ -185,7 +185,7 @@ class App {
 
 
     self.getConstituencyData = function(key) {
-      return model.constituencesData.filter(function(constituency) {
+      return model.constituenciesData.filter(function(constituency) {
         return constituency.objectID == key;
       })[0];
     }
@@ -285,7 +285,7 @@ class App {
       {
         cells: [
           { value: 'Total Votes:' },
-          { value: model.constituencesData.totalVotes }
+          { value: model.constituenciesData.totalVotes }
         ]
       },
       {

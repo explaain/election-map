@@ -1,4 +1,5 @@
 const conf = require("../conf/conf.js");
+const paFetchModeIsLive = conf.paFetchMode==="LIVE";
 
 module.exports = function(app){
 
@@ -11,10 +12,9 @@ module.exports = function(app){
   var lastUpdateedFromPA;
 
   app.get('/pa/:folder/list', function(req, res) {
-    const SWITCH = new Date(conf.startDate)<new Date();
-    if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
+    if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
     connectToPA(function(c){
-      c.list('/'+(!SWITCH?"test/":"")+req.params.folder,function(err, list) {
+      c.list('/'+(!paFetchModeIsLive?"test/":"")+req.params.folder,function(err, list) {
         if(err){
           res.send({error: "Folder not found"});
         } else {
@@ -33,10 +33,9 @@ module.exports = function(app){
   });
 
   app.get("/pa/:folder/get/:file", function(req, res){
-    const SWITCH = new Date(conf.startDate)<new Date();
-    if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
+    if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
     connectToPA(function(c){
-      c.get('/'+(!SWITCH?"test/":"")+req.params.folder+'/'+req.params.file+".xml", function(err, stream) {
+      c.get('/'+(!paFetchModeIsLive?"test/":"")+req.params.folder+'/'+req.params.file+".xml", function(err, stream) {
         if(err){
           res.send({error: "File not found"});
           c.destroy();
@@ -61,16 +60,15 @@ module.exports = function(app){
   // todo: this also needs a reasonable timeout, let's say 10 secs, otherwise we will pollute PA with useless requests
 
   app.get("/pa-update", function(req, res){
-    const SWITCH = new Date(conf.startDate)<new Date();
-    if(!SWITCH){console.log("Warning! Using TEST query until the START of election calculation")}
+    if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
     if((new Date())-lastFetchedSopt>conf.sopFetchTimeout*1000 && sopFetchStatus!=="updating"){
       lastFetchedSopt = new Date();
       const parseString = require('xml2js').parseString;
       var lastObservedSop;
       var lastObservedSopn = 0;
-      const SopRegExp = new RegExp(!!SWITCH?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
+      const SopRegExp = new RegExp(!!paFetchModeIsLive?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
       connectToPA(function(c){
-        const folder = !!SWITCH?'/results':'/test/results';
+        const folder = !!paFetchModeIsLive?'/results':'/test/results';
         c.list(folder, function(err, list) {
           if(err){
             res.send({error: err});
@@ -135,12 +133,11 @@ module.exports = function(app){
   }
 
   function traverseSop(sopJSON,c,folder,req,res){
-    const SWITCH = new Date(conf.startDate)<new Date();
     //TODO: sopNumber might be 2,3,4,5,6 etc!
     const sopNumber = "1" /*lastFetchedSopn*/; // not sure here, even at the LIVE TEST on 16 May 2017 they always had "1" suffix
     const async = require("async");
     //TODO: Make sure the prefix for LIVE data is CORRECT!
-    const constituencyFilePrefix = SWITCH?"Snap_General_Election_result_":"Test_Snap_General_Election_result_";
+    const constituencyFilePrefix = paFetchModeIsLive?"Snap_General_Election_result_":"Test_Snap_General_Election_result_";
     async.parallel([
       function(sopUpdated){
         paDB.updateSop(sopJSON,sopUpdated);

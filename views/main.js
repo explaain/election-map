@@ -12,9 +12,9 @@ helpers = new Helpers(model, h, CardTemplates, http, router);
 const App = require('./components/app');
 
 var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
-var index1 = client.initIndex('ge2017-pa');
-var index2 = client.initIndex('ge2017-parties');
-var index3 = client.initIndex('constituencies');
+var index1 = client.initIndex('map-pa-'+(conf.paFetchMode==="LIVE"?"live":"test"));
+var index2 = client.initIndex('map-parties-'+(conf.paFetchMode==="LIVE"?"live":"test"));
+var index3 = client.initIndex('map-constituencies-'+(conf.paFetchMode==="LIVE"?"live":"test"));
 
 const templatesUrl = '//explaain-api.herokuapp.com/templates';
 helpers.loadTemplates(templatesUrl).then(function(templates){
