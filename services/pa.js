@@ -144,28 +144,15 @@ module.exports = function(app){
       },
       function(allConstituenciesUpdated){
         async.each(sopJSON.FirstPastThePostStateOfParties.ConstituenciesIncluded[0].Constituency,function(constituency,constituencyUpdated){
-          const fileName = folder+'/'+constituencyFilePrefix+constituency.$.name.replace(/&/g,"and").replace(/\s/g,"_")+"_"+sopNumber+".xml";
-          c.get(fileName, function(err, stream) {
-            if(err){
-              console.log("Error: '"+fileName+"' not found on FTP server");
-              constituencyUpdated();
+          getLatestResult(null,1,c,folder,constituencyFilePrefix,constituency,function(xml){
+            if(xml){
+              const parseString = require('xml2js').parseString;
+              parseString(xml, function (err, constituencyJSON) {
+                paDB.updateConstituency(constituencyJSON,constituencyUpdated);
+              });
             } else {
-              const chunks = [];
-              stream.on('data', (chunk) => {
-                chunks.push(chunk.toString());
-              });
-              stream.on('end', () => {
-                //console.log("Fetched: '"+fileName+"'");
-                const xml = chunks.join('');
-                const parseString = require('xml2js').parseString;
-                parseString(xml, function (err, constituencyJSON) {
-                  paDB.updateConstituency(constituencyJSON,constituencyUpdated);
-                });
-              });
-              stream.on('error', () => {
-                console.log("Stream error");
-                constituencyUpdated();
-              });
+              // error happened, but still letting it go
+              constituencyUpdated();
             }
           });
         },function(){
@@ -183,6 +170,31 @@ module.exports = function(app){
       }
     });
 
+  }
+
+  function getLatestResult(_xml,sopNumber,c,folder,constituencyFilePrefix,constituency,callback){
+    const fileName = folder+'/'+constituencyFilePrefix+constituency.$.name.replace(/&/g,"and").replace(/\s/g,"_")+"_"+sopNumber+".xml";
+    c.get(fileName, function(err, stream) {
+      if(err){
+        // In this case ERROR means SUCCESS: if file not found, then the previously
+        // fetched XML is the latest!
+        console.log("FETCHED: " + constituency.$.name + " " + (sopNumber - 1))
+        callback(_xml);
+      } else {
+        const chunks = [];
+        stream.on('data', (chunk) => {
+          chunks.push(chunk.toString());
+        });
+        stream.on('end', () => {
+          const _xml = chunks.join('');
+          sopNumber++;
+          getLatestResult(_xml,sopNumber,c,folder,constituencyFilePrefix,constituency,callback)
+        });
+        stream.on('error', () => {
+          callback();
+        });
+      }
+    });
   }
 
 }
