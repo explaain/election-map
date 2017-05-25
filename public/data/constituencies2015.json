@@ -1,7 +1,7 @@
-[
+module.exports = [
   {
     "objectID": "E14000530",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -52,7 +52,7 @@
   },
   {
     "objectID": "E14000531",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -112,7 +112,7 @@
   },
   {
     "objectID": "E14000532",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -163,7 +163,7 @@
   },
   {
     "objectID": "E14000533",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -214,7 +214,7 @@
   },
   {
     "objectID": "E14000534",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -265,7 +265,7 @@
   },
   {
     "objectID": "E14000535",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -316,7 +316,7 @@
   },
   {
     "objectID": "E14000536",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -367,7 +367,7 @@
   },
   {
     "objectID": "E14000537",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -418,7 +418,7 @@
   },
   {
     "objectID": "E14000538",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -469,7 +469,7 @@
   },
   {
     "objectID": "E14000539",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -529,7 +529,7 @@
   },
   {
     "objectID": "E14000540",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -589,7 +589,7 @@
   },
   {
     "objectID": "E14000541",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -658,7 +658,7 @@
   },
   {
     "objectID": "E14000542",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -736,7 +736,7 @@
   },
   {
     "objectID": "E14000543",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -796,7 +796,7 @@
   },
   {
     "objectID": "E14000544",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -838,7 +838,7 @@
   },
   {
     "objectID": "E14000545",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -889,7 +889,7 @@
   },
   {
     "objectID": "E14000546",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -940,7 +940,7 @@
   },
   {
     "objectID": "E14000547",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1009,7 +1009,7 @@
   },
   {
     "objectID": "E14000548",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -1078,7 +1078,7 @@
   },
   {
     "objectID": "E14000549",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1129,7 +1129,7 @@
   },
   {
     "objectID": "E14000550",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1180,7 +1180,7 @@
   },
   {
     "objectID": "E14000551",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1231,7 +1231,7 @@
   },
   {
     "objectID": "E14000552",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1291,7 +1291,7 @@
   },
   {
     "objectID": "E14000553",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -1378,7 +1378,7 @@
   },
   {
     "objectID": "E14000554",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1438,7 +1438,7 @@
   },
   {
     "objectID": "E14000555",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -1543,7 +1543,7 @@
   },
   {
     "objectID": "E14000556",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1603,7 +1603,7 @@
   },
   {
     "objectID": "E14000557",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1654,7 +1654,7 @@
   },
   {
     "objectID": "E14000558",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -1714,7 +1714,7 @@
   },
   {
     "objectID": "E14000559",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -1765,7 +1765,7 @@
   },
   {
     "objectID": "E14000560",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -1834,7 +1834,7 @@
   },
   {
     "objectID": "E14000561",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -1894,7 +1894,7 @@
   },
   {
     "objectID": "E14000562",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -1954,7 +1954,7 @@
   },
   {
     "objectID": "E14000563",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2014,7 +2014,7 @@
   },
   {
     "objectID": "E14000564",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2074,7 +2074,7 @@
   },
   {
     "objectID": "E14000565",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2125,7 +2125,7 @@
   },
   {
     "objectID": "E14000566",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2185,7 +2185,7 @@
   },
   {
     "objectID": "E14000567",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2236,7 +2236,7 @@
   },
   {
     "objectID": "E14000568",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2314,7 +2314,7 @@
   },
   {
     "objectID": "E14000569",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2365,7 +2365,7 @@
   },
   {
     "objectID": "E14000570",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2407,7 +2407,7 @@
   },
   {
     "objectID": "E14000571",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2458,7 +2458,7 @@
   },
   {
     "objectID": "E14000572",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -2518,7 +2518,7 @@
   },
   {
     "objectID": "E14000573",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2587,7 +2587,7 @@
   },
   {
     "objectID": "E14000574",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2638,7 +2638,7 @@
   },
   {
     "objectID": "E14000575",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2689,7 +2689,7 @@
   },
   {
     "objectID": "E14000576",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -2740,7 +2740,7 @@
   },
   {
     "objectID": "E14000577",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2782,7 +2782,7 @@
   },
   {
     "objectID": "E14000578",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2833,7 +2833,7 @@
   },
   {
     "objectID": "E14000579",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -2884,7 +2884,7 @@
   },
   {
     "objectID": "E14000580",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -2944,7 +2944,7 @@
   },
   {
     "objectID": "E14000581",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -3004,7 +3004,7 @@
   },
   {
     "objectID": "E14000582",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3091,7 +3091,7 @@
   },
   {
     "objectID": "E14000583",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3133,7 +3133,7 @@
   },
   {
     "objectID": "E14000584",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3193,7 +3193,7 @@
   },
   {
     "objectID": "E14000585",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3253,7 +3253,7 @@
   },
   {
     "objectID": "E14000586",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3304,7 +3304,7 @@
   },
   {
     "objectID": "E14000587",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -3364,7 +3364,7 @@
   },
   {
     "objectID": "E14000588",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -3415,7 +3415,7 @@
   },
   {
     "objectID": "E14000589",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -3493,7 +3493,7 @@
   },
   {
     "objectID": "E14000590",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3562,7 +3562,7 @@
   },
   {
     "objectID": "E14000591",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -3640,7 +3640,7 @@
   },
   {
     "objectID": "E14000592",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -3700,7 +3700,7 @@
   },
   {
     "objectID": "E14000593",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -3751,7 +3751,7 @@
   },
   {
     "objectID": "E14000594",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3811,7 +3811,7 @@
   },
   {
     "objectID": "E14000595",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3862,7 +3862,7 @@
   },
   {
     "objectID": "E14000596",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -3931,7 +3931,7 @@
   },
   {
     "objectID": "E14000597",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4000,7 +4000,7 @@
   },
   {
     "objectID": "E14000598",
-    "ge2015Results": [
+    "results": [
       {
         "party": "green",
         "rank": 1,
@@ -4069,7 +4069,7 @@
   },
   {
     "objectID": "E14000599",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -4129,7 +4129,7 @@
   },
   {
     "objectID": "E14000600",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4189,7 +4189,7 @@
   },
   {
     "objectID": "E14000601",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -4249,7 +4249,7 @@
   },
   {
     "objectID": "E14000602",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -4318,7 +4318,7 @@
   },
   {
     "objectID": "E14000603",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4369,7 +4369,7 @@
   },
   {
     "objectID": "E14000604",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4420,7 +4420,7 @@
   },
   {
     "objectID": "E14000605",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4471,7 +4471,7 @@
   },
   {
     "objectID": "E14000606",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4522,7 +4522,7 @@
   },
   {
     "objectID": "E14000607",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4582,7 +4582,7 @@
   },
   {
     "objectID": "E14000608",
-    "ge2015Results": [
+    "results": [
       {
         "party": "the-speaker-seeking-re-election",
         "rank": 1,
@@ -4615,7 +4615,7 @@
   },
   {
     "objectID": "E14000609",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -4666,7 +4666,7 @@
   },
   {
     "objectID": "E14000610",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4717,7 +4717,7 @@
   },
   {
     "objectID": "E14000611",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4768,7 +4768,7 @@
   },
   {
     "objectID": "E14000612",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -4828,7 +4828,7 @@
   },
   {
     "objectID": "E14000613",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4879,7 +4879,7 @@
   },
   {
     "objectID": "E14000614",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -4948,7 +4948,7 @@
   },
   {
     "objectID": "E14000615",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -5053,7 +5053,7 @@
   },
   {
     "objectID": "E14000616",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5113,7 +5113,7 @@
   },
   {
     "objectID": "E14000617",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -5173,7 +5173,7 @@
   },
   {
     "objectID": "E14000618",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5224,7 +5224,7 @@
   },
   {
     "objectID": "E14000619",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5284,7 +5284,7 @@
   },
   {
     "objectID": "E14000620",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5344,7 +5344,7 @@
   },
   {
     "objectID": "E14000621",
-    "ge2015Results": [
+    "results": [
       {
         "party": "lib-dem",
         "rank": 1,
@@ -5413,7 +5413,7 @@
   },
   {
     "objectID": "E14000622",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5464,7 +5464,7 @@
   },
   {
     "objectID": "E14000623",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5524,7 +5524,7 @@
   },
   {
     "objectID": "E14000624",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5584,7 +5584,7 @@
   },
   {
     "objectID": "E14000625",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5635,7 +5635,7 @@
   },
   {
     "objectID": "E14000626",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5704,7 +5704,7 @@
   },
   {
     "objectID": "E14000627",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5773,7 +5773,7 @@
   },
   {
     "objectID": "E14000628",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5833,7 +5833,7 @@
   },
   {
     "objectID": "E14000629",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5884,7 +5884,7 @@
   },
   {
     "objectID": "E14000630",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5944,7 +5944,7 @@
   },
   {
     "objectID": "E14000631",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -5995,7 +5995,7 @@
   },
   {
     "objectID": "E14000632",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -6064,7 +6064,7 @@
   },
   {
     "objectID": "E14000633",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6124,7 +6124,7 @@
   },
   {
     "objectID": "E14000634",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6193,7 +6193,7 @@
   },
   {
     "objectID": "E14000635",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6244,7 +6244,7 @@
   },
   {
     "objectID": "E14000636",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6304,7 +6304,7 @@
   },
   {
     "objectID": "E14000637",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -6364,7 +6364,7 @@
   },
   {
     "objectID": "E14000638",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6415,7 +6415,7 @@
   },
   {
     "objectID": "E14000639",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6493,7 +6493,7 @@
   },
   {
     "objectID": "E14000640",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -6535,7 +6535,7 @@
   },
   {
     "objectID": "E14000641",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -6604,7 +6604,7 @@
   },
   {
     "objectID": "E14000642",
-    "ge2015Results": [
+    "results": [
       {
         "party": "ukip",
         "rank": 1,
@@ -6655,7 +6655,7 @@
   },
   {
     "objectID": "E14000643",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6715,7 +6715,7 @@
   },
   {
     "objectID": "E14000644",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6775,7 +6775,7 @@
   },
   {
     "objectID": "E14000645",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6844,7 +6844,7 @@
   },
   {
     "objectID": "E14000646",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6895,7 +6895,7 @@
   },
   {
     "objectID": "E14000647",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -6946,7 +6946,7 @@
   },
   {
     "objectID": "E14000648",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -6997,7 +6997,7 @@
   },
   {
     "objectID": "E14000649",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7066,7 +7066,7 @@
   },
   {
     "objectID": "E14000650",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7126,7 +7126,7 @@
   },
   {
     "objectID": "E14000651",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7195,7 +7195,7 @@
   },
   {
     "objectID": "E14000652",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7246,7 +7246,7 @@
   },
   {
     "objectID": "E14000653",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7288,7 +7288,7 @@
   },
   {
     "objectID": "E14000654",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7357,7 +7357,7 @@
   },
   {
     "objectID": "E14000655",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7435,7 +7435,7 @@
   },
   {
     "objectID": "E14000656",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7504,7 +7504,7 @@
   },
   {
     "objectID": "E14000657",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7582,7 +7582,7 @@
   },
   {
     "objectID": "E14000658",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7642,7 +7642,7 @@
   },
   {
     "objectID": "E14000659",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7702,7 +7702,7 @@
   },
   {
     "objectID": "E14000660",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7753,7 +7753,7 @@
   },
   {
     "objectID": "E14000661",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7813,7 +7813,7 @@
   },
   {
     "objectID": "E14000662",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7864,7 +7864,7 @@
   },
   {
     "objectID": "E14000663",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -7933,7 +7933,7 @@
   },
   {
     "objectID": "E14000664",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -7993,7 +7993,7 @@
   },
   {
     "objectID": "E14000665",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -8044,7 +8044,7 @@
   },
   {
     "objectID": "E14000666",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8113,7 +8113,7 @@
   },
   {
     "objectID": "E14000667",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8173,7 +8173,7 @@
   },
   {
     "objectID": "E14000668",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8233,7 +8233,7 @@
   },
   {
     "objectID": "E14000669",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8311,7 +8311,7 @@
   },
   {
     "objectID": "E14000670",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -8362,7 +8362,7 @@
   },
   {
     "objectID": "E14000671",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8431,7 +8431,7 @@
   },
   {
     "objectID": "E14000672",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -8482,7 +8482,7 @@
   },
   {
     "objectID": "E14000673",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8560,7 +8560,7 @@
   },
   {
     "objectID": "E14000674",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8647,7 +8647,7 @@
   },
   {
     "objectID": "E14000675",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8707,7 +8707,7 @@
   },
   {
     "objectID": "E14000676",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8767,7 +8767,7 @@
   },
   {
     "objectID": "E14000677",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8836,7 +8836,7 @@
   },
   {
     "objectID": "E14000678",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -8887,7 +8887,7 @@
   },
   {
     "objectID": "E14000679",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -8956,7 +8956,7 @@
   },
   {
     "objectID": "E14000680",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9007,7 +9007,7 @@
   },
   {
     "objectID": "E14000681",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9067,7 +9067,7 @@
   },
   {
     "objectID": "E14000682",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9127,7 +9127,7 @@
   },
   {
     "objectID": "E14000683",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9187,7 +9187,7 @@
   },
   {
     "objectID": "E14000684",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9247,7 +9247,7 @@
   },
   {
     "objectID": "E14000685",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9316,7 +9316,7 @@
   },
   {
     "objectID": "E14000686",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9376,7 +9376,7 @@
   },
   {
     "objectID": "E14000687",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -9436,7 +9436,7 @@
   },
   {
     "objectID": "E14000688",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -9505,7 +9505,7 @@
   },
   {
     "objectID": "E14000689",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9556,7 +9556,7 @@
   },
   {
     "objectID": "E14000690",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -9607,7 +9607,7 @@
   },
   {
     "objectID": "E14000691",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -9676,7 +9676,7 @@
   },
   {
     "objectID": "E14000692",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9727,7 +9727,7 @@
   },
   {
     "objectID": "E14000693",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9787,7 +9787,7 @@
   },
   {
     "objectID": "E14000694",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9856,7 +9856,7 @@
   },
   {
     "objectID": "E14000695",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -9907,7 +9907,7 @@
   },
   {
     "objectID": "E14000696",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -9976,7 +9976,7 @@
   },
   {
     "objectID": "E14000697",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10045,7 +10045,7 @@
   },
   {
     "objectID": "E14000698",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -10105,7 +10105,7 @@
   },
   {
     "objectID": "E14000699",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10174,7 +10174,7 @@
   },
   {
     "objectID": "E14000700",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10243,7 +10243,7 @@
   },
   {
     "objectID": "E14000701",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -10294,7 +10294,7 @@
   },
   {
     "objectID": "E14000702",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10345,7 +10345,7 @@
   },
   {
     "objectID": "E14000703",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10396,7 +10396,7 @@
   },
   {
     "objectID": "E14000704",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10474,7 +10474,7 @@
   },
   {
     "objectID": "E14000705",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10525,7 +10525,7 @@
   },
   {
     "objectID": "E14000706",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10594,7 +10594,7 @@
   },
   {
     "objectID": "E14000707",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10654,7 +10654,7 @@
   },
   {
     "objectID": "E14000708",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -10705,7 +10705,7 @@
   },
   {
     "objectID": "E14000709",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -10756,7 +10756,7 @@
   },
   {
     "objectID": "E14000710",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -10807,7 +10807,7 @@
   },
   {
     "objectID": "E14000711",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10885,7 +10885,7 @@
   },
   {
     "objectID": "E14000712",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -10954,7 +10954,7 @@
   },
   {
     "objectID": "E14000713",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11014,7 +11014,7 @@
   },
   {
     "objectID": "E14000714",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11083,7 +11083,7 @@
   },
   {
     "objectID": "E14000715",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11134,7 +11134,7 @@
   },
   {
     "objectID": "E14000716",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour-party-candidate",
         "rank": 1,
@@ -11203,7 +11203,7 @@
   },
   {
     "objectID": "E14000717",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11263,7 +11263,7 @@
   },
   {
     "objectID": "E14000718",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -11323,7 +11323,7 @@
   },
   {
     "objectID": "E14000719",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11401,7 +11401,7 @@
   },
   {
     "objectID": "E14000720",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -11470,7 +11470,7 @@
   },
   {
     "objectID": "E14000721",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -11575,7 +11575,7 @@
   },
   {
     "objectID": "E14000722",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11626,7 +11626,7 @@
   },
   {
     "objectID": "E14000723",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -11695,7 +11695,7 @@
   },
   {
     "objectID": "E14000724",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11755,7 +11755,7 @@
   },
   {
     "objectID": "E14000725",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -11815,7 +11815,7 @@
   },
   {
     "objectID": "E14000726",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -11875,7 +11875,7 @@
   },
   {
     "objectID": "E14000727",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -11944,7 +11944,7 @@
   },
   {
     "objectID": "E14000728",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -11995,7 +11995,7 @@
   },
   {
     "objectID": "E14000729",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12064,7 +12064,7 @@
   },
   {
     "objectID": "E14000730",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12115,7 +12115,7 @@
   },
   {
     "objectID": "E14000731",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12175,7 +12175,7 @@
   },
   {
     "objectID": "E14000732",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -12235,7 +12235,7 @@
   },
   {
     "objectID": "E14000733",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -12313,7 +12313,7 @@
   },
   {
     "objectID": "E14000734",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12364,7 +12364,7 @@
   },
   {
     "objectID": "E14000735",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12415,7 +12415,7 @@
   },
   {
     "objectID": "E14000736",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12466,7 +12466,7 @@
   },
   {
     "objectID": "E14000737",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -12517,7 +12517,7 @@
   },
   {
     "objectID": "E14000738",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12568,7 +12568,7 @@
   },
   {
     "objectID": "E14000739",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12628,7 +12628,7 @@
   },
   {
     "objectID": "E14000740",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -12679,7 +12679,7 @@
   },
   {
     "objectID": "E14000741",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12730,7 +12730,7 @@
   },
   {
     "objectID": "E14000742",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12781,7 +12781,7 @@
   },
   {
     "objectID": "E14000743",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12832,7 +12832,7 @@
   },
   {
     "objectID": "E14000744",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12883,7 +12883,7 @@
   },
   {
     "objectID": "E14000745",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12925,7 +12925,7 @@
   },
   {
     "objectID": "E14000746",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -12976,7 +12976,7 @@
   },
   {
     "objectID": "E14000747",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13027,7 +13027,7 @@
   },
   {
     "objectID": "E14000748",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -13078,7 +13078,7 @@
   },
   {
     "objectID": "E14000749",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -13129,7 +13129,7 @@
   },
   {
     "objectID": "E14000750",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13207,7 +13207,7 @@
   },
   {
     "objectID": "E14000751",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -13267,7 +13267,7 @@
   },
   {
     "objectID": "E14000752",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13345,7 +13345,7 @@
   },
   {
     "objectID": "E14000753",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -13423,7 +13423,7 @@
   },
   {
     "objectID": "E14000754",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13474,7 +13474,7 @@
   },
   {
     "objectID": "E14000755",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13552,7 +13552,7 @@
   },
   {
     "objectID": "E14000756",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13612,7 +13612,7 @@
   },
   {
     "objectID": "E14000757",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -13663,7 +13663,7 @@
   },
   {
     "objectID": "E14000758",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13714,7 +13714,7 @@
   },
   {
     "objectID": "E14000759",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13774,7 +13774,7 @@
   },
   {
     "objectID": "E14000760",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13825,7 +13825,7 @@
   },
   {
     "objectID": "E14000761",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -13876,7 +13876,7 @@
   },
   {
     "objectID": "E14000762",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -13936,7 +13936,7 @@
   },
   {
     "objectID": "E14000763",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -13996,7 +13996,7 @@
   },
   {
     "objectID": "E14000764",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14056,7 +14056,7 @@
   },
   {
     "objectID": "E14000765",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14116,7 +14116,7 @@
   },
   {
     "objectID": "E14000766",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -14167,7 +14167,7 @@
   },
   {
     "objectID": "E14000767",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -14236,7 +14236,7 @@
   },
   {
     "objectID": "E14000768",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -14323,7 +14323,7 @@
   },
   {
     "objectID": "E14000769",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -14383,7 +14383,7 @@
   },
   {
     "objectID": "E14000770",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -14452,7 +14452,7 @@
   },
   {
     "objectID": "E14000771",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14530,7 +14530,7 @@
   },
   {
     "objectID": "E14000772",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14590,7 +14590,7 @@
   },
   {
     "objectID": "E14000773",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14650,7 +14650,7 @@
   },
   {
     "objectID": "E14000774",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -14728,7 +14728,7 @@
   },
   {
     "objectID": "E14000775",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14779,7 +14779,7 @@
   },
   {
     "objectID": "E14000776",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14839,7 +14839,7 @@
   },
   {
     "objectID": "E14000777",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14899,7 +14899,7 @@
   },
   {
     "objectID": "E14000778",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -14950,7 +14950,7 @@
   },
   {
     "objectID": "E14000779",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15010,7 +15010,7 @@
   },
   {
     "objectID": "E14000780",
-    "ge2015Results": [
+    "results": [
       {
         "party": "lib-dem",
         "rank": 1,
@@ -15088,7 +15088,7 @@
   },
   {
     "objectID": "E14000781",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15157,7 +15157,7 @@
   },
   {
     "objectID": "E14000782",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15226,7 +15226,7 @@
   },
   {
     "objectID": "E14000783",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15286,7 +15286,7 @@
   },
   {
     "objectID": "E14000784",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15346,7 +15346,7 @@
   },
   {
     "objectID": "E14000785",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15397,7 +15397,7 @@
   },
   {
     "objectID": "E14000786",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -15448,7 +15448,7 @@
   },
   {
     "objectID": "E14000787",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15517,7 +15517,7 @@
   },
   {
     "objectID": "E14000788",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15595,7 +15595,7 @@
   },
   {
     "objectID": "E14000789",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15691,7 +15691,7 @@
   },
   {
     "objectID": "E14000790",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15751,7 +15751,7 @@
   },
   {
     "objectID": "E14000791",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -15811,7 +15811,7 @@
   },
   {
     "objectID": "E14000792",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -15871,7 +15871,7 @@
   },
   {
     "objectID": "E14000793",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -15931,7 +15931,7 @@
   },
   {
     "objectID": "E14000794",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16000,7 +16000,7 @@
   },
   {
     "objectID": "E14000795",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16069,7 +16069,7 @@
   },
   {
     "objectID": "E14000796",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16129,7 +16129,7 @@
   },
   {
     "objectID": "E14000797",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -16180,7 +16180,7 @@
   },
   {
     "objectID": "E14000798",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -16249,7 +16249,7 @@
   },
   {
     "objectID": "E14000799",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -16300,7 +16300,7 @@
   },
   {
     "objectID": "E14000800",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16351,7 +16351,7 @@
   },
   {
     "objectID": "E14000801",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16420,7 +16420,7 @@
   },
   {
     "objectID": "E14000802",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -16471,7 +16471,7 @@
   },
   {
     "objectID": "E14000803",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -16540,7 +16540,7 @@
   },
   {
     "objectID": "E14000804",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -16609,7 +16609,7 @@
   },
   {
     "objectID": "E14000805",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16660,7 +16660,7 @@
   },
   {
     "objectID": "E14000806",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -16729,7 +16729,7 @@
   },
   {
     "objectID": "E14000807",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16807,7 +16807,7 @@
   },
   {
     "objectID": "E14000808",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16876,7 +16876,7 @@
   },
   {
     "objectID": "E14000809",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16936,7 +16936,7 @@
   },
   {
     "objectID": "E14000810",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -16996,7 +16996,7 @@
   },
   {
     "objectID": "E14000811",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17047,7 +17047,7 @@
   },
   {
     "objectID": "E14000812",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17107,7 +17107,7 @@
   },
   {
     "objectID": "E14000813",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17176,7 +17176,7 @@
   },
   {
     "objectID": "E14000814",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17227,7 +17227,7 @@
   },
   {
     "objectID": "E14000815",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17278,7 +17278,7 @@
   },
   {
     "objectID": "E14000816",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17329,7 +17329,7 @@
   },
   {
     "objectID": "E14000817",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17398,7 +17398,7 @@
   },
   {
     "objectID": "E14000818",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17449,7 +17449,7 @@
   },
   {
     "objectID": "E14000819",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -17500,7 +17500,7 @@
   },
   {
     "objectID": "E14000820",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -17551,7 +17551,7 @@
   },
   {
     "objectID": "E14000821",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17620,7 +17620,7 @@
   },
   {
     "objectID": "E14000822",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17689,7 +17689,7 @@
   },
   {
     "objectID": "E14000823",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -17749,7 +17749,7 @@
   },
   {
     "objectID": "E14000824",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17800,7 +17800,7 @@
   },
   {
     "objectID": "E14000825",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17860,7 +17860,7 @@
   },
   {
     "objectID": "E14000826",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17920,7 +17920,7 @@
   },
   {
     "objectID": "E14000827",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -17971,7 +17971,7 @@
   },
   {
     "objectID": "E14000828",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18022,7 +18022,7 @@
   },
   {
     "objectID": "E14000829",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18082,7 +18082,7 @@
   },
   {
     "objectID": "E14000830",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18160,7 +18160,7 @@
   },
   {
     "objectID": "E14000831",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -18211,7 +18211,7 @@
   },
   {
     "objectID": "E14000832",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -18280,7 +18280,7 @@
   },
   {
     "objectID": "E14000833",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -18340,7 +18340,7 @@
   },
   {
     "objectID": "E14000834",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -18400,7 +18400,7 @@
   },
   {
     "objectID": "E14000835",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18460,7 +18460,7 @@
   },
   {
     "objectID": "E14000836",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -18502,7 +18502,7 @@
   },
   {
     "objectID": "E14000837",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18571,7 +18571,7 @@
   },
   {
     "objectID": "E14000838",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18631,7 +18631,7 @@
   },
   {
     "objectID": "E14000839",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18682,7 +18682,7 @@
   },
   {
     "objectID": "E14000840",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -18733,7 +18733,7 @@
   },
   {
     "objectID": "E14000841",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18784,7 +18784,7 @@
   },
   {
     "objectID": "E14000842",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18835,7 +18835,7 @@
   },
   {
     "objectID": "E14000843",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -18895,7 +18895,7 @@
   },
   {
     "objectID": "E14000844",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -18955,7 +18955,7 @@
   },
   {
     "objectID": "E14000845",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19006,7 +19006,7 @@
   },
   {
     "objectID": "E14000846",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19057,7 +19057,7 @@
   },
   {
     "objectID": "E14000847",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19108,7 +19108,7 @@
   },
   {
     "objectID": "E14000848",
-    "ge2015Results": [
+    "results": [
       {
         "party": "lib-dem",
         "rank": 1,
@@ -19159,7 +19159,7 @@
   },
   {
     "objectID": "E14000849",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19210,7 +19210,7 @@
   },
   {
     "objectID": "E14000850",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19261,7 +19261,7 @@
   },
   {
     "objectID": "E14000851",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19312,7 +19312,7 @@
   },
   {
     "objectID": "E14000852",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19372,7 +19372,7 @@
   },
   {
     "objectID": "E14000853",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -19441,7 +19441,7 @@
   },
   {
     "objectID": "E14000854",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19501,7 +19501,7 @@
   },
   {
     "objectID": "E14000855",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19561,7 +19561,7 @@
   },
   {
     "objectID": "E14000856",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -19612,7 +19612,7 @@
   },
   {
     "objectID": "E14000857",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19663,7 +19663,7 @@
   },
   {
     "objectID": "E14000858",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19714,7 +19714,7 @@
   },
   {
     "objectID": "E14000859",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19765,7 +19765,7 @@
   },
   {
     "objectID": "E14000860",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19834,7 +19834,7 @@
   },
   {
     "objectID": "E14000861",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19885,7 +19885,7 @@
   },
   {
     "objectID": "E14000862",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -19945,7 +19945,7 @@
   },
   {
     "objectID": "E14000863",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20005,7 +20005,7 @@
   },
   {
     "objectID": "E14000864",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20074,7 +20074,7 @@
   },
   {
     "objectID": "E14000865",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20143,7 +20143,7 @@
   },
   {
     "objectID": "E14000866",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20203,7 +20203,7 @@
   },
   {
     "objectID": "E14000867",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20263,7 +20263,7 @@
   },
   {
     "objectID": "E14000868",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20332,7 +20332,7 @@
   },
   {
     "objectID": "E14000869",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20410,7 +20410,7 @@
   },
   {
     "objectID": "E14000870",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20461,7 +20461,7 @@
   },
   {
     "objectID": "E14000871",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20512,7 +20512,7 @@
   },
   {
     "objectID": "E14000872",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20563,7 +20563,7 @@
   },
   {
     "objectID": "E14000873",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20650,7 +20650,7 @@
   },
   {
     "objectID": "E14000874",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20719,7 +20719,7 @@
   },
   {
     "objectID": "E14000875",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20770,7 +20770,7 @@
   },
   {
     "objectID": "E14000876",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -20821,7 +20821,7 @@
   },
   {
     "objectID": "E14000877",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20872,7 +20872,7 @@
   },
   {
     "objectID": "E14000878",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -20941,7 +20941,7 @@
   },
   {
     "objectID": "E14000879",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21001,7 +21001,7 @@
   },
   {
     "objectID": "E14000880",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21061,7 +21061,7 @@
   },
   {
     "objectID": "E14000881",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21130,7 +21130,7 @@
   },
   {
     "objectID": "E14000882",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -21199,7 +21199,7 @@
   },
   {
     "objectID": "E14000883",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21268,7 +21268,7 @@
   },
   {
     "objectID": "E14000884",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21346,7 +21346,7 @@
   },
   {
     "objectID": "E14000885",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour-and-cooperative-party",
         "rank": 1,
@@ -21397,7 +21397,7 @@
   },
   {
     "objectID": "E14000886",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21448,7 +21448,7 @@
   },
   {
     "objectID": "E14000887",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21508,7 +21508,7 @@
   },
   {
     "objectID": "E14000888",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21568,7 +21568,7 @@
   },
   {
     "objectID": "E14000889",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21619,7 +21619,7 @@
   },
   {
     "objectID": "E14000890",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21697,7 +21697,7 @@
   },
   {
     "objectID": "E14000891",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -21757,7 +21757,7 @@
   },
   {
     "objectID": "E14000892",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21817,7 +21817,7 @@
   },
   {
     "objectID": "E14000893",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21868,7 +21868,7 @@
   },
   {
     "objectID": "E14000894",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -21946,7 +21946,7 @@
   },
   {
     "objectID": "E14000895",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22015,7 +22015,7 @@
   },
   {
     "objectID": "E14000896",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22066,7 +22066,7 @@
   },
   {
     "objectID": "E14000897",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -22144,7 +22144,7 @@
   },
   {
     "objectID": "E14000898",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22204,7 +22204,7 @@
   },
   {
     "objectID": "E14000899",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22255,7 +22255,7 @@
   },
   {
     "objectID": "E14000900",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22306,7 +22306,7 @@
   },
   {
     "objectID": "E14000901",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22357,7 +22357,7 @@
   },
   {
     "objectID": "E14000902",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22435,7 +22435,7 @@
   },
   {
     "objectID": "E14000903",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -22486,7 +22486,7 @@
   },
   {
     "objectID": "E14000904",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -22555,7 +22555,7 @@
   },
   {
     "objectID": "E14000905",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22615,7 +22615,7 @@
   },
   {
     "objectID": "E14000906",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22684,7 +22684,7 @@
   },
   {
     "objectID": "E14000907",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22735,7 +22735,7 @@
   },
   {
     "objectID": "E14000908",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22786,7 +22786,7 @@
   },
   {
     "objectID": "E14000909",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22846,7 +22846,7 @@
   },
   {
     "objectID": "E14000910",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -22906,7 +22906,7 @@
   },
   {
     "objectID": "E14000911",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -22984,7 +22984,7 @@
   },
   {
     "objectID": "E14000912",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -23044,7 +23044,7 @@
   },
   {
     "objectID": "E14000913",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -23104,7 +23104,7 @@
   },
   {
     "objectID": "E14000914",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -23173,7 +23173,7 @@
   },
   {
     "objectID": "E14000915",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -23224,7 +23224,7 @@
   },
   {
     "objectID": "E14000916",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -23275,7 +23275,7 @@
   },
   {
     "objectID": "E14000917",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -23335,7 +23335,7 @@
   },
   {
     "objectID": "E14000918",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -23386,7 +23386,7 @@
   },
   {
     "objectID": "E14000919",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -23482,7 +23482,7 @@
   },
   {
     "objectID": "E14000920",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -23560,7 +23560,7 @@
   },
   {
     "objectID": "E14000921",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -23629,7 +23629,7 @@
   },
   {
     "objectID": "E14000922",
-    "ge2015Results": [
+    "results": [
       {
         "party": "lib-dem",
         "rank": 1,
@@ -23707,7 +23707,7 @@
   },
   {
     "objectID": "E14000923",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -23776,7 +23776,7 @@
   },
   {
     "objectID": "E14000924",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -23836,7 +23836,7 @@
   },
   {
     "objectID": "E14000925",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -23896,7 +23896,7 @@
   },
   {
     "objectID": "E14000926",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -23956,7 +23956,7 @@
   },
   {
     "objectID": "E14000927",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24016,7 +24016,7 @@
   },
   {
     "objectID": "E14000928",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24067,7 +24067,7 @@
   },
   {
     "objectID": "E14000929",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24118,7 +24118,7 @@
   },
   {
     "objectID": "E14000930",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -24169,7 +24169,7 @@
   },
   {
     "objectID": "E14000931",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24238,7 +24238,7 @@
   },
   {
     "objectID": "E14000932",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24298,7 +24298,7 @@
   },
   {
     "objectID": "E14000933",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24367,7 +24367,7 @@
   },
   {
     "objectID": "E14000934",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24418,7 +24418,7 @@
   },
   {
     "objectID": "E14000935",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24469,7 +24469,7 @@
   },
   {
     "objectID": "E14000936",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24538,7 +24538,7 @@
   },
   {
     "objectID": "E14000937",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24589,7 +24589,7 @@
   },
   {
     "objectID": "E14000938",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24658,7 +24658,7 @@
   },
   {
     "objectID": "E14000939",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24709,7 +24709,7 @@
   },
   {
     "objectID": "E14000940",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24751,7 +24751,7 @@
   },
   {
     "objectID": "E14000941",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24802,7 +24802,7 @@
   },
   {
     "objectID": "E14000942",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24853,7 +24853,7 @@
   },
   {
     "objectID": "E14000943",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -24895,7 +24895,7 @@
   },
   {
     "objectID": "E14000944",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -24955,7 +24955,7 @@
   },
   {
     "objectID": "E14000945",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25006,7 +25006,7 @@
   },
   {
     "objectID": "E14000946",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25066,7 +25066,7 @@
   },
   {
     "objectID": "E14000947",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25117,7 +25117,7 @@
   },
   {
     "objectID": "E14000948",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25222,7 +25222,7 @@
   },
   {
     "objectID": "E14000949",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25273,7 +25273,7 @@
   },
   {
     "objectID": "E14000950",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25324,7 +25324,7 @@
   },
   {
     "objectID": "E14000951",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25384,7 +25384,7 @@
   },
   {
     "objectID": "E14000952",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25435,7 +25435,7 @@
   },
   {
     "objectID": "E14000953",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25504,7 +25504,7 @@
   },
   {
     "objectID": "E14000954",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25555,7 +25555,7 @@
   },
   {
     "objectID": "E14000955",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25615,7 +25615,7 @@
   },
   {
     "objectID": "E14000956",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -25684,7 +25684,7 @@
   },
   {
     "objectID": "E14000957",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25744,7 +25744,7 @@
   },
   {
     "objectID": "E14000958",
-    "ge2015Results": [
+    "results": [
       {
         "party": "lib-dem",
         "rank": 1,
@@ -25804,7 +25804,7 @@
   },
   {
     "objectID": "E14000959",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25873,7 +25873,7 @@
   },
   {
     "objectID": "E14000960",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25924,7 +25924,7 @@
   },
   {
     "objectID": "E14000961",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -25984,7 +25984,7 @@
   },
   {
     "objectID": "E14000962",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -26035,7 +26035,7 @@
   },
   {
     "objectID": "E14000963",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -26086,7 +26086,7 @@
   },
   {
     "objectID": "E14000964",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26146,7 +26146,7 @@
   },
   {
     "objectID": "E14000965",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26206,7 +26206,7 @@
   },
   {
     "objectID": "E14000966",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26257,7 +26257,7 @@
   },
   {
     "objectID": "E14000967",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour-and-cooperative-party",
         "rank": 1,
@@ -26308,7 +26308,7 @@
   },
   {
     "objectID": "E14000968",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26386,7 +26386,7 @@
   },
   {
     "objectID": "E14000969",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -26446,7 +26446,7 @@
   },
   {
     "objectID": "E14000970",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -26497,7 +26497,7 @@
   },
   {
     "objectID": "E14000971",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26557,7 +26557,7 @@
   },
   {
     "objectID": "E14000972",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -26635,7 +26635,7 @@
   },
   {
     "objectID": "E14000973",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -26704,7 +26704,7 @@
   },
   {
     "objectID": "E14000974",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -26764,7 +26764,7 @@
   },
   {
     "objectID": "E14000975",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26824,7 +26824,7 @@
   },
   {
     "objectID": "E14000976",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26875,7 +26875,7 @@
   },
   {
     "objectID": "E14000977",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -26926,7 +26926,7 @@
   },
   {
     "objectID": "E14000978",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -27004,7 +27004,7 @@
   },
   {
     "objectID": "E14000979",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -27073,7 +27073,7 @@
   },
   {
     "objectID": "E14000980",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27142,7 +27142,7 @@
   },
   {
     "objectID": "E14000981",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27193,7 +27193,7 @@
   },
   {
     "objectID": "E14000982",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -27253,7 +27253,7 @@
   },
   {
     "objectID": "E14000983",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27322,7 +27322,7 @@
   },
   {
     "objectID": "E14000984",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27391,7 +27391,7 @@
   },
   {
     "objectID": "E14000985",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27451,7 +27451,7 @@
   },
   {
     "objectID": "E14000986",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27502,7 +27502,7 @@
   },
   {
     "objectID": "E14000987",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27553,7 +27553,7 @@
   },
   {
     "objectID": "E14000988",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27631,7 +27631,7 @@
   },
   {
     "objectID": "E14000989",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27682,7 +27682,7 @@
   },
   {
     "objectID": "E14000990",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27733,7 +27733,7 @@
   },
   {
     "objectID": "E14000991",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27784,7 +27784,7 @@
   },
   {
     "objectID": "E14000992",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27835,7 +27835,7 @@
   },
   {
     "objectID": "E14000993",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27904,7 +27904,7 @@
   },
   {
     "objectID": "E14000994",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -27955,7 +27955,7 @@
   },
   {
     "objectID": "E14000995",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28024,7 +28024,7 @@
   },
   {
     "objectID": "E14000996",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28075,7 +28075,7 @@
   },
   {
     "objectID": "E14000997",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28126,7 +28126,7 @@
   },
   {
     "objectID": "E14000998",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -28177,7 +28177,7 @@
   },
   {
     "objectID": "E14000999",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28228,7 +28228,7 @@
   },
   {
     "objectID": "E14001000",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28279,7 +28279,7 @@
   },
   {
     "objectID": "E14001001",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28330,7 +28330,7 @@
   },
   {
     "objectID": "E14001002",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -28399,7 +28399,7 @@
   },
   {
     "objectID": "E14001003",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28486,7 +28486,7 @@
   },
   {
     "objectID": "E14001004",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28546,7 +28546,7 @@
   },
   {
     "objectID": "E14001005",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28615,7 +28615,7 @@
   },
   {
     "objectID": "E14001006",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -28666,7 +28666,7 @@
   },
   {
     "objectID": "E14001007",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -28789,7 +28789,7 @@
   },
   {
     "objectID": "E14001008",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -28885,7 +28885,7 @@
   },
   {
     "objectID": "E14001009",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -28954,7 +28954,7 @@
   },
   {
     "objectID": "E14001010",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -29005,7 +29005,7 @@
   },
   {
     "objectID": "E14001011",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -29065,7 +29065,7 @@
   },
   {
     "objectID": "E14001012",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -29116,7 +29116,7 @@
   },
   {
     "objectID": "E14001013",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -29194,7 +29194,7 @@
   },
   {
     "objectID": "E14001014",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -29245,7 +29245,7 @@
   },
   {
     "objectID": "E14001015",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29296,7 +29296,7 @@
   },
   {
     "objectID": "E14001016",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -29347,7 +29347,7 @@
   },
   {
     "objectID": "E14001017",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour-party-candidate",
         "rank": 1,
@@ -29398,7 +29398,7 @@
   },
   {
     "objectID": "E14001018",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29458,7 +29458,7 @@
   },
   {
     "objectID": "E14001019",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29509,7 +29509,7 @@
   },
   {
     "objectID": "E14001020",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -29569,7 +29569,7 @@
   },
   {
     "objectID": "E14001021",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29629,7 +29629,7 @@
   },
   {
     "objectID": "E14001022",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29680,7 +29680,7 @@
   },
   {
     "objectID": "E14001023",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29731,7 +29731,7 @@
   },
   {
     "objectID": "E14001024",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29791,7 +29791,7 @@
   },
   {
     "objectID": "E14001025",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29842,7 +29842,7 @@
   },
   {
     "objectID": "E14001026",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29920,7 +29920,7 @@
   },
   {
     "objectID": "E14001027",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -29989,7 +29989,7 @@
   },
   {
     "objectID": "E14001028",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30040,7 +30040,7 @@
   },
   {
     "objectID": "E14001029",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30091,7 +30091,7 @@
   },
   {
     "objectID": "E14001030",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30142,7 +30142,7 @@
   },
   {
     "objectID": "E14001031",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30193,7 +30193,7 @@
   },
   {
     "objectID": "E14001032",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30262,7 +30262,7 @@
   },
   {
     "objectID": "E14001033",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30322,7 +30322,7 @@
   },
   {
     "objectID": "E14001034",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30373,7 +30373,7 @@
   },
   {
     "objectID": "E14001035",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30424,7 +30424,7 @@
   },
   {
     "objectID": "E14001036",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30493,7 +30493,7 @@
   },
   {
     "objectID": "E14001037",
-    "ge2015Results": [
+    "results": [
       {
         "party": "lib-dem",
         "rank": 1,
@@ -30544,7 +30544,7 @@
   },
   {
     "objectID": "E14001038",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30604,7 +30604,7 @@
   },
   {
     "objectID": "E14001039",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30673,7 +30673,7 @@
   },
   {
     "objectID": "E14001040",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30724,7 +30724,7 @@
   },
   {
     "objectID": "E14001041",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30775,7 +30775,7 @@
   },
   {
     "objectID": "E14001042",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30835,7 +30835,7 @@
   },
   {
     "objectID": "E14001043",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30886,7 +30886,7 @@
   },
   {
     "objectID": "E14001044",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -30937,7 +30937,7 @@
   },
   {
     "objectID": "E14001045",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -30997,7 +30997,7 @@
   },
   {
     "objectID": "E14001046",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31111,7 +31111,7 @@
   },
   {
     "objectID": "E14001047",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31189,7 +31189,7 @@
   },
   {
     "objectID": "E14001048",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31249,7 +31249,7 @@
   },
   {
     "objectID": "E14001049",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -31300,7 +31300,7 @@
   },
   {
     "objectID": "E14001050",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -31351,7 +31351,7 @@
   },
   {
     "objectID": "E14001051",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -31411,7 +31411,7 @@
   },
   {
     "objectID": "E14001052",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31480,7 +31480,7 @@
   },
   {
     "objectID": "E14001053",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -31540,7 +31540,7 @@
   },
   {
     "objectID": "E14001054",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -31618,7 +31618,7 @@
   },
   {
     "objectID": "E14001055",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31669,7 +31669,7 @@
   },
   {
     "objectID": "E14001056",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31729,7 +31729,7 @@
   },
   {
     "objectID": "E14001057",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31780,7 +31780,7 @@
   },
   {
     "objectID": "E14001058",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31840,7 +31840,7 @@
   },
   {
     "objectID": "E14001059",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -31909,7 +31909,7 @@
   },
   {
     "objectID": "E14001060",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -31960,7 +31960,7 @@
   },
   {
     "objectID": "E14001061",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -32029,7 +32029,7 @@
   },
   {
     "objectID": "E14001062",
-    "ge2015Results": [
+    "results": [
       {
         "party": "conservative",
         "rank": 1,
@@ -32080,7 +32080,7 @@
   },
   {
     "objectID": "N06000001",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -32140,7 +32140,7 @@
   },
   {
     "objectID": "N06000002",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -32200,7 +32200,7 @@
   },
   {
     "objectID": "N06000003",
-    "ge2015Results": [
+    "results": [
       {
         "party": "sdlp-social-democratic-&-labour-party",
         "rank": 1,
@@ -32287,7 +32287,7 @@
   },
   {
     "objectID": "N06000004",
-    "ge2015Results": [
+    "results": [
       {
         "party": "sinn-féin",
         "rank": 1,
@@ -32374,7 +32374,7 @@
   },
   {
     "objectID": "N06000005",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -32452,7 +32452,7 @@
   },
   {
     "objectID": "N06000006",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -32521,7 +32521,7 @@
   },
   {
     "objectID": "N06000007",
-    "ge2015Results": [
+    "results": [
       {
         "party": "ulster-unionist-party",
         "rank": 1,
@@ -32572,7 +32572,7 @@
   },
   {
     "objectID": "N06000008",
-    "ge2015Results": [
+    "results": [
       {
         "party": "sdlp-social-democratic-&-labour-party",
         "rank": 1,
@@ -32641,7 +32641,7 @@
   },
   {
     "objectID": "N06000009",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -32728,7 +32728,7 @@
   },
   {
     "objectID": "N06000010",
-    "ge2015Results": [
+    "results": [
       {
         "party": "sinn-féin",
         "rank": 1,
@@ -32815,7 +32815,7 @@
   },
   {
     "objectID": "N06000011",
-    "ge2015Results": [
+    "results": [
       {
         "party": "sinn-féin",
         "rank": 1,
@@ -32866,7 +32866,7 @@
   },
   {
     "objectID": "N06000012",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -32953,7 +32953,7 @@
   },
   {
     "objectID": "N06000013",
-    "ge2015Results": [
+    "results": [
       {
         "party": "independent",
         "rank": 1,
@@ -33049,7 +33049,7 @@
   },
   {
     "objectID": "N06000014",
-    "ge2015Results": [
+    "results": [
       {
         "party": "ulster-unionist-party",
         "rank": 1,
@@ -33118,7 +33118,7 @@
   },
   {
     "objectID": "N06000015",
-    "ge2015Results": [
+    "results": [
       {
         "party": "sdlp-social-democratic-&-labour-party",
         "rank": 1,
@@ -33187,7 +33187,7 @@
   },
   {
     "objectID": "N06000016",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -33265,7 +33265,7 @@
   },
   {
     "objectID": "N06000017",
-    "ge2015Results": [
+    "results": [
       {
         "party": "democratic-unionist-party---d.u.p.",
         "rank": 1,
@@ -33343,7 +33343,7 @@
   },
   {
     "objectID": "N06000018",
-    "ge2015Results": [
+    "results": [
       {
         "party": "sinn-féin",
         "rank": 1,
@@ -33430,7 +33430,7 @@
   },
   {
     "objectID": "S14000001",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33490,7 +33490,7 @@
   },
   {
     "objectID": "S14000002",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33559,7 +33559,7 @@
   },
   {
     "objectID": "S14000003",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33619,7 +33619,7 @@
   },
   {
     "objectID": "S14000004",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33679,7 +33679,7 @@
   },
   {
     "objectID": "S14000005",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33730,7 +33730,7 @@
   },
   {
     "objectID": "S14000006",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33781,7 +33781,7 @@
   },
   {
     "objectID": "S14000007",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33823,7 +33823,7 @@
   },
   {
     "objectID": "S14000008",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33892,7 +33892,7 @@
   },
   {
     "objectID": "S14000009",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33943,7 +33943,7 @@
   },
   {
     "objectID": "S14000010",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -33994,7 +33994,7 @@
   },
   {
     "objectID": "S14000011",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34045,7 +34045,7 @@
   },
   {
     "objectID": "S14000012",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34087,7 +34087,7 @@
   },
   {
     "objectID": "S14000013",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34138,7 +34138,7 @@
   },
   {
     "objectID": "S14000014",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-conservative-and-unionist",
         "rank": 1,
@@ -34198,7 +34198,7 @@
   },
   {
     "objectID": "S14000015",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34267,7 +34267,7 @@
   },
   {
     "objectID": "S14000016",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34327,7 +34327,7 @@
   },
   {
     "objectID": "S14000017",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34378,7 +34378,7 @@
   },
   {
     "objectID": "S14000018",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34438,7 +34438,7 @@
   },
   {
     "objectID": "S14000019",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34498,7 +34498,7 @@
   },
   {
     "objectID": "S14000020",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34567,7 +34567,7 @@
   },
   {
     "objectID": "S14000021",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34618,7 +34618,7 @@
   },
   {
     "objectID": "S14000022",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34687,7 +34687,7 @@
   },
   {
     "objectID": "S14000023",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34756,7 +34756,7 @@
   },
   {
     "objectID": "S14000024",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-labour-party",
         "rank": 1,
@@ -34825,7 +34825,7 @@
   },
   {
     "objectID": "S14000025",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34885,7 +34885,7 @@
   },
   {
     "objectID": "S14000026",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34945,7 +34945,7 @@
   },
   {
     "objectID": "S14000027",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -34996,7 +34996,7 @@
   },
   {
     "objectID": "S14000028",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35047,7 +35047,7 @@
   },
   {
     "objectID": "S14000029",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35134,7 +35134,7 @@
   },
   {
     "objectID": "S14000030",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35203,7 +35203,7 @@
   },
   {
     "objectID": "S14000031",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35281,7 +35281,7 @@
   },
   {
     "objectID": "S14000032",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35350,7 +35350,7 @@
   },
   {
     "objectID": "S14000033",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35419,7 +35419,7 @@
   },
   {
     "objectID": "S14000034",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35479,7 +35479,7 @@
   },
   {
     "objectID": "S14000035",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35548,7 +35548,7 @@
   },
   {
     "objectID": "S14000036",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35590,7 +35590,7 @@
   },
   {
     "objectID": "S14000037",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35641,7 +35641,7 @@
   },
   {
     "objectID": "S14000038",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35701,7 +35701,7 @@
   },
   {
     "objectID": "S14000039",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35770,7 +35770,7 @@
   },
   {
     "objectID": "S14000040",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35812,7 +35812,7 @@
   },
   {
     "objectID": "S14000041",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35863,7 +35863,7 @@
   },
   {
     "objectID": "S14000042",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35914,7 +35914,7 @@
   },
   {
     "objectID": "S14000043",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -35974,7 +35974,7 @@
   },
   {
     "objectID": "S14000044",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36025,7 +36025,7 @@
   },
   {
     "objectID": "S14000045",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36085,7 +36085,7 @@
   },
   {
     "objectID": "S14000046",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36145,7 +36145,7 @@
   },
   {
     "objectID": "S14000047",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36196,7 +36196,7 @@
   },
   {
     "objectID": "S14000048",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36247,7 +36247,7 @@
   },
   {
     "objectID": "S14000049",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36307,7 +36307,7 @@
   },
   {
     "objectID": "S14000050",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36358,7 +36358,7 @@
   },
   {
     "objectID": "S14000051",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-liberal-democrats",
         "rank": 1,
@@ -36409,7 +36409,7 @@
   },
   {
     "objectID": "S14000052",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36478,7 +36478,7 @@
   },
   {
     "objectID": "S14000053",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36529,7 +36529,7 @@
   },
   {
     "objectID": "S14000054",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36598,7 +36598,7 @@
   },
   {
     "objectID": "S14000055",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36667,7 +36667,7 @@
   },
   {
     "objectID": "S14000056",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36727,7 +36727,7 @@
   },
   {
     "objectID": "S14000057",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36778,7 +36778,7 @@
   },
   {
     "objectID": "S14000058",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36847,7 +36847,7 @@
   },
   {
     "objectID": "S14000059",
-    "ge2015Results": [
+    "results": [
       {
         "party": "scottish-national-party-snp",
         "rank": 1,
@@ -36898,7 +36898,7 @@
   },
   {
     "objectID": "W07000041",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -36958,7 +36958,7 @@
   },
   {
     "objectID": "W07000042",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37018,7 +37018,7 @@
   },
   {
     "objectID": "W07000043",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37078,7 +37078,7 @@
   },
   {
     "objectID": "W07000044",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37147,7 +37147,7 @@
   },
   {
     "objectID": "W07000045",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37225,7 +37225,7 @@
   },
   {
     "objectID": "W07000046",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -37312,7 +37312,7 @@
   },
   {
     "objectID": "W07000047",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37399,7 +37399,7 @@
   },
   {
     "objectID": "W07000048",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37450,7 +37450,7 @@
   },
   {
     "objectID": "W07000049",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37537,7 +37537,7 @@
   },
   {
     "objectID": "W07000050",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37615,7 +37615,7 @@
   },
   {
     "objectID": "W07000051",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -37693,7 +37693,7 @@
   },
   {
     "objectID": "W07000052",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37753,7 +37753,7 @@
   },
   {
     "objectID": "W07000053",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37831,7 +37831,7 @@
   },
   {
     "objectID": "W07000054",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -37900,7 +37900,7 @@
   },
   {
     "objectID": "W07000055",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -37969,7 +37969,7 @@
   },
   {
     "objectID": "W07000056",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -38029,7 +38029,7 @@
   },
   {
     "objectID": "W07000057",
-    "ge2015Results": [
+    "results": [
       {
         "party": "plaid-cymru---the-party-of-wales",
         "rank": 1,
@@ -38089,7 +38089,7 @@
   },
   {
     "objectID": "W07000058",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -38149,7 +38149,7 @@
   },
   {
     "objectID": "W07000059",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -38218,7 +38218,7 @@
   },
   {
     "objectID": "W07000060",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -38269,7 +38269,7 @@
   },
   {
     "objectID": "W07000061",
-    "ge2015Results": [
+    "results": [
       {
         "party": "plaid-cymru---the-party-of-wales",
         "rank": 1,
@@ -38338,7 +38338,7 @@
   },
   {
     "objectID": "W07000062",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -38398,7 +38398,7 @@
   },
   {
     "objectID": "W07000063",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -38458,7 +38458,7 @@
   },
   {
     "objectID": "W07000064",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-liberal-democrats---democratiaid-rhyddfrydol-cymru",
         "rank": 1,
@@ -38518,7 +38518,7 @@
   },
   {
     "objectID": "W07000065",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -38596,7 +38596,7 @@
   },
   {
     "objectID": "W07000066",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -38656,7 +38656,7 @@
   },
   {
     "objectID": "W07000067",
-    "ge2015Results": [
+    "results": [
       {
         "party": "plaid-cymru---carmarthenshire's-voice",
         "rank": 1,
@@ -38716,7 +38716,7 @@
   },
   {
     "objectID": "W07000068",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -38776,7 +38776,7 @@
   },
   {
     "objectID": "W07000069",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -38836,7 +38836,7 @@
   },
   {
     "objectID": "W07000070",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -38905,7 +38905,7 @@
   },
   {
     "objectID": "W07000071",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -38983,7 +38983,7 @@
   },
   {
     "objectID": "W07000072",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -39043,7 +39043,7 @@
   },
   {
     "objectID": "W07000073",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -39139,7 +39139,7 @@
   },
   {
     "objectID": "W07000074",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -39208,7 +39208,7 @@
   },
   {
     "objectID": "W07000075",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -39286,7 +39286,7 @@
   },
   {
     "objectID": "W07000076",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -39355,7 +39355,7 @@
   },
   {
     "objectID": "W07000077",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,
@@ -39433,7 +39433,7 @@
   },
   {
     "objectID": "W07000078",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-conservative-party-candidate/ymgeisydd-plaid-geidwadol-cymru",
         "rank": 1,
@@ -39502,7 +39502,7 @@
   },
   {
     "objectID": "W07000079",
-    "ge2015Results": [
+    "results": [
       {
         "party": "welsh-labour/llafur-cymru",
         "rank": 1,
@@ -39571,7 +39571,7 @@
   },
   {
     "objectID": "W07000080",
-    "ge2015Results": [
+    "results": [
       {
         "party": "labour",
         "rank": 1,

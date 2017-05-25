@@ -2,7 +2,9 @@
 const hyperdom = require('hyperdom');
 const h = hyperdom.html;
 const model = require('../models/model');
+const async = require('async');
 Model = model;
+const SWITCH = true;
 
 
 //Components
@@ -14,23 +16,98 @@ class App {
   constructor() {
     const self = this;
 
+
+    var getParty = function(key) {
+      var party = allParties.filter(function(party) {
+        return party.key == key;
+      })[0];
+      if (!party) {
+        party = {key: key, name: key, color: 'lightgray'}
+      }
+      return party;
+    }
+
     // Getting data
-    var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
-    var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
-    model.rawData = [];
-    index.search('', {
-      hitsPerPage: 650 //TODO: looks like a hardcode
-    }, function searchDone(err, content) {
-      model.rawData = content.hits;
-      model.rawData.totalVotes = 0;
-      model.rawData.forEach(function(_data){
-        _data[clientConf.resProp].forEach(function(party){
-          model.rawData.totalVotes+=parseInt(party.votes);
-        })
+    model.constituencesData = [];
+    model.partiesData = {
+      results: []
+    };
+    model.seatsCard = { name: "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes", parties: []}
+    const client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
+    async.parallel([
+      function(cb){
+        if(SWITCH){
+          const index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
+          index.search('', {
+            hitsPerPage: 650 //TODO: looks like a hardcode
+          }, function searchDone(err, content) {
+            model.constituencesData = content.hits;
+
+            cb();
+          });
+        } else {
+          model.constituencesData = require("../../public/data/constituencies2015");
+          model.constituencesData.forEach(function(_constitiency){
+            _constitiency.results.forEach(function(_party){
+              const partyFound = allParties.filter(function(__party) {
+                return __party.key == _party.party;
+              })[0];
+              _party.name = partyFound?partyFound.name:"";
+            })
+          })
+          cb();
+        }
+      },
+      function(cb){
+        if(SWITCH){
+          const index = client.initIndex("ge2017-parties");
+          index.search('', {
+            hitsPerPage: 650 //TODO: looks like a hardcode
+          }, function searchDone(err, content) {
+            content.hits.forEach(function(party){
+              const partyCode = party.name.toLowerCase().replace(/\s/g,"-");
+              model.partiesData.results.push({
+                party: partyCode,
+                //rank: parties.length+1,
+                votes: party.totalVotes,
+                name: party.name,
+                seats: party.totalSeats?party.totalSeats:0,
+                share: party.percentageShare,
+                shareChange: party.percentageChange,
+              });
+              model.partiesData.results.sort(function(a,b){
+                return b.share - a.share;
+              })
+
+            });
+            cb();
+          });
+        } else {
+          model.partiesData = require("../../public/data/parties2015");
+        }
+      }
+    ],function(){
+      model.constituencesData.totalVotes = 0;
+      model.partiesData.results.forEach(function(_data){
+        model.constituencesData.totalVotes+=parseInt(_data.votes);
       });
-      console.log(model.rawData.totalVotes)
+      model.partiesData.results.forEach(function(party){
+        const partyCode = party.name.toLowerCase().replace(/\s/g,"-");
+        model.seatsCard.parties.push({
+          name: party.name,
+          seats: party.seats,
+          color: getParty(partyCode).color,//"#e43b2c",
+          getWidth: self.getSeatsWidth,
+          code: partyCode,
+        });
+        model.seatsCard.parties.sort(function(a,b){
+          return b.seats - a.seats;
+        })
+      })
+
       self.refresh();
-    });
+    })
+
     // END: getting data
 
     self.getSeatsWidth = function(seats) {
@@ -66,13 +143,15 @@ class App {
       name: "Party",
       // objectID: "objectID",
       // paId: "paId",
-      totalVotes: "Votes",
-      percentageChange: "% Change",
-      percentageShare: "% Share",
+      votes: "Votes",
+      shareChange: "% Change",
+      share: "% Share",
     }
 
-    self.partiesToTable = function() {
-      var parties = model.data.detailsByParty;
+    self.partiesToTable = function(parties) {
+      if(!parties){
+        return [];
+      }
       var rows = parties.map(function(party) {
         var partyKeys = Object.keys(party);
         var newParty = [];
@@ -100,8 +179,7 @@ class App {
 
 
     self.getConstituencyData = function(key) {
-
-      return model.data.constituencies.filter(function(constituency) {
+      return model.constituencesData.filter(function(constituency) {
         return constituency.objectID == key;
       })[0];
     }
@@ -128,8 +206,8 @@ class App {
 
     self.implementSelectConstituency = function(constituency) {
       self.ukMap.selectConstituency(constituency.objectID);
-      var newData = {
-        parties: constituency[clientConf.resProp]
+      /*var newData = {
+        parties: constituency.results
       }
       newData.parties = newData.parties.map(function(party) {
         var newParty = getParty(party.party);
@@ -138,13 +216,15 @@ class App {
         return newParty
       })
       model.seatsCard.parties = newData.parties;
-      self.seatsCard.refresh();
+      self.seatsCard.refresh();*/
+      model.selectedConstituency = self.getConstituencyData(constituency.objectID);
+      self.refresh()
     }
 
 
-    model.seatsCard = { name: "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes" }
 
-    model.seatsCard.parties = [
+
+    /*model.seatsCard.parties = [
       {
         name: "Conservatives",
         seats: 0,//326,
@@ -173,7 +253,9 @@ class App {
         getWidth: self.getSeatsWidth,
         code: "lib-dem"
       }
-    ];
+    ];*/
+
+
 
 
 
@@ -186,7 +268,6 @@ class App {
   }
 
   render() {
-    console.log("REFRESH APP")
     const self = this;
     self.summaryRows = [
       {
@@ -198,7 +279,7 @@ class App {
       {
         cells: [
           { value: 'Total Votes:' },
-          { value: model.rawData.totalVotes }
+          { value: model.constituencesData.totalVotes }
         ]
       },
       {
@@ -218,7 +299,7 @@ class App {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: self.partiesToTable() }
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results) }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);

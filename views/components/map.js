@@ -9,7 +9,6 @@ class Map {
 
 
   constructor(outboundSelectConstituency) {
-    console.log("REFRESH")
     const self = this;
     self.constituencies = {};
     self.constituencyFeatures;
@@ -37,7 +36,7 @@ class Map {
 
   render() {
     const self = this;
-    if(Model.rawData.length>0){
+    if(Model.constituencesData.length>0){
       $('#ukMap').ready(function() {
         const map = this;
 
@@ -74,11 +73,11 @@ class Map {
               }
 
             });*/
-            const searchData = Model.rawData;
+            const searchData = Model.constituencesData;
             if(conf.prodMode==="TEST"){
               searchData.forEach(function(_data){
                 if(Math.random()>=0){
-                  _data[clientConf.resProp].forEach(function(_result){
+                  _data.results.forEach(function(_result){
                     _result.rank = 0;
                     _result.share = 0;
                     _result.shareChange = 0;
@@ -108,16 +107,16 @@ class Map {
               // Checking if at least one party exists in the list
               // and its share is greater than 0
 
-              if(data&&data[clientConf.resProp][0]&&data[clientConf.resProp][0].share>0){
+              if(data&&data.results[0]&&data.results[0].share>0){
                 //TODO: probably not the best place to populate the model
                 // Populating model
-                // console.log(data[clientConf.resProp][0])
-                if(!partySeats[partyReconciliation[data[clientConf.resProp][0].party]]){
-                  partySeats[partyReconciliation[data[clientConf.resProp][0].party]] = 0;
+                // console.log(data.results[0])
+                if(!partySeats[partyReconciliation[data.results[0].party]]){
+                  partySeats[partyReconciliation[data.results[0].party]] = 0;
                 }
-                partySeats[partyReconciliation[data[clientConf.resProp][0].party]]++;
+                partySeats[partyReconciliation[data.results[0].party]]++;
                 // Populating map
-                var partyKey = data[clientConf.resProp][0].party;
+                var partyKey = data.results[0].party;
                 if (collectParties.indexOf(partyKey) == -1) {
                   collectParties.push(partyKey)
                 }
@@ -239,7 +238,6 @@ class Map {
       });
     }
 
-    console.log("REFRESH2")
     return h('div.map',
       h('div#ukMap', '')
     );

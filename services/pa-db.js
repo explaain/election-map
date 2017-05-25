@@ -731,6 +731,8 @@ module.exports = {
         party: party.$.name.toLowerCase().replace(/\s/g,"-"),
         rank: parties.length+1,
         votes: party.$.votes,
+        candidate: candidate.$.firstName + " " + candidate.$.surname,
+        name: party.$.name,
         share: party.$.percentageShare,
         shareChange: party.$.percentageShareChange,
       })
