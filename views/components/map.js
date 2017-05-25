@@ -140,8 +140,8 @@ class Map {
               if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
                 layer.bringToFront();
               }
-              $(".progress,.seats,.name").hide();
-              setTimeout(function(){$(".progress,.seats,.name").show();})
+              //$(".progress,.seats,.name").hide();
+              //setTimeout(function(){$(".progress,.seats,.name").show();})
               info.update(layer.feature.properties);
             }
             function resetHighlight(e) {
