@@ -33,7 +33,7 @@ class Map {
 
 
           var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
-          var index = client.initIndex('constituencies');
+          var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
 
           var searchData = [];
 
@@ -78,7 +78,7 @@ class Map {
               // Checking if at least one party exists in the list
               // and its share is greater than 0
 
-              if(data[clientConf.resProp][0]&&data[clientConf.resProp][0].share>0){
+              if(data&&data[clientConf.resProp][0]&&data[clientConf.resProp][0].share>0){
                 //TODO: probably not the best place to populate the model
                 // Populating model
                 // console.log(data[clientConf.resProp][0])

@@ -3,7 +3,7 @@ const algoliasearch = require("algoliasearch");
 var client = algoliasearch(conf.algoliaId, conf.algoliaKey);
 var index1 = client.initIndex('ge2017-pa');
 var index2 = client.initIndex('ge2017-parties');
-var index3 = client.initIndex('constituencies');
+var index3 = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
 
 var numbersToIds = {
   "1": "W07000049",
@@ -672,8 +672,8 @@ module.exports = {
     summary.objectID = 'summary';
     var parties = sopJSON.FirstPastThePostStateOfParties.Parties[0].Party;
 
-    console.log(JSON.stringify(summary));
-    console.log(JSON.stringify(parties[0]));
+    //console.log(JSON.stringify(summary));
+    //console.log(JSON.stringify(parties[0]));
 
     index1.saveObject(summary);
     index2.clearIndex(function(err) {
@@ -694,17 +694,56 @@ module.exports = {
     // Call done() once done
 
     // console.log(constituencyJSON)
-    var election = constituencyJSON.FirstPastThePostResult.Election;
-    var objectID = numbersToIds[election[0].Constituency[0].$.number];
-    console.log({
-      objectID: objectID,
-      ge2017: election
-    });
+    //var election = ;
 
-    index3.partialUpdateObject({ //Currently this isn't working for some reason!
+    const constituency = constituencyJSON.FirstPastThePostResult.Election[0].Constituency[0];
+    const objectID = numbersToIds[constituency.$.number];
+    //console.log(constituency.$.name);
+    const candidates = [constituency.Candidate]
+    const parties = [];
+    //console.log("CS")
+    //console.log(candidates)
+    candidates.forEach(function(candidate){
+      //console.log("CDT")
+      //console.log(candidate)
+      const party = candidate[0].Party[0];
+      /*
+      "paId": "9066",
+                "name": "Conservative",
+                "abbreviation": "C",
+                "votes": "19176",
+                "percentageShare": "43.96",
+                "percentageShareChange": "-8.09"
+      */
+      /*
+      "party": "conservative",
+      "rank": 1,
+      "votes": 23369,
+      "voteMargin": 14901,
+      "share": 50.6,
+      "shareMargin": 32.3,
+      "shareChange": 3.9
+      */
+      //console.log("PRTY")
+      //console.log(party)
+      parties.push({
+        party: party.$.name.toLowerCase().replace(/\s/,"-"),
+        votes: party.$.votes,
+        share: party.$.percentageShare,
+        shareChange: party.$.percentageShareChange,
+      })
+    });
+    const toUpdateObj = {
       objectID: objectID,
-      ge2017: election
-    }, function(err, content) {
+      name: constituency.$.name,
+      ge2017Results: parties,
+      ge2017: {
+        test: "wow"
+      }
+    };
+
+    index3.partialUpdateObject( //TODO: Currently this isn't working for some reason!
+      toUpdateObj, function(err, content) {
       if (err) {
         console.error(err);
         return;

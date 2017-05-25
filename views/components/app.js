@@ -153,28 +153,28 @@ class App {
     model.seatsCard.parties = [
       {
         name: "Conservatives",
-        seats: 326,
+        seats: 0,//326,
         color: "#204eb7",
         getWidth: self.getSeatsWidth,
         code: "conservative"
       },
       {
         name: "Labour",
-        seats: 230,
+        seats: 0,//230,
         color: "#e43b2c",
         getWidth: self.getSeatsWidth,
         code: "labour"
       },
       {
         name: "Scottish National Party",
-        seats: 56,
+        seats: 0,//56,
         color: "#f3df00",
         getWidth: self.getSeatsWidth,
         code: "plaid"
       },
       {
         name: "Liberal Democrats",
-        seats: 8,
+        seats: 0,//8,
         color: "#e0aa15",
         getWidth: self.getSeatsWidth,
         code: "lib-dem"
@@ -188,6 +188,17 @@ class App {
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
       'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: self.partiesToTable() }
     }
+
+    // Getting data
+    var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
+    var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
+    var searchData = [];
+    index.search('', {
+      hitsPerPage: 650 //TODO: looks like a hardcode
+    }, function searchDone(err, content) {
+      console.log(content)
+    });
+    // END: getting data
 
     self.searchBar = new Search(self.selectConstituency);
     self.ukMap = new ClickMap(self.selectConstituency);

@@ -152,7 +152,7 @@ module.exports = function(app){
                 chunks.push(chunk.toString());
               });
               stream.on('end', () => {
-                console.log("Fetched: '"+fileName+"'");
+                //console.log("Fetched: '"+fileName+"'");
                 const xml = chunks.join('');
                 const parseString = require('xml2js').parseString;
                 parseString(xml, function (err, constituencyJSON) {
