@@ -192,11 +192,13 @@ class App {
     // Getting data
     var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
     var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
-    var searchData = [];
+    model.rawData = [];
     index.search('', {
       hitsPerPage: 650 //TODO: looks like a hardcode
     }, function searchDone(err, content) {
-      //console.log(content)
+      model.rawData = content.hits;
+      self.refresh();
+
     });
     // END: getting data
 
@@ -209,7 +211,7 @@ class App {
   }
 
   render() {
-
+    console.log("REFRESH APP")
     const self = this;
 
     var returnable = h('div.app',

@@ -9,43 +9,72 @@ class Map {
 
 
   constructor(outboundSelectConstituency) {
+    console.log("REFRESH")
     const self = this;
-    $('#ukMap').ready(function() {
-      self.constituencies = {};
-      self.constituencyFeatures;
-      self.findConstituency;
+    self.constituencies = {};
+    self.constituencyFeatures;
+    self.findConstituency;
+    self.outboundSelectConstituency = outboundSelectConstituency;
+  }
 
-      setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
-        try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
+  selectConstituency(key) {
+    const self = this;
+    const constituency = self.findConstituency(key);
+    if(constituency!==undefined){
+      self.ukMap.fitBounds(constituency.getBounds(), {
+        padding: [100,100]
+      });
+      self.specialHighlightFeature(constituency);
+    } else {
+      console.log("Constituency not found by a key " + key + ". This is probably a Northern Ireland one.")
+    }
 
-          this.ukMap = L.map('ukMap', {
-            center: [54.505, -4.09],
-            zoom: 6,
-            scrollWheelZoom: false
-          });
+  }
 
-          $('#ukMap').addClass("initialized");
+  onload() {
 
-          L.tileLayer('', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>' /* + ', Imagery © <a href="http://mapbox.com">Mapbox</a>'*/,
-            maxZoom: 18,
-          }).addTo(ukMap);
+  }
+
+  render() {
+    const self = this;
+    if(Model.rawData.length>0){
+      $('#ukMap').ready(function() {
+        const map = this;
 
 
-          var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
-          var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
+        setTimeout(function() { //CLEARLY THIS IS NOT A GOOD WAY OF DOING THINGS!
+          try { //This is a hack! We need to stop this from attempting to rerender as Leaflet doesn't like it.
 
-          var searchData = [];
+            map.ukMap = L.map('ukMap', {
+              center: [54.505, -4.09],
+              zoom: 6,
+              scrollWheelZoom: false
+            });
+            self.ukMap = map.ukMap;
 
-          index.search('', {
-            hitsPerPage: 650 //TODO: looks like a hardcode
-          }, function searchDone(err, content) {
-            if (err) {
-              console.error(err);
-              return;
-            }
-            searchData = content.hits;
-            console.log(JSON.stringify(searchData[0]));
+            $('#ukMap').addClass("initialized");
+
+            L.tileLayer('', {
+              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>' /* + ', Imagery © <a href="http://mapbox.com">Mapbox</a>'*/,
+              maxZoom: 18,
+            }).addTo(map.ukMap);
+
+
+            //var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
+            //var index = client.initIndex(conf.appMode==="LIVE"?"constituencies2017":"constituencies");
+
+            //var searchData = [];
+
+            /*index.search('', {
+              hitsPerPage: 650 //TODO: looks like a hardcode
+            }, function searchDone(err, content) {
+              if (err) {
+                console.error(err);
+                return;
+              }
+
+            });*/
+            const searchData = Model.rawData;
             if(conf.prodMode==="TEST"){
               searchData.forEach(function(_data){
                 if(Math.random()>=0){
@@ -161,7 +190,7 @@ class Map {
 
             function zoomToFeature(e) {
               $("#search-input").val(e.target.feature.properties.pcon16nm);
-              outboundSelectConstituency(e.target.feature.properties.pcon16cd);
+              self.outboundSelectConstituency(e.target.feature.properties.pcon16cd);
             }
             function onEachFeature(feature, layer) {
               var key = feature.properties.pcon16cd;
@@ -179,7 +208,7 @@ class Map {
               style: style,
               onEachFeature: onEachFeature,
               zoomSnap: 0.5
-            }).addTo(ukMap);
+            }).addTo(map.ukMap);
 
 
             var info = L.control();
@@ -195,40 +224,22 @@ class Map {
               this._div.innerHTML = (props ?
                 '<h4>' + props.pcon16nm + '</h4><p>Current Party: <b>' + (props.currentParty.name||"No results yet") + '</b></p>'
                 : 'Hover over a constituency');
-              };
+            };
 
-              info.addTo(ukMap);
-          });
-
+            info.addTo(map.ukMap);
 
 
-        } catch(e) {
 
-        }
+          } catch(e) {
+            console.log("ERROR")
+            console.log(e)
+          }
 
-      },1000);
-    });
-  }
-
-  selectConstituency(key) {
-    const self = this;
-    const constituency = self.findConstituency(key);
-    if(constituency!==undefined){
-      ukMap.fitBounds(constituency.getBounds(), {
-        padding: [100,100]
+        },1000);
       });
-      self.specialHighlightFeature(constituency);
-    } else {
-      console.log("Constituency not found by a key " + key + ". This is probably a Northern Ireland one.")
     }
 
-  }
-
-  onload() {
-
-  }
-
-  render() {
+    console.log("REFRESH2")
     return h('div.map',
       h('div#ukMap', '')
     );
