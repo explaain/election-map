@@ -41,8 +41,13 @@ class App {
           index.search('', {
             hitsPerPage: 650 //TODO: looks like a hardcode
           }, function searchDone(err, content) {
-            model.constituenciesData = content.hits;
-
+            model.constituenciesData = require("../../public/data/constituencies2017-empty");
+            const freshData = content.hits;
+            freshData.forEach(function(constituency){
+              model.constituenciesData.filter(function(_constituency) {
+                return _constituency.objectID === constituency.objectID;
+              })[0].results = constituency.results;
+            })
             cb();
           });
         } else {
