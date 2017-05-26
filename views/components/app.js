@@ -39,8 +39,8 @@ class App {
       self.ukMap.deselectConstituency();
     }
 
-    // Getting data
     model.constituenciesData = [];
+    model.partySummary = {};
     model.partiesData = {
       results: []
     };
@@ -105,7 +105,19 @@ class App {
             cb();
           })
         }
-      }
+      },
+      function(cb){
+        if(SWITCH){
+          const index = client.initIndex("map-pa-"+(conf.paFetchMode==="LIVE"?"live":"test"));
+          index.search('', {}, function searchDone(err, content) {
+            model.partySummary = content.hits[0];
+            cb();
+          });
+        } else {
+          model.partySummary = require("../../public/data/partySummary2015");
+          cb();
+        }
+      },
     ],function(){
       model.constituenciesData.totalVotes = 0;
       model.partiesData.results.forEach(function(_data){
@@ -127,15 +139,9 @@ class App {
       self.refresh();
     })
 
-    // END: getting data
-
     self.getSeatsWidth = function(seats) {
       return (seats/4.5 + '%');
     }
-
-
-    // model.data.detailsByParty = testData.detailsByParty;
-    // model.data.summary = testData.summary;
 
 
 
@@ -273,19 +279,19 @@ class App {
       {
         cells: [
           { value: 'No. of Results:' },
-          { value: self.totalResultsAmount + ' / ' + model.constituenciesData.length  }
+          { value: model.partySummary.numberOfResults+ ' / ' + model.partySummary.totalNumberOfConstituencies  }
         ]
       },
       {
         cells: [
           { value: 'Total Votes:' },
-          { value: model.constituenciesData.totalVotes }
+          { value: model.partySummary.totalVotes }
         ]
       },
       {
         cells: [
-          { value: 'Forecast Winner:' },
-          { value: model.data.summary.forecastWinningParty }
+          { value: (SWITCH?'Forecast Winner:':'Winner') },
+          { value: model.partySummary.forecastWinningParty }
         ]
       },
       // {
