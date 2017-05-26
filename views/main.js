@@ -21,6 +21,8 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
   for(var key in templates){
     CardTemplates[key] = templates[key];
   };
+  require("../development/templates.js")(CardTemplates);
+  console.log(CardTemplates.table)
 
   var paDataUrl = '/pa-update?test=yes';
   http.get(paDataUrl);

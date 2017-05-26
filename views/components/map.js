@@ -3,6 +3,7 @@ const partyReconciliation = require('../../public/data/partyReconciliation');
 const h = hyperdom.html;
 
 var selectConstituency,
+    deselectConstituency,
     findConstituency;
 
 class Map {
@@ -28,6 +29,16 @@ class Map {
       console.log("Constituency not found by a key " + key + ". This is probably a Northern Ireland one.")
     }
 
+  }
+
+  deselectConstituency() {
+    const self = this;
+    //TODO: zoom out!
+
+    self.ukMap.setView([54.505, -4.09],6);
+    self.deselectLayer();
+    $("#search-input").val("");
+    self.refresh();
   }
 
   onload() {
@@ -123,6 +134,7 @@ class Map {
 
             }
             self.specialHighlightFeature = function(layer) {
+              Model.selectedConstituencyLayer = layer;
               $(".leaflet-interactive.selected").attr("class","leaflet-interactive")
               $(layer.getElement()).attr("class","leaflet-interactive selected")
 
@@ -133,11 +145,20 @@ class Map {
               //setTimeout(function(){$(".progress,.seats,.name").show();})
               info.update(layer.feature.properties);
             }
-            function resetHighlight(e) {
+            self.resetHighlight = function(e){
               if(!$(e.target.getElement()).attr("class").match(/selected/)){
                 $(e.target.getElement()).attr("class","leaflet-interactive")
               }
               info.update();
+            }
+
+            self.deselectLayer = function(){
+              const layer = Model.selectedConstituencyLayer;
+              //$(".leaflet-interactive").attr("class","")
+              $(layer.getElement()).attr("class","leaflet-interactive")
+              //$(".progress,.seats,.name").hide();
+              //setTimeout(function(){$(".progress,.seats,.name").show();})
+              //info.update(layer.feature.properties);
             }
             self.findConstituency = function(key) {
               var layers = self.constituencyFeatures._layers;
@@ -159,7 +180,7 @@ class Map {
               self.constituencies[key].getBounds = feature.getBounds;
               layer.on({
                 mouseover: highlightFeature,
-                mouseout: resetHighlight,
+                mouseout: self.resetHighlight,
                 click: zoomToFeature
               });
             }
@@ -207,6 +228,7 @@ class Map {
 }
 
 selectConstituency = Map.selectConstituency;
+deselectConstituency = Map.deselectConstituency;
 findConstituency = Map.findConstituency;
 
 module.exports = Map;

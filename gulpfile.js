@@ -28,6 +28,7 @@ const watchFiles = [
   'public/data/*',
   'public/img/*',
   'public/js/*',
+  'development/*',
 ];
 
 // JS Files to compile (babel, browserify)

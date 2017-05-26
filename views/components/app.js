@@ -16,6 +16,14 @@ class App {
   constructor() {
     const self = this;
 
+    self.deselectConstituency = function(){
+      model.selectedConstituency = null;
+      self.ukMap.deselectConstituency();
+      self.refresh();
+      $('html, body').animate({
+        scrollTop: 0
+      }, 1000);
+    }
 
     var getParty = function(key) {
       var party = allParties.filter(function(party) {
@@ -83,8 +91,6 @@ class App {
               model.partiesData.results.sort(function(a,b){
                 return b.share - a.share;
               })
-
-
             });
             console.log(model.partiesData)
             cb();
@@ -199,6 +205,11 @@ class App {
       if (typeof constituency === 'string') {
         constituency = self.getConstituencyData(constituency);
       }
+      setTimeout(function(){
+        $('html, body').animate({
+          scrollTop: $(document).height()
+        }, 1000);
+      })
       return self.implementSelectConstituency(constituency)
     }
 
@@ -306,16 +317,18 @@ class App {
       //   ]
       // }
     ];
+    const tableCardRows = self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results);
     model.cardsData = {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results) }
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);
     self.latestCard = new Card(model.cardsData["latestCard"]);
     self.tableCard = new Card(model.cardsData["tableCard"]);
+    const constituencyDeselector = helpers.assembleCards({deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency}, 'constituencyDeselector');
     var returnable = h('div.app',
       self.ukMap,
       h('div.side-cards',
@@ -323,7 +336,8 @@ class App {
         self.summaryCard,
         self.latestCard
       ),
-      self.tableCard
+      self.tableCard,
+      constituencyDeselector
     );
 
     return returnable;
