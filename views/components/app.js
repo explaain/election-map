@@ -12,6 +12,8 @@ const Search = require('./search');
 const ClickMap = require('./map');
 const Card = require('./card');
 
+const allCandidates = require("../../public/data/localCandidates");
+
 class App {
   constructor() {
     const self = this;
@@ -304,12 +306,17 @@ class App {
       //   ]
       // }
     ];
+
+    const localCandidates = model.selectedConstituency ? allCandidates.filter(function(candidate){
+      return candidate.gss_code === model.selectedConstituency.objectID
+    }) : [];
+
     const tableCardRows = self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results);
     model.cardsData = {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency }
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", localCandidates: localCandidates, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);

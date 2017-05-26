@@ -290,3 +290,41 @@ input#search-input {
 .constituencyDeselector:hover {
   opacity: 1;
 }
+
+
+
+/* Local candidates */
+div.local-candidates-container{
+  padding: 5px;
+}
+.local-candidate-plate{
+  display: block;
+  width: 50%;
+  width: 179px;
+  float: left;
+  margin: 5px;
+  border: 1px solid #ddd!important;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 270px;
+}
+a.local-candidate-plate{
+  padding: 0px!important;
+  background-color: transparent!important;
+}
+a.local-candidate-plate:hover{
+  background-color: #ff6e73!important;
+}
+.local-candidate-plate .lc-image{
+  height: 150px;
+  background-position: center;
+  background-size: cover;
+}
+.local-candidate-plate .lc-name{
+  line-height: 1.4em;
+}
+.local-candidate-plate .lc-party-name{
+  margin:0px;
+  line-height: 1.4em;
+  font-size: 14px;
+}

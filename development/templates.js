@@ -9,6 +9,12 @@ module.exports = function(CardTemplates){
         }
       },
       {
+        "dom": "div.local-candidates-container",
+        // "condition": "localCandidates",
+        "loop": "localCandidates",
+        "content": [{"template": "localCandidatePlate"}]
+      },
+      {
         "dom": "div.body-content",
         "content": [
           {
@@ -27,6 +33,38 @@ module.exports = function(CardTemplates){
             "content": "Sorry, there is no data yet"
           }
         ]
+      }
+    ]
+  }
+  CardTemplates.localCandidatePlate = {
+    "dom": "a.local-candidate-plate.internal",
+    "attr":{
+      "href": {
+        "var": "cardHref"
+      }
+    },
+    "content": [
+      {
+        "dom": "div.lc-image",
+        "attr": {
+          "style": {
+            "background-image": {
+              "var": "image_url"
+            }
+          },
+        },
+      },
+      {
+        "dom": "h3.lc-name",
+        "content": {
+          "var": "name"
+        }
+      },
+      {
+        "dom": "h4.lc-party-name",
+        "content": {
+          "var": "party_name"
+        }
       }
     ]
   }
