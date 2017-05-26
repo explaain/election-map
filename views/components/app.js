@@ -16,6 +16,19 @@ class App {
   constructor() {
     const self = this;
 
+    const getParty = function(key) {
+      var party = allParties.filter(function(party) {
+        return party.key == key;
+      })[0];
+      if (!party) {
+        party = {key: key, name: key, color: 'lightgray'}
+      }
+      if (!party.key) {party.key = key}
+      if (!party.name) {party.name = party.key}
+      if (!party.color) {party.color = 'lightgray'}
+      return party;
+    }
+
     self.deselectConstituency = function(){
       model.selectedConstituency = null;
       self.ukMap.deselectConstituency();
@@ -23,16 +36,6 @@ class App {
       $('html, body').animate({
         scrollTop: 0
       }, 1000);
-    }
-
-    var getParty = function(key) {
-      var party = allParties.filter(function(party) {
-        return party.key == key;
-      })[0];
-      if (!party) {
-        party = {key: key, name: key, color: 'lightgray'}
-      }
-      return party;
     }
 
     // Getting data
@@ -211,19 +214,6 @@ class App {
         }, 1000);
       })
       return self.implementSelectConstituency(constituency)
-    }
-
-    var getParty = function(key) {
-      var party = allParties.filter(function(party) {
-        return party.key == key;
-      })[0];
-      if (!party) {
-        party = {key: key, name: key, color: 'lightgray'}
-      }
-      if (!party.key) {party.key = key}
-      if (!party.name) {party.name = party.key}
-      if (!party.color) {party.color = 'lightgray'}
-      return party;
     }
 
     self.implementSelectConstituency = function(constituency) {
