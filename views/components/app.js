@@ -124,13 +124,16 @@ class App {
         model.constituenciesData.totalVotes+=parseInt(_data.votes);
       });
       model.partiesData.results.forEach(function(party){
-        model.seatsCard.parties.push({
-          name: party.name,
-          seats: party.seats,
-          color: getParty(party.party).color,
-          getWidth: self.getSeatsWidth,
-          code: party.party,
-        });
+        if(party.seats>0){
+          model.seatsCard.parties.push({
+            name: party.name,
+            seats: party.seats,
+            color: getParty(party.party).color,
+            getWidth: self.getSeatsWidth,
+            code: party.party,
+          });
+        }
+
       })
       model.seatsCard.parties.sort(function(a,b){
         return b.seats - a.seats;
@@ -227,47 +230,6 @@ class App {
       self.refresh()
     }
 
-
-
-
-    /*model.seatsCard.parties = [
-      {
-        name: "Conservatives",
-        seats: 0,//326,
-        color: "#204eb7",
-        getWidth: self.getSeatsWidth,
-        code: "conservative"
-      },
-      {
-        name: "Labour",
-        seats: 0,//230,
-        color: "#e43b2c",
-        getWidth: self.getSeatsWidth,
-        code: "labour"
-      },
-      {
-        name: "Scottish National Party",
-        seats: 0,//56,
-        color: "#f3df00",
-        getWidth: self.getSeatsWidth,
-        code: "plaid"
-      },
-      {
-        name: "Liberal Democrats",
-        seats: 0,//8,
-        color: "#e0aa15",
-        getWidth: self.getSeatsWidth,
-        code: "lib-dem"
-      }
-    ];*/
-
-
-
-
-
-
-
-
     self.searchBar = new Search(self.selectConstituency);
     self.ukMap = new ClickMap(self.selectConstituency);
 
@@ -290,7 +252,7 @@ class App {
       },
       {
         cells: [
-          { value: (SWITCH?'Forecast Winner:':'Winner') },
+          { value: (SWITCH?'Forecast Winner:':'Winner:') },
           { value: model.partySummary.forecastWinningParty }
         ]
       },
