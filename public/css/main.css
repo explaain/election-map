@@ -302,13 +302,14 @@ div.local-candidates-container{
 .local-candidate-plate{
   display: block;
   width: 50%;
-  width: 179px;
+  width: 140px;
   float: left;
   margin: 5px;
   border: 1px solid #ddd!important;
   border-radius: 5px;
   overflow: hidden;
-  height: 270px;
+  min-height: 220px;
+  text-align: center;
 }
 a.local-candidate-plate{
   padding: 0px!important;
@@ -318,15 +319,18 @@ a.local-candidate-plate:hover{
   background-color: #ff6e73!important;
 }
 .local-candidate-plate .lc-image{
-  height: 150px;
+  background-color: lightgrey;
+  height: 130px;
   background-position: center;
   background-size: cover;
 }
 .local-candidate-plate .lc-name{
   line-height: 1.4em;
+  padding: 0 5px;
 }
 .local-candidate-plate .lc-party-name{
-  margin:0px;
+  margin:0 0 10px 0;
+  padding: 0 5px;
   line-height: 1.4em;
   font-size: 14px;
 }
@@ -343,4 +347,13 @@ a.local-candidate-plate:hover{
 .selectAnotherConstituency:hover {
   background-color: gray;
   color: white;
+}
+.local-candidate-plate h3 {
+  font-size: 18px;
+  margin: 10px 0 5px;
+  font-weight: 600;
+}
+.local-candidate-plate h4 {
+  font-size: 14px;
+  margin: 10px 0 5px;
 }

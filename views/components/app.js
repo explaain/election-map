@@ -283,9 +283,11 @@ class App {
       // }
     ];
 
-    const localCandidates = model.selectedConstituency ? allCandidates.filter(function(candidate){
-      return candidate.gss_code === model.selectedConstituency.objectID
-    }) : [];
+    const localCandidates = model.selectedConstituency ?
+      allCandidates.filter(function(candidate){
+        return candidate.gss_code === model.selectedConstituency.objectID
+      }).map(function(candidate) { candidate.image_url = candidate.image_url || '/img/profile.png'; return candidate })
+      : [];
 
     const tableCardRows = self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results);
     model.cardsData = {
