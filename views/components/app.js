@@ -307,7 +307,7 @@ class App {
       h('div.side-cards',
         self.seatsCard,
         self.summaryCard,
-        self.latestCard
+        (SWITCH?self.latestCard:undefined)
       ),
       self.tableCard,
       constituencyDeselector
