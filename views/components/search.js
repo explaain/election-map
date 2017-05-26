@@ -8,7 +8,7 @@ class Search {
     this.selectConstituency = selectConstituency;
 
     var client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
-    var index = client.initIndex('map-constituencies-'+(conf.paFetchMode==="LIVE"?"live":"test"));
+    var index = client.initIndex('constituencies');
     $('#search-input').on("click",function(){
       $('#search-input').val("");
     })
