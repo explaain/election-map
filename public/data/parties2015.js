@@ -17,7 +17,7 @@ module.exports = [
     "shareChange": "+1.5"
   },
   {
-    "party": "scottish-national-party",
+    "party": "scottish-national-party-snp",
     "votes": "1454436",
     "name": "Scottish National Party",
     "seats": "56",
@@ -25,7 +25,7 @@ module.exports = [
     "shareChange": "+3.1"
   },
   {
-    "party": "liberal-democrat",
+    "party": "lib-dem",
     "votes": "2415862",
     "name": "Liberal Democrat",
     "seats": "8",

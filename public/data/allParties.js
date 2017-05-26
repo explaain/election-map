@@ -109,5 +109,10 @@ var allParties = [
     key: "independent",
     name: "Independent",
     color: "lightgray"
-  }
+  },
+  {
+    key: "scottish-national-party",
+    name: "SNP",
+    color: "#f3df00",
+  },
 ];

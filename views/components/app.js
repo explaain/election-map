@@ -95,12 +95,10 @@ class App {
                 return b.share - a.share;
               })
             });
-            console.log(model.partiesData)
             cb();
           });
         } else {
           model.partiesData.results = require("../../public/data/parties2015");
-          console.log(model.partiesData)
           setTimeout(function(){
             cb();
           })
@@ -112,13 +110,12 @@ class App {
         model.constituenciesData.totalVotes+=parseInt(_data.votes);
       });
       model.partiesData.results.forEach(function(party){
-        const partyCode = party.name.toLowerCase().replace(/\s/g,"-");
         model.seatsCard.parties.push({
           name: party.name,
           seats: party.seats,
-          color: getParty(partyCode).color,//"#e43b2c",
+          color: getParty(party.party).color,//"#e43b2c",
           getWidth: self.getSeatsWidth,
-          code: partyCode,
+          code: party.party,
         });
       })
       model.seatsCard.parties.sort(function(a,b){
