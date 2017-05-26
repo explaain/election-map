@@ -21,11 +21,12 @@ class App {
         return party.key == key;
       })[0];
       if (!party) {
-        party = {key: key, name: key, color: 'lightgray'}
+        party = {key: key, name: key, color: 'gray'}
+      } else {
+        if (!party.key) {party.key = key}
+        if (!party.name) {party.name = party.key}
+        if (!party.color) {party.color = 'lightgray'}
       }
-      if (!party.key) {party.key = key}
-      if (!party.name) {party.name = party.key}
-      if (!party.color) {party.color = 'lightgray'}
       return party;
     }
 
@@ -113,7 +114,7 @@ class App {
         model.seatsCard.parties.push({
           name: party.name,
           seats: party.seats,
-          color: getParty(party.party).color,//"#e43b2c",
+          color: getParty(party.party).color,
           getWidth: self.getSeatsWidth,
           code: party.party,
         });
@@ -215,17 +216,6 @@ class App {
 
     self.implementSelectConstituency = function(constituency) {
       self.ukMap.selectConstituency(constituency.objectID);
-      /*var newData = {
-        parties: constituency.results
-      }
-      newData.parties = newData.parties.map(function(party) {
-        var newParty = getParty(party.party);
-        newParty.seats = party.seats || party.share;
-        newParty.getWidth = self.getSeatsWidth
-        return newParty
-      })
-      model.seatsCard.parties = newData.parties;
-      self.seatsCard.refresh();*/
       model.selectedConstituency = self.getConstituencyData(constituency.objectID);
       self.refresh()
     }

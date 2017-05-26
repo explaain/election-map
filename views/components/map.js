@@ -70,12 +70,16 @@ class Map {
 
 
             const searchData = Model.constituenciesData;
-            var getParty = function(key) {
+            const getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;
               })[0];
               if (!party) {
-                party = {key: key, name: key, color: 'lightgray'}
+                party = {key: key, name: key, color: 'gray'}
+              } else {
+                if (!party.key) {party.key = key}
+                if (!party.name) {party.name = party.key}
+                if (!party.color) {party.color = 'lightgray'}
               }
               return party;
             }
