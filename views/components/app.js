@@ -30,12 +30,15 @@ class App {
     }
 
     self.deselectConstituency = function(){
-      model.selectedConstituency = null;
-      self.ukMap.deselectConstituency();
-      self.refresh();
+
       $('html, body').animate({
         scrollTop: 0
-      }, 1000);
+      }, 500);
+      setTimeout(function(){
+        model.selectedConstituency = null;
+        self.ukMap.deselectConstituency();
+        self.refresh();
+      },500)
     }
 
     // Getting data
@@ -211,8 +214,8 @@ class App {
       setTimeout(function(){
         $('html, body').animate({
           scrollTop: $(document).height()
-        }, 1000);
-      })
+        }, 500);
+      },500)
       return self.implementSelectConstituency(constituency)
     }
 

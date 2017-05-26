@@ -24,7 +24,7 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
   require("../development/templates.js")(CardTemplates);
   console.log(CardTemplates.table)
 
-  var paDataUrl = '/pa-update?test=yes';
+  var paDataUrl = '/pa-update';
   http.get(paDataUrl);
 
   hyperdom.append(document.body, new App());
