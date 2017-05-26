@@ -55,6 +55,7 @@ class App {
           }, function searchDone(err, content) {
             model.constituenciesData = require("../../public/data/constituencies2017-empty");
             const freshData = content.hits;
+            self.totalResultsAmount = freshData.length;
             freshData.forEach(function(constituency){
               model.constituenciesData.filter(function(_constituency) {
                 return _constituency.objectID === constituency.objectID;
@@ -272,7 +273,7 @@ class App {
       {
         cells: [
           { value: 'No. of Results:' },
-          { value: model.data.summary.numberOfResults + ' / ' + model.data.summary.totalNumberOfConstituencies  }
+          { value: self.totalResultsAmount + ' / ' + model.constituenciesData.length  }
         ]
       },
       {
