@@ -25,6 +25,21 @@ module.exports = function(CardTemplates){
             "dom": "p",
             "condition": "!rowsExist",
             "content": "Sorry, there is no data yet"
+          },
+          {
+            "dom": "p",
+            "condition": "selectedConstituency",
+            "content": [
+              {
+                "dom": "button.selectAnotherConstituency",
+                "content": "Select another constituency",
+                "attr": {
+                  "onclick": {
+                    "var": "deselectConstituency"
+                  }
+                }
+              }
+            ]
           }
         ]
       }
