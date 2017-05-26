@@ -33,8 +33,6 @@ class Map {
 
   deselectConstituency() {
     const self = this;
-    //TODO: zoom out!
-
     self.ukMap.setView([54.505, -4.09],6);
     self.deselectLayer();
     $("#search-input").val("");
