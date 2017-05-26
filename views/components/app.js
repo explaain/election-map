@@ -31,12 +31,16 @@ class App {
     }
 
     self.deselectConstituency = function(){
-      model.selectedConstituency = null;
-      self.refresh();
-      $('html, body').animate({
-        scrollTop: 0
-      }, 500);
-      self.ukMap.deselectConstituency();
+
+      setTimeout(function(){
+        $('html, body').animate({
+          scrollTop: 0
+        }, 500);
+        self.ukMap.deselectConstituency();
+        model.selectedConstituencyLayer = null;
+        model.selectedConstituency = null;
+        self.refresh();
+      })
     }
 
     model.constituenciesData = [];
@@ -44,6 +48,7 @@ class App {
     model.partiesData = {
       results: []
     };
+    model.latestData = [];
     model.seatsCard = { name: "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes", parties: []}
     const client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
     async.parallel([
@@ -94,7 +99,7 @@ class App {
                 shareChange: party.percentageChange,
               });
               model.partiesData.results.sort(function(a,b){
-                return b.share - a.share;
+                return b.seats - a.seats;
               })
             });
             cb();
@@ -115,6 +120,17 @@ class App {
           });
         } else {
           model.partySummary = require("../../public/data/partySummary2015");
+          cb();
+        }
+      },
+      function(cb){
+        if(SWITCH){
+          const index = client.initIndex("map-latest-"+(conf.paFetchMode==="LIVE"?"live":"test"));
+          index.search('', {}, function searchDone(err, content) {
+            model.latestData = content.hits;
+            cb();
+          });
+        } else {
           cb();
         }
       },
@@ -150,31 +166,10 @@ class App {
 
 
 
-    self.latestItems = [
-      {
-        value: "Conservatives hold Westminster"
-      },
-      {
-        value: "Lib Dems take Vauxhall"
-      },
-      {
-        value: "Conservatives take Lambeth"
-      },
-      {
-        value: "Labour hold Islington North"
-      }
-    ];
 
 
-    self.tableKeysToHeadings = {
-      // abbreviation: "Abbreviation",
-      name: "Party",
-      // objectID: "objectID",
-      // paId: "paId",
-      votes: "Votes",
-      shareChange: "% Change",
-      share: "% Share",
-    }
+
+
 
     self.partiesToTable = function(parties) {
       if(!parties){
@@ -216,12 +211,8 @@ class App {
       if (typeof constituency === 'string') {
         constituency = self.getConstituencyData(constituency);
       }
-      setTimeout(function(){
-        $('html, body').animate({
-          scrollTop: $(document).height()
-        }, 500);
-      },500)
       return self.implementSelectConstituency(constituency)
+
     }
 
     self.implementSelectConstituency = function(constituency) {
@@ -231,12 +222,38 @@ class App {
     }
 
     self.searchBar = new Search(self.selectConstituency);
-    self.ukMap = new ClickMap(self.selectConstituency);
+    self.ukMap = new ClickMap(self.selectConstituency,self.deselectConstituency);
 
   }
 
   render() {
     const self = this;
+
+    self.latestItems = [];
+    model.latestData.forEach(function(latestResult){
+      self.latestItems.push({
+        value: latestResult.party + " " + latestResult.type + " " + latestResult.constituency
+      })
+    })
+
+    if(model.selectedConstituency){
+      self.tableKeysToHeadings = {
+        name: "Party",
+        candidate: "Candidate",
+        votes: "Votes",
+        shareChange: "% Change",
+        share: "% Share",
+      }
+    } else {
+      self.tableKeysToHeadings = {
+        name: "Party",
+        seats: "Seats",
+        votes: "Votes",
+        shareChange: "% Change",
+        share: "% Share",
+      }
+    }
+
     self.summaryRows = [
       {
         cells: [
@@ -274,6 +291,8 @@ class App {
     self.summaryCard = new Card(model.cardsData["summaryCard"]);
     self.latestCard = new Card(model.cardsData["latestCard"]);
     self.tableCard = new Card(model.cardsData["tableCard"]);
+    console.log("model.selectedConstituency")
+    console.log(model.selectedConstituency)
     const constituencyDeselector = helpers.assembleCards({deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency}, 'constituencyDeselector');
     var returnable = h('div.app',
       self.ukMap,

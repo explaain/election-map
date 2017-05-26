@@ -6,10 +6,12 @@ module.exports = function(app){
   const paDB = require("./pa-db.js");
 
   var lastFetchedSopt = new Date();
+  var lastFetchedConstituencyt = new Date();
   var lastFetchedSopn = 0;
   var sopFetchStatus = "idle";
   var sopFetchTimeout = sopFetchTimeout; // in seconds
   var lastUpdateedFromPA;
+  var latestFetchStatus = "idle";
 
   app.get('/pa/:folder/list', function(req, res) {
     if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
@@ -57,8 +59,6 @@ module.exports = function(app){
     })
   })
 
-  // todo: this also needs a reasonable timeout, let's say 10 secs, otherwise we will pollute PA with useless requests
-
   app.get("/pa-update", function(req, res){
     if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
     if((new Date())-lastFetchedSopt>conf.sopFetchTimeout*1000 && sopFetchStatus!=="updating"){
@@ -66,7 +66,7 @@ module.exports = function(app){
       const parseString = require('xml2js').parseString;
       var lastObservedSop;
       var lastObservedSopn = 0;
-      const SopRegExp = new RegExp(!!paFetchModeIsLive?"todo: OTHER REG EXP":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
+      const SopRegExp = new RegExp(!!paFetchModeIsLive?"^Snap_General_Election_Sop_":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
       connectToPA(function(c){
         const folder = !!paFetchModeIsLive?'/results':'/test/results';
         c.list(folder, function(err, list) {
@@ -116,6 +116,82 @@ module.exports = function(app){
       });
     } else {
       console.log("Not going to check for a new Sop right now");
+      res.send({ok: true, updated: false})
+    }
+  });
+
+  app.get("/pa-update-latest", function(req, res){
+    if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
+    if((new Date())-lastFetchedConstituencyt>conf.sopFetchTimeout*1000 && latestFetchStatus!=="updating"){
+      latestFetchStatus = "updating";
+      lastFetchedConstituencyt = new Date();
+      const parseString = require('xml2js').parseString;
+      const SopRegExp = new RegExp(!!paFetchModeIsLive?"^Snap_General_Election_result_":"^Test_Snap_General_Election_result_","i")
+      connectToPA(function(c){
+        const async = require("async");
+        const folder = !!paFetchModeIsLive?'/results':'/test/results';
+        c.list(folder, function(err, list) {
+          if(err){
+            res.send({error: err});
+            c.destroy();
+          } else {
+            list.sort(function(a,b){
+              return (new Date(b.date)) - (new Date(a.date))
+            })
+            const filesToFetch = [];
+            list.forEach(function(file){
+              var Sopmatch = file.name.match(SopRegExp);
+              if(Sopmatch){
+                if(filesToFetch.length<4){
+                  filesToFetch.push(file.name)
+                }
+              }
+            });
+            const data = [];
+            async.eachLimit(filesToFetch,1,function(fileToFetch,callback){
+              const path = folder+'/'+fileToFetch;
+              c.get(path, function(err, stream) {
+                if(err){
+                  callback();
+                } else {
+                  const chunks = [];
+                  stream.on('data', (chunk) => {
+                    chunks.push(chunk.toString());
+                  });
+                  stream.on('end', () => {
+                    const _xml = chunks.join('');
+                    const parseString = require('xml2js').parseString;
+                    parseString(_xml, function (err, json) {
+                      const _data = json.FirstPastThePostResult.Election[0].Constituency[0];
+                      data.push({
+                        type: _data.$.winningParty===_data.$.sittingParty?"hold":"take",
+                        constituency: _data.$.name,
+                        constituencyID: _data.$.number,
+                        party: _data.Candidate[0].Party[0].$.name
+                      })
+                      callback();
+                    });
+                  });
+                  stream.on('error', () => {
+                    callback();
+                  });
+                }
+              });
+            },function(){
+              paDB.updateLatest(data,function(){
+                latestFetchStatus = "idle";
+                res.send({ok: true, updated: true})
+                c.destroy();
+              });
+
+            })
+
+          }
+        });
+      });
+    } else {
+      console.log("Not going to check for a new Sop right now");
+      res.send({ok: true, updated: false})
     }
   });
 

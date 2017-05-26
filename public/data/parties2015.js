@@ -1,4 +1,4 @@
-//TODO: Jeremy! This is not a real data yet!!!
+//TODO: Igor, include other parties with >0 seats
 module.exports = [
   {
     "party": "conservative",

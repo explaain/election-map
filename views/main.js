@@ -26,6 +26,8 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
 
   var paDataUrl = '/pa-update';
   http.get(paDataUrl);
+  var paDataUrl2 = '/pa-update-latest';
+  http.get(paDataUrl2);
 
   hyperdom.append(document.body, new App());
 });
