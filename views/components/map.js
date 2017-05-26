@@ -9,12 +9,13 @@ var selectConstituency,
 class Map {
 
 
-  constructor(outboundSelectConstituency) {
+  constructor(outboundSelectConstituency,outboundDeselectConstituency) {
     const self = this;
     self.constituencies = {};
     self.constituencyFeatures;
     self.findConstituency;
     self.outboundSelectConstituency = outboundSelectConstituency;
+    self.outboundDeselectConstituency = outboundDeselectConstituency;
   }
 
   selectConstituency(key) {
@@ -36,7 +37,6 @@ class Map {
     self.ukMap.setView([54.505, -4.09],6);
     self.deselectLayer();
     $("#search-input").val("");
-    self.refresh();
   }
 
   onload() {
@@ -70,12 +70,16 @@ class Map {
 
 
             const searchData = Model.constituenciesData;
-            var getParty = function(key) {
+            const getParty = function(key) {
               var party = allParties.filter(function(party) {
                 return party.key == key;
               })[0];
               if (!party) {
-                party = {key: key, name: key, color: 'lightgray'}
+                party = {key: key, name: key, color: 'gray'}
+              } else {
+                if (!party.key) {party.key = key}
+                if (!party.name) {party.name = party.key}
+                if (!party.color) {party.color = 'lightgray'}
               }
               return party;
             }
@@ -132,16 +136,22 @@ class Map {
 
             }
             self.specialHighlightFeature = function(layer) {
-              Model.selectedConstituencyLayer = layer;
-              $(".leaflet-interactive.selected").attr("class","leaflet-interactive")
-              $(layer.getElement()).attr("class","leaflet-interactive selected")
-
-              if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                layer.bringToFront();
+              if(Model.selectedConstituencyLayer===layer){
+                self.outboundDeselectConstituency();
+              } else {
+                Model.selectedConstituencyLayer = layer;
+                $(".leaflet-interactive.selected").attr("class","leaflet-interactive")
+                $(layer.getElement()).attr("class","leaflet-interactive selected")
+                if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                  layer.bringToFront();
+                }
+                info.update(layer.feature.properties);
+                setTimeout(function(){
+                  $('html, body').animate({
+                    scrollTop: $(document).height()
+                  }, 500);
+                },500)
               }
-              //$(".progress,.seats,.name").hide();
-              //setTimeout(function(){$(".progress,.seats,.name").show();})
-              info.update(layer.feature.properties);
             }
             self.resetHighlight = function(e){
               if(!$(e.target.getElement()).attr("class").match(/selected/)){

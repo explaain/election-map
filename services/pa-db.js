@@ -4,6 +4,7 @@ var client = algoliasearch(conf.algoliaId, conf.algoliaKey);
 var index1 = client.initIndex('map-pa-'+(conf.paFetchMode==="LIVE"?"live":"test"));
 var index2 = client.initIndex('map-parties-'+(conf.paFetchMode==="LIVE"?"live":"test"));
 var index3 = client.initIndex("map-constituencies-"+(conf.paFetchMode==="LIVE"?"live":"test"));
+var index4 = client.initIndex("map-latest-"+(conf.paFetchMode==="LIVE"?"live":"test"));
 
 var numbersToIds = {
   "1": "W07000049",
@@ -720,6 +721,21 @@ module.exports = {
         console.error(err);
         return;
       }
+    });
+    done();
+  },
+
+  updateLatest: function (data,done){
+    index4.clearIndex(function(err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      data.forEach(function(result) {
+        result.constituencyID = numbersToIds[result.constituencyID];
+        result.objectID = Math.random();
+        index4.saveObject(result);
+      });
     });
     done();
   }

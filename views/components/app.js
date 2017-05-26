@@ -23,28 +23,34 @@ class App {
         return party.key == key;
       })[0];
       if (!party) {
-        party = {key: key, name: key, color: 'lightgray'}
+        party = {key: key, name: key, color: 'gray'}
+      } else {
+        if (!party.key) {party.key = key}
+        if (!party.name) {party.name = party.key}
+        if (!party.color) {party.color = 'lightgray'}
       }
-      if (!party.key) {party.key = key}
-      if (!party.name) {party.name = party.key}
-      if (!party.color) {party.color = 'lightgray'}
       return party;
     }
 
     self.deselectConstituency = function(){
-      model.selectedConstituency = null;
-      self.refresh();
-      $('html, body').animate({
-        scrollTop: 0
-      }, 500);
-      self.ukMap.deselectConstituency();
+
+      setTimeout(function(){
+        $('html, body').animate({
+          scrollTop: 0
+        }, 500);
+        self.ukMap.deselectConstituency();
+        model.selectedConstituencyLayer = null;
+        model.selectedConstituency = null;
+        self.refresh();
+      })
     }
 
-    // Getting data
     model.constituenciesData = [];
+    model.partySummary = {};
     model.partiesData = {
       results: []
     };
+    model.latestData = [];
     model.seatsCard = { name: "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes", parties: []}
     const client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
     async.parallel([
@@ -56,6 +62,7 @@ class App {
           }, function searchDone(err, content) {
             model.constituenciesData = require("../../public/data/constituencies2017-empty");
             const freshData = content.hits;
+            self.totalResultsAmount = freshData.length;
             freshData.forEach(function(constituency){
               model.constituenciesData.filter(function(_constituency) {
                 return _constituency.objectID === constituency.objectID;
@@ -94,7 +101,7 @@ class App {
                 shareChange: party.percentageChange,
               });
               model.partiesData.results.sort(function(a,b){
-                return b.share - a.share;
+                return b.seats - a.seats;
               })
             });
             cb();
@@ -105,20 +112,46 @@ class App {
             cb();
           })
         }
-      }
+      },
+      function(cb){
+        if(SWITCH){
+          const index = client.initIndex("map-pa-"+(conf.paFetchMode==="LIVE"?"live":"test"));
+          index.search('', {}, function searchDone(err, content) {
+            model.partySummary = content.hits[0];
+            cb();
+          });
+        } else {
+          model.partySummary = require("../../public/data/partySummary2015");
+          cb();
+        }
+      },
+      function(cb){
+        if(SWITCH){
+          const index = client.initIndex("map-latest-"+(conf.paFetchMode==="LIVE"?"live":"test"));
+          index.search('', {}, function searchDone(err, content) {
+            model.latestData = content.hits;
+            cb();
+          });
+        } else {
+          cb();
+        }
+      },
     ],function(){
       model.constituenciesData.totalVotes = 0;
       model.partiesData.results.forEach(function(_data){
         model.constituenciesData.totalVotes+=parseInt(_data.votes);
       });
       model.partiesData.results.forEach(function(party){
-        model.seatsCard.parties.push({
-          name: party.name,
-          seats: party.seats,
-          color: getParty(party.party).color,//"#e43b2c",
-          getWidth: self.getSeatsWidth,
-          code: party.party,
-        });
+        if(party.seats>0){
+          model.seatsCard.parties.push({
+            name: party.name,
+            seats: party.seats,
+            color: getParty(party.party).color,
+            getWidth: self.getSeatsWidth,
+            code: party.party,
+          });
+        }
+
       })
       model.seatsCard.parties.sort(function(a,b){
         return b.seats - a.seats;
@@ -127,45 +160,18 @@ class App {
       self.refresh();
     })
 
-    // END: getting data
-
     self.getSeatsWidth = function(seats) {
       return (seats/4.5 + '%');
     }
 
 
-    // model.data.detailsByParty = testData.detailsByParty;
-    // model.data.summary = testData.summary;
 
 
 
 
 
-    self.latestItems = [
-      {
-        value: "Conservatives hold Westminster"
-      },
-      {
-        value: "Lib Dems take Vauxhall"
-      },
-      {
-        value: "Conservatives take Lambeth"
-      },
-      {
-        value: "Labour hold Islington North"
-      }
-    ];
 
 
-    self.tableKeysToHeadings = {
-      // abbreviation: "Abbreviation",
-      name: "Party",
-      // objectID: "objectID",
-      // paId: "paId",
-      votes: "Votes",
-      shareChange: "% Change",
-      share: "% Share",
-    }
 
     self.partiesToTable = function(parties) {
       if(!parties){
@@ -207,96 +213,66 @@ class App {
       if (typeof constituency === 'string') {
         constituency = self.getConstituencyData(constituency);
       }
-      setTimeout(function(){
-        $('html, body').animate({
-          scrollTop: $(document).height()
-        }, 500);
-      },500)
       return self.implementSelectConstituency(constituency)
+
     }
 
     self.implementSelectConstituency = function(constituency) {
       self.ukMap.selectConstituency(constituency.objectID);
-      /*var newData = {
-        parties: constituency.results
-      }
-      newData.parties = newData.parties.map(function(party) {
-        var newParty = getParty(party.party);
-        newParty.seats = party.seats || party.share;
-        newParty.getWidth = self.getSeatsWidth
-        return newParty
-      })
-      model.seatsCard.parties = newData.parties;
-      self.seatsCard.refresh();*/
       model.selectedConstituency = self.getConstituencyData(constituency.objectID);
       self.refresh()
     }
 
-
-
-
-    /*model.seatsCard.parties = [
-      {
-        name: "Conservatives",
-        seats: 0,//326,
-        color: "#204eb7",
-        getWidth: self.getSeatsWidth,
-        code: "conservative"
-      },
-      {
-        name: "Labour",
-        seats: 0,//230,
-        color: "#e43b2c",
-        getWidth: self.getSeatsWidth,
-        code: "labour"
-      },
-      {
-        name: "Scottish National Party",
-        seats: 0,//56,
-        color: "#f3df00",
-        getWidth: self.getSeatsWidth,
-        code: "plaid"
-      },
-      {
-        name: "Liberal Democrats",
-        seats: 0,//8,
-        color: "#e0aa15",
-        getWidth: self.getSeatsWidth,
-        code: "lib-dem"
-      }
-    ];*/
-
-
-
-
-
-
-
-
     self.searchBar = new Search(self.selectConstituency);
-    self.ukMap = new ClickMap(self.selectConstituency);
+    self.ukMap = new ClickMap(self.selectConstituency,self.deselectConstituency);
 
   }
 
   render() {
     const self = this;
+
+    self.latestItems = [];
+    model.latestData.forEach(function(latestResult){
+      self.latestItems.push({
+        value: latestResult.party + " " + latestResult.type + " " + latestResult.constituency
+      })
+    })
+
+    if(model.selectedConstituency){
+      self.tableKeysToHeadings = {
+        name: "Party",
+        candidate: "Candidate",
+        votes: "Votes",
+        shareChange: "% Change",
+        share: "% Share",
+      }
+    } else {
+      self.tableKeysToHeadings = {
+        name: "Party",
+        seats: "Seats",
+        votes: "Votes",
+        shareChange: "% Change",
+        share: "% Share",
+      }
+    }
+
     self.summaryRows = [
       {
         cells: [
           { value: 'No. of Results:' },
-          { value: model.data.summary.numberOfResults + ' / ' + model.data.summary.totalNumberOfConstituencies  }
+          { value: model.partySummary.numberOfResults+ ' / ' + model.partySummary.totalNumberOfConstituencies  }
         ]
       },
       {
         cells: [
           { value: 'Total Votes:' },
-          { value: model.constituenciesData.totalVotes }
+          { value: model.partySummary.totalVotes }
         ]
       },
       {
         cells: [
-          { value: 'Forecast Winner:' },
-          { value: model.data.summary.forecastWinningParty }
+          { value: (SWITCH?'Forecast Winner:':'Winner:') },
+          { value: model.partySummary.forecastWinningParty }
         ]
       },
       // {
@@ -316,12 +292,14 @@ class App {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", localCandidates: localCandidates, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency }
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", localCandidates: localCandidates, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);
     self.latestCard = new Card(model.cardsData["latestCard"]);
     self.tableCard = new Card(model.cardsData["tableCard"]);
+    console.log("model.selectedConstituency")
+    console.log(model.selectedConstituency)
     const constituencyDeselector = helpers.assembleCards({deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency}, 'constituencyDeselector');
     var returnable = h('div.app',
       self.ukMap,
