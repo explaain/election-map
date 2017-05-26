@@ -148,7 +148,7 @@ class Map {
                 info.update(layer.feature.properties);
                 setTimeout(function(){
                   $('html, body').animate({
-                    scrollTop: $(document).height()
+                    scrollTop: $(".card.table").offset().top - 20
                   }, 500);
                 },500)
               }

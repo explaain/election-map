@@ -344,3 +344,7 @@ a.local-candidate-plate:hover{
   background-color: gray;
   color: white;
 }
+
+.card.list li {
+  cursor: pointer;
+}

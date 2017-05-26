@@ -234,7 +234,8 @@ class App {
     self.latestItems = [];
     model.latestData.forEach(function(latestResult){
       self.latestItems.push({
-        value: latestResult.party + " " + latestResult.type + " " + latestResult.constituency
+        value: latestResult.party + " " + latestResult.type + " " + latestResult.constituency,
+        action: function(){self.selectConstituency(latestResult.constituencyID)}
       })
     })
 
