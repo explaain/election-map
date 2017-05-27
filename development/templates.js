@@ -4,6 +4,7 @@ module.exports = function(CardTemplates){
     "content": [
       {
         "dom": "h2",
+        "condition": "selectedConstituency",
         "content": {
           "var": "name"
         }

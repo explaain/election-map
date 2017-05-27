@@ -284,6 +284,12 @@ class App {
       // }
     ];
 
+
+    console.log('model.selectedConstituency');
+    console.log(model.selectedConstituency);
+    // console.log(model.selectedConstituency.objectID);
+
+
     const localCandidates = model.selectedConstituency ?
       allCandidates.filter(function(candidate){
         return candidate.gss_code === model.selectedConstituency.objectID
@@ -291,6 +297,9 @@ class App {
       : [];
 
     var clientCards = [];
+
+    console.log('localCandidates');
+    console.log(localCandidates);
 
     localCandidates.forEach(function(localCandidate){
       clientCards.push({
@@ -304,7 +313,7 @@ class App {
     });
     console.log('clientCards');
     console.log(clientCards);
-    // explaain.addClientCards(clientCards);
+    explaain.addClientCards(clientCards);
 
     var mainName = model.selectedConstituency ? "Your candidates for " + model.selectedConstituency.name : "";
     var tableName = model.selectedConstituency ? (SWITCH ? '2017' : '2015') + " Results for " + model.selectedConstituency.name : "State of the Parties: Which Party is Winning";
@@ -314,7 +323,7 @@ class App {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: mainName, localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
+      'tableCard': { id: "tableCard", name: mainName, selectedConstituency: model.selectedConstituency, localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);
