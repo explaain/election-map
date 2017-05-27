@@ -15,6 +15,12 @@ module.exports = function(CardTemplates){
         "content": [{"template": "localCandidatePlate"}]
       },
       {
+        "dom": "h2",
+        "content": {
+          "var": "tableName"
+        }
+      },
+      {
         "dom": "div.body-content",
         "content": [
           {

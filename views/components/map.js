@@ -193,7 +193,7 @@ class Map {
                 L.DomUtil.setPosition(this._div, L.point([myFeature.feature.properties.lat,myFeature.feature.properties.long]))
               };
 
-              info.addTo(map.ukMap);
+              // info.addTo(map.ukMap);
 
               return myFeature;
             }

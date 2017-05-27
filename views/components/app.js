@@ -306,14 +306,15 @@ class App {
     console.log(clientCards);
     // explaain.addClientCards(clientCards);
 
-    // var tableName = (SWITCH ? '2017' : '2015') + " Results for " + model.selectedConstituency.name;
+    var mainName = model.selectedConstituency ? "Your candidates for " + model.selectedConstituency.name : "";
+    var tableName = model.selectedConstituency ? (SWITCH ? '2017' : '2015') + " Results for " + model.selectedConstituency.name : "State of the Parties: Which Party is Winning";
 
     const tableCardRows = self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results);
     model.cardsData = {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
+      'tableCard': { id: "tableCard", name: mainName, localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);
