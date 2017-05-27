@@ -311,12 +311,18 @@ div.local-candidates-container{
   min-height: 220px;
   text-align: center;
 }
+@media (max-width: 600px) {
+  .local-candidate-plate {
+    width: 50%;
+  }
+}
 a.local-candidate-plate{
   padding: 0px!important;
   background-color: transparent!important;
 }
 a.local-candidate-plate:hover{
-  background-color: #ff6e73!important;
+  background-color: #eee !important;
+  border-color: #ff6e73!important;
 }
 .local-candidate-plate .lc-image{
   background-color: lightgrey;
@@ -348,6 +354,7 @@ a.local-candidate-plate:hover{
   background-color: gray;
   color: white;
 }
+
 .local-candidate-plate h3 {
   font-size: 18px;
   margin: 10px 0 5px;
@@ -356,4 +363,8 @@ a.local-candidate-plate:hover{
 .local-candidate-plate h4 {
   font-size: 14px;
   margin: 10px 0 5px;
+}
+
+.card.list li {
+  cursor: pointer;
 }

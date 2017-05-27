@@ -97,4 +97,37 @@ module.exports = function(CardTemplates){
       }
     }
   }
+  CardTemplates.list = {
+    "dom": "div.content",
+    "content": [
+      {
+        "dom": "h2",
+        "content": {
+          "var": "name"
+        }
+      },
+      {
+        "dom": "div.body-content",
+        "content": [
+          {
+            "dom": "ul",
+            "loop": "items",
+            "content": [
+              {
+                "dom": "li",
+                "content": {
+                  "var": "value"
+                },
+                "attr": {
+                  "onclick": {
+                    "var": "action"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 };

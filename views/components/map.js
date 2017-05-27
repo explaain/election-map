@@ -148,7 +148,7 @@ class Map {
                 info.update(layer.feature.properties);
                 setTimeout(function(){
                   $('html, body').animate({
-                    scrollTop: $(document).height()
+                    scrollTop: $(".card.table").offset().top - 20
                   }, 500);
                 },500)
               }
@@ -175,6 +175,26 @@ class Map {
                 return layers[layerKey].feature.properties.pcon16cd == key;
               })[0];
               var myFeature = layers[myFeatureKey];
+
+              console.log('myFeature');
+              console.log(myFeature);
+
+              var info = L.control();
+
+              info.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'deselect'); // create a div with a class "info"
+                this.update();
+                return this._div;
+              };
+              //TODO: Jeremy, please improve text "No results yet"
+              // method that we will use to update the control based on feature properties passed
+              info.update = function (props) {
+                this._div.innerHTML = "Click to deselect constituency ";
+                L.DomUtil.setPosition(this._div, L.point([myFeature.feature.properties.lat,myFeature.feature.properties.long]))
+              };
+
+              info.addTo(map.ukMap);
+
               return myFeature;
             }
 

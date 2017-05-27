@@ -225,7 +225,7 @@ class App {
 
     self.searchBar = new Search(self.selectConstituency);
     self.ukMap = new ClickMap(self.selectConstituency,self.deselectConstituency);
-
+    MyMap = self.ukMap;
   }
 
   render() {
@@ -234,7 +234,8 @@ class App {
     self.latestItems = [];
     model.latestData.forEach(function(latestResult){
       self.latestItems.push({
-        value: latestResult.party + " " + latestResult.type + " " + latestResult.constituency
+        value: latestResult.party + " " + latestResult.type + " " + latestResult.constituency,
+        action: function(){self.selectConstituency(latestResult.constituencyID)}
       })
     })
 
@@ -289,12 +290,30 @@ class App {
       }).map(function(candidate) { candidate.image_url = candidate.image_url || '/img/profile.png'; return candidate })
       : [];
 
+    var clientCards = [];
+
+    localCandidates.forEach(function(localCandidate){
+      clientCards.push({
+        "@id": "//api.explaain.com/Headline/localCandidate_"+localCandidate.id,
+        "@type": "http://api.explaain.com/Headline",
+        image: localCandidate.image_url,
+        name: localCandidate.name,
+        description: (new LocalCandidateDetails(localCandidate)).render()
+      });
+      localCandidate.cardHref = "//api.explaain.com/Headline/localCandidate_"+localCandidate.id;
+    });
+    console.log('clientCards');
+    console.log(clientCards);
+    // explaain.addClientCards(clientCards);
+
+    // var tableName = (SWITCH ? '2017' : '2015') + " Results for " + model.selectedConstituency.name;
+
     const tableCardRows = self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results);
     model.cardsData = {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", localCandidates: localCandidates, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
+      'tableCard': { id: "tableCard", name: "State of the Parties: Which Party is Winning", localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);
@@ -308,13 +327,36 @@ class App {
       h('div.side-cards',
         self.seatsCard,
         self.summaryCard,
-        self.latestCard
+        (SWITCH?self.latestCard:undefined)
       ),
       self.tableCard,
       constituencyDeselector
     );
 
     return returnable;
+  }
+}
+
+class LocalCandidateDetails {
+  constructor(data) {
+    const self = this;
+    self.data = data;
+  }
+
+  render() {
+    var self = this;
+    return  "<div class='local-candidate-details'>" +
+              "<div>" + self.data.party_name + "</div>" +
+              "<div>" + self.data.birth_date + "</div>" +
+              "<div>" + self.data.post_label + "</div>" +
+              (self.data.email ? "<div><a href='mailto:" + self.data.email + "'>" + self.data.email + "</a></div>" : "") +
+              (self.data.twitter_username ? "<div><a href='https://twitter.com/" + self.data.twitter_username + "'>@" + self.data.twitter_username + "</a></div>" : "") +
+              (self.data.facebook_page_url ? "<div><a href='" + self.data.facebook_page_url + "'>Facebook</a></div>" : "") +
+              (self.data.homepage_url ? "<div><a href='" + self.data.homepage_url + "'>Homepage</a></div>" : "") +
+              (self.data.wikipedia_url ? "<div><a href='" + self.data.wikipedia_url + "'>Wikipedia</a></div>" : "") +
+              (self.data.likedin_url ? "<div><a href='" + self.data.likedin_url + "'>LinkedIn</a></div>" : "") +
+              // (self.data.mapit_url ? "<div><a href='" + self.data.mapit_url + "'>MapIt</a></div>" : "") +
+            "</div>";
   }
 }
 
