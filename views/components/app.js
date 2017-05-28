@@ -322,13 +322,19 @@ class App {
     // console.log(model.selectedConstituency.objectID);
 
 
-    const showCandidates = !SWITCH && model.selectedConstituency;
+    var showCandidates = !SWITCH && model.selectedConstituency !== undefined && model.selectedConstituency !== null;
 
-    const localCandidates = showCandidates ?
+    console.log('showCandidates')
+    console.log(showCandidates)
+
+    var localCandidates = showCandidates ?
       allCandidates.filter(function(candidate){
         return candidate.gss_code === model.selectedConstituency.objectID
       }).map(function(candidate) { candidate.image_url = candidate.image_url || '/img/profile.png'; return candidate })
       : [];
+
+    console.log('localCandidates')
+    console.log(localCandidates)
 
     var clientCards = [];
 
@@ -359,7 +365,7 @@ class App {
       'seatsCard': "seatsCard",
       'summaryCard': { id: "summaryCard", name: (SWITCH ? "Voting Summary" : "2015: Results Summary"), icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
-      'tableCard': { id: "tableCard", name: mainName, selectedConstituency: model.selectedConstituency, localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
+      'tableCard': { id: "tableCard", name: mainName, showCandidates: showCandidates, selectedConstituency: model.selectedConstituency, localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);
     self.summaryCard = new Card(model.cardsData["summaryCard"]);

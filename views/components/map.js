@@ -99,7 +99,6 @@ class Map {
                 }
                 partySeats[partyReconciliation[data.results[0].party]]++;
                 // Populating map
-                console.log(data.newParty);
                 var partyKey = data.newParty || data.results[0].party;
                 if (collectParties.indexOf(partyKey) == -1) {
                   collectParties.push(partyKey)

@@ -297,7 +297,7 @@ input#search-input {
 
 /* Local candidates */
 div.local-candidates-container{
-  padding: 5px;
+  padding: 5px 15px;
 }
 .local-candidate-plate{
   display: block;
