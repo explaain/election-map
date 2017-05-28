@@ -23,6 +23,7 @@ class Search {
         }
       }
     ]).on('autocomplete:selected', function(event, suggestion, dataset) {
+      mixpanel.track("Selected from search", {constituencySuggestion: suggestion});
       self.selectConstituency(suggestion);
     });
   }

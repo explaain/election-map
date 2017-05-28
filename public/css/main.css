@@ -301,7 +301,6 @@ div.local-candidates-container{
 }
 .local-candidate-plate{
   display: block;
-  width: 50%;
   width: 140px;
   float: left;
   margin: 5px;
@@ -313,7 +312,7 @@ div.local-candidates-container{
 }
 @media (max-width: 600px) {
   .local-candidate-plate {
-    width: 50%;
+    width: calc(50% - 10px);
   }
 }
 a.local-candidate-plate{

@@ -99,7 +99,8 @@ class Map {
                 }
                 partySeats[partyReconciliation[data.results[0].party]]++;
                 // Populating map
-                var partyKey = data.results[0].party;
+                console.log(data.newParty);
+                var partyKey = data.newParty || data.results[0].party;
                 if (collectParties.indexOf(partyKey) == -1) {
                   collectParties.push(partyKey)
                 }
@@ -199,6 +200,7 @@ class Map {
             }
 
             function zoomToFeature(e) {
+              mixpanel.track("Zoom to/from feature", {constituencyProperties: e.target.feature.properties});
               $("#search-input").val(e.target.feature.properties.pcon16nm);
               self.outboundSelectConstituency(e.target.feature.properties.pcon16cd);
             }

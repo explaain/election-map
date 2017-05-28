@@ -51,11 +51,12 @@ class App {
       results: []
     };
     model.latestData = [];
-    model.seatsCard = { name: "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes", parties: []}
+    model.seatsCard = { name: (SWITCH ? "" : "2015: ") + "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes", parties: []}
     const client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
     async.parallel([
       function(cb){
         if(SWITCH){
+          console.log(1);
           const index = client.initIndex("map-constituencies-"+(conf.paFetchMode==="LIVE"?"live":"test"));
           index.search('', {
             hitsPerPage: 650 //TODO: looks like a hardcode
@@ -71,14 +72,24 @@ class App {
             cb();
           });
         } else {
+          console.log(2);
           model.constituenciesData = require("../../public/data/constituencies2015");
-          model.constituenciesData.forEach(function(_constitiency){
-            _constitiency.results.forEach(function(_party){
+          model.byElections = require("../../public/data/byElections");
+          model.constituenciesData.forEach(function(_constituency){
+            _constituency.results.forEach(function(_party){
               const partyFound = allParties.filter(function(__party) {
                 return __party.key == _party.party;
               })[0];
               _party.name = partyFound?partyFound.name:"";
             })
+            const byElection = model.byElections.filter(function(byElection) {
+              return byElection.constituency == _constituency.objectID;
+            })[0];
+            if (byElection) {
+              console.log('byElection')
+              console.log('byElection')
+              _constituency.newParty = byElection.newParty;
+            }
           })
           cb();
         }
@@ -174,7 +185,11 @@ class App {
 
 
     self.partiesToTable = function(parties) {
-      if(!parties){
+      console.log('parties');
+      console.log(parties);
+      console.log(parties.length);
+      if(parties.length === 0){
+        console.log('hi');
         return [];
       }
       var rows = parties.map(function(party) {
@@ -210,6 +225,8 @@ class App {
     }
 
     self.selectConstituency = function(constituency) {
+      console.log(constituency);
+      mixpanel.track("Selected constituency", {constituency: constituency});
       if (typeof constituency === 'string') {
         constituency = self.getConstituencyData(constituency);
       }
@@ -219,7 +236,11 @@ class App {
 
     self.implementSelectConstituency = function(constituency) {
       self.ukMap.selectConstituency(constituency.objectID);
+      console.log(constituency.objectID);
       model.selectedConstituency = self.getConstituencyData(constituency.objectID);
+      console.log('self.getConstituencyData');
+      console.log(self.getConstituencyData);
+      console.log(constituency);
       self.refresh()
     }
 
@@ -240,12 +261,21 @@ class App {
     })
 
     if(model.selectedConstituency){
-      self.tableKeysToHeadings = {
-        name: "Party",
-        candidate: "Candidate",
-        votes: "Votes",
-        shareChange: "% Change",
-        share: "% Share",
+      if(SWITCH) {
+        self.tableKeysToHeadings = {
+          name: "Party",
+          candidate: "Candidate",
+          votes: "Votes",
+          shareChange: "% Change",
+          share: "% Share",
+        }
+      } else {
+        self.tableKeysToHeadings = {
+          name: "Party",
+          votes: "Votes",
+          shareChange: "% Change",
+          share: "% Share",
+        }
       }
     } else {
       self.tableKeysToHeadings = {
@@ -284,13 +314,17 @@ class App {
       // }
     ];
 
+    var summaryTitle = SWITCH ? 'Voting Summary' : '2015 Voting Summary';
+
 
     console.log('model.selectedConstituency');
     console.log(model.selectedConstituency);
     // console.log(model.selectedConstituency.objectID);
 
 
-    const localCandidates = model.selectedConstituency ?
+    const showCandidates = !SWITCH && model.selectedConstituency;
+
+    const localCandidates = showCandidates ?
       allCandidates.filter(function(candidate){
         return candidate.gss_code === model.selectedConstituency.objectID
       }).map(function(candidate) { candidate.image_url = candidate.image_url || '/img/profile.png'; return candidate })
@@ -315,13 +349,15 @@ class App {
     console.log(clientCards);
     explaain.addClientCards(clientCards);
 
+    mixpanel.track_links(".local-candidate-plate","Opened Candidate Card");
+
     var mainName = model.selectedConstituency ? "Your candidates for " + model.selectedConstituency.name : "";
-    var tableName = model.selectedConstituency ? (SWITCH ? '2017' : '2015') + " Results for " + model.selectedConstituency.name : "State of the Parties: Which Party is Winning";
+    var tableName = model.selectedConstituency ? (SWITCH ? '2017' : '2015') + " Results for " + model.selectedConstituency.name : (SWITCH ? "State of the Parties: Which Party is Winning" : "2015 Results Breakdown");
 
     const tableCardRows = self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results);
     model.cardsData = {
       'seatsCard': "seatsCard",
-      'summaryCard': { id: "summaryCard", name: "Voting Summary", icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
+      'summaryCard': { id: "summaryCard", name: (SWITCH ? "Voting Summary" : "2015: Results Summary"), icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
       'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
       'tableCard': { id: "tableCard", name: mainName, selectedConstituency: model.selectedConstituency, localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
     }

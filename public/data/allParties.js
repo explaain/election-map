@@ -94,4 +94,24 @@ var allParties = [
     name: "SNP",
     color: "#f3df00",
   },
+  {
+    key: "democratic-unionist-party---d.u.p.",
+    name: "Democratic Unionist Party",
+    color: "#c52329",
+  },
+  {
+    key: "sinn-féin",
+    name: "Sinn Féin",
+    color: "#039355",
+  },
+  {
+    key: "ulster-unionist-party",
+    name: "Ulster Unionist Party",
+    color: "#1c3664",
+  },
+  {
+    key: "sdlp-social-democratic-&-labour-party",
+    name: "Social Democratic and Labour Party",
+    color: "#006e51",
+  },
 ];

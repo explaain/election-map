@@ -4,14 +4,14 @@ module.exports = function(CardTemplates){
     "content": [
       {
         "dom": "h2",
-        "condition": "selectedConstituency",
+        "condition": "showCandidates",
         "content": {
           "var": "name"
         }
       },
       {
         "dom": "div.local-candidates-container",
-        // "condition": "localCandidates",
+        "condition": "showCandidates",
         "loop": "localCandidates",
         "content": [{"template": "localCandidatePlate"}]
       },
