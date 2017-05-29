@@ -1,6 +1,9 @@
 body {
   overflow-x: hidden;
 }
+body.framed {
+  margin: 0 -20px;
+}
 
 span.algolia-autocomplete {
   display: block;
@@ -47,7 +50,11 @@ input#search-input {
   background-position: center;
   background-repeat: no-repeat;
   background-size:80px;
+  background-color: white;
   position: relative;
+}
+body.framed .map {
+  margin: 20px;
 }
 
 .map-overlay {
@@ -60,6 +67,7 @@ input#search-input {
 
 #ukMap {
   height: calc(100vh - 240px);
+  min-height: 300px;
   width: 100%;
   z-index: 0;
   background: white;
