@@ -8,6 +8,7 @@ const Helpers = require("./includes/helpers");
 
 helpers = new Helpers(model, h, CardTemplates, http, router);
 
+
 //Components
 const App = require('./components/app');
 
@@ -28,6 +29,8 @@ helpers.loadTemplates(templatesUrl).then(function(templates){
   http.get(paDataUrl);
   var paDataUrl2 = '/pa-update-latest';
   http.get(paDataUrl2);
+
+  document.body.className = document.body.className ? document.body.className + (window.self == window.top ? " top" : " framed") : (window.self == window.top ? "top" : "framed");
 
   hyperdom.append(document.body, new App());
 });

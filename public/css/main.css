@@ -229,7 +229,7 @@ body.framed .map {
 }
 
 .card.table table {
-  min-width: 800px;
+  min-width: 600px;
 }
 .card.table table tr:nth-child(odd) {
   background-color: #f4f4f4;
@@ -315,9 +315,10 @@ div.local-candidates-container{
   border: 1px solid #ddd!important;
   border-radius: 5px;
   overflow: hidden;
-  min-height: 220px;
+  min-height: 230px;
   text-align: center;
 }
+
 @media (max-width: 600px) {
   .local-candidate-plate {
     width: calc(50% - 10px);
@@ -338,6 +339,8 @@ a.local-candidate-plate:hover{
   background-size: cover;
 }
 .local-candidate-plate .lc-name{
+  margin: 1em 0 0.5em;
+  min-height: 1.9em;
   line-height: 1.4em;
   padding: 0 5px;
 }

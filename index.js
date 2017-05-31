@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-app.set('port', (process.env.PORT || 1234));
+app.set('port', (process.env.PORT || 2468));
 
 app.use(express.static(__dirname + '/public'));
 
