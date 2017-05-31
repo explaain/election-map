@@ -24,6 +24,7 @@ class Search {
       }
     ]).on('autocomplete:selected', function(event, suggestion, dataset) {
       mixpanel.track("Selected from search", {constituencySuggestion: suggestion});
+      $('#search-input').blur();
       self.selectConstituency(suggestion);
     });
   }
