@@ -239,6 +239,11 @@ body.framed .map {
   border-bottom: 1px solid #ddd;
   background-color: transparent;
 }
+@media (max-width: 320px) {
+  .card.table table {
+    min-width: 480px;
+  }
+}
 
 
 /* Map */
@@ -377,4 +382,34 @@ a.local-candidate-plate:hover{
 
 .card.list li {
   cursor: pointer;
+}
+
+.fade-mask {
+  position: absolute;
+  pointer-events: none;
+  bottom: 0;
+  top: 0;
+  height: 100%;
+  right: 0;
+  left: 80%;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100 */
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
+}
+.fade-mask i {
+  position: absolute;
+  top: 50%;
+  /*bottom: calc(50% - 10px);*/
+  font-size: 3em;
+  color: rgba(0,0,0,0.3);
+  line-height: 1;
+  right: 10px;
+}
+@media (min-width: 680px) {
+  .fade-mask {
+    display: none;
+  }
 }

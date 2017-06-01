@@ -397,6 +397,15 @@ class App {
       constituencyDeselector
     );
 
+
+    $('.card.table .body-content').on('scroll', function() {
+      console.log('hi');
+      if($(this).scrollLeft() > 80) {
+        console.log('hi1');
+        $('.card.table .body-content .fade-mask i').fadeOut(1000);
+      }
+    });
+
     return returnable;
   }
 }

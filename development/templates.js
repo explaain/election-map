@@ -25,6 +25,14 @@ module.exports = function(CardTemplates){
         "dom": "div.body-content",
         "content": [
           {
+            "dom": "div.fade-mask",
+            "content": [
+              {
+                "dom": "i.fa.fa-chevron-circle-right"
+              }
+            ]
+          },
+          {
             "dom": "table",
             "condition": "rowsExist",
             "loop": "rows",
