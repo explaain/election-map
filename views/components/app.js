@@ -391,14 +391,21 @@ class App {
       localCandidate.cardHref = "//api.explaain.com/Headline/localCandidate_"+localCandidate.id;
       localCandidate.openCandidate = function(e) {
         e.preventDefault();
-        parentIFrame.sendMessage({type: 'openCard', key: localCandidate.cardHref});
+        if ('parentIFrame' in window) {
+          parentIFrame.sendMessage({type: 'openCard', key: localCandidate.cardHref});
+        } else {
+          explaain.showOverlay(localCandidate.cardHref);
+        }
         return false;
       }
     });
     console.log('clientCards');
     console.log(clientCards);
-    parentIFrame.sendMessage({type: 'addCards', data: clientCards});
-    // explaain.addClientCards(clientCards);
+    if ('parentIFrame' in window) {
+      parentIFrame.sendMessage({type: 'addCards', data: clientCards});
+    } else {
+      explaain.addClientCards(clientCards);
+    }
 
     // mixpanel.track_links(".local-candidate-plate","Opened Candidate Card");
 
