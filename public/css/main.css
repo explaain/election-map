@@ -53,9 +53,9 @@ input#search-input {
   background-color: white;
   position: relative;
 }
-body.framed .map {
-  margin: 20px;
-}
+/*body.framed .map {
+  margin: 0 20px 20px 20px;
+}*/
 
 .map-overlay {
   z-index:2;
@@ -66,8 +66,7 @@ body.framed .map {
 }
 
 #ukMap {
-  height: calc(100vh - 240px);
-  min-height: 300px;
+  height: 300px;
   width: 100%;
   z-index: 0;
   background: white;

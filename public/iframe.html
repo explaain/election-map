@@ -6,20 +6,29 @@
 	</head>
 	<body>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.14/iframeResizer.min.js'></script>
-		<style>
-		iframe#election-map-2017 {
+		<script src="http://localhost:2468/js/smoothscroll.js"></script>
+		<script type="text/javascript">
+			var explaainMessageCallback = function (params) {
+				if (params.message.type == 'scroll') {
+					console.log('oj');
+					window.scroll({ top: params.message.pos, left: 0, behavior: 'smooth' });
+					return false;
+				}
+			}
+		</script>
+
+		<style>iframe{
 			margin: 0;
 			padding: 0;
 			border: none;
 			width: 100%;
-			padding: 0 10px;
-			border: 1px solid #DDD;
-			border-radius: 5px;
-		}
-		</style>
-		<iframe id="election-map-2017"
-						scrolling="no"
-						src="http://localhost:2468/"></iframe>
-		<script>iFrameResize({log:true},'#election-map-2017')</script>
+			/*padding: 0 10px;*/
+			/*border: 1px solid #DDD;*/
+			/*border-radius: 5px;*/
+		}</style>
+		<iframe id="explaainMapIframe" src="http://localhost:2468" scrolling="no"></iframe>
+		<script>
+			iFrameResize({tolerance: 10, maxHeight: 4000, messageCallback: explaainMessageCallback}, '#explaainMapIframe')
+		</script>
 	</body>
 </html>

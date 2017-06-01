@@ -47,9 +47,20 @@ class App {
     self.deselectConstituency = function(){
 
       setTimeout(function(){
-        $('html, body').animate({
-          scrollTop: 0
-        }, 500);
+        if ('parentIFrame' in window) {
+          var scroll = true;
+          var infoCallback = function(info) {
+            if (scroll) {
+              parentIFrame.sendMessage({type: 'scroll', pos: info.offsetTop});
+            }
+            scroll = false;
+          }
+          parentIFrame.getPageInfo(infoCallback)
+        } else {
+          $('html, body').animate({
+            scrollTop: 0
+          }, 500);
+        }
         self.ukMap.deselectConstituency();
         model.selectedConstituencyLayer = null;
         model.selectedConstituency = null;
@@ -253,6 +264,22 @@ class App {
       console.log('self.getConstituencyData');
       console.log(self.getConstituencyData);
       console.log(constituency);
+      setTimeout(function(){
+        if ('parentIFrame' in window) {
+          var scroll = true;
+          var infoCallback = function(info) {
+            if (scroll) {
+              parentIFrame.sendMessage({type: 'scroll', pos: info.offsetTop + $(".card.table").offset().top - 20});
+            }
+            scroll = false;
+          }
+          parentIFrame.getPageInfo(infoCallback)
+        } else {
+          $('html, body').animate({
+            scrollTop: $(".card.table").offset().top - 20
+          }, 500);
+        }
+      },500)
       self.refresh()
     }
 
@@ -402,7 +429,7 @@ class App {
       console.log('hi');
       if($(this).scrollLeft() > 80) {
         console.log('hi1');
-        $('.card.table .body-content .fade-mask i').fadeOut(1000);
+        $('.card.table .body-content .fade-mask').fadeOut(1000);
       }
     });
 

@@ -25,6 +25,7 @@ class Map {
       self.ukMap.fitBounds(constituency.getBounds(), {
         padding: [100,100]
       });
+      console.log('selecting');
       self.specialHighlightFeature(constituency);
     } else {
       console.log("Constituency not found by a key " + key + ". This is probably a Northern Ireland one.")
@@ -146,11 +147,6 @@ class Map {
                   layer.bringToFront();
                 }
                 info.update(layer.feature.properties);
-                setTimeout(function(){
-                  $('html, body').animate({
-                    scrollTop: $(".card.table").offset().top - 20
-                  }, 500);
-                },500)
               }
             }
             self.resetHighlight = function(e){
