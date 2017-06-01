@@ -389,12 +389,18 @@ class App {
         description: (new LocalCandidateDetails(localCandidate)).render()
       });
       localCandidate.cardHref = "//api.explaain.com/Headline/localCandidate_"+localCandidate.id;
+      localCandidate.openCandidate = function(e) {
+        e.preventDefault();
+        parentIFrame.sendMessage({type: 'openCard', key: localCandidate.cardHref});
+        return false;
+      }
     });
     console.log('clientCards');
     console.log(clientCards);
-    explaain.addClientCards(clientCards);
+    parentIFrame.sendMessage({type: 'addCards', data: clientCards});
+    // explaain.addClientCards(clientCards);
 
-    mixpanel.track_links(".local-candidate-plate","Opened Candidate Card");
+    // mixpanel.track_links(".local-candidate-plate","Opened Candidate Card");
 
     var mainName = model.selectedConstituency ? "Your candidates for " + model.selectedConstituency.name : "";
     var tableName = model.selectedConstituency ? (SWITCH ? '2017' : '2015') + " Results for " + model.selectedConstituency.name : (SWITCH ? "State of the Parties: Which Party is Winning" : "2015 Results Breakdown");

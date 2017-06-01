@@ -6,14 +6,25 @@
 	</head>
 	<body>
 		<script src='//cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.14/iframeResizer.min.js'></script>
-		<script src="//ge2017.com/js/smoothscroll.js"></script>
+		<script src="//lbc.ge2017.com/js/smoothscroll.js"></script>
+		<script src="//use.explaain.com/explaain.js"></script>
 		<script type="text/javascript">
 			var explaainMessageCallback = function (params) {
-				if (params.message.type == 'scroll') {
-					console.log('oj');
-					window.scroll({ top: params.message.pos, left: 0, behavior: 'smooth' });
-					return false;
+				switch (params.message.type) {
+					case 'scroll':
+						window.scroll({ top: params.message.pos, left: 0, behavior: 'smooth' });
+						return false;
+						break;
+					case 'addCards':
+						explaain.addClientCards(params.message.data);
+						break;
+					case 'openCard':
+						console.log(params.message.key);
+						explaain.showOverlay(params.message.key);
+						break;
+					default:
 				}
+
 			}
 		</script>
 

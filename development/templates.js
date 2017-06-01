@@ -69,8 +69,8 @@ module.exports = function(CardTemplates){
   CardTemplates.localCandidatePlate = {
     "dom": "a.local-candidate-plate.internal",
     "attr":{
-      "href": {
-        "var": "cardHref"
+      "onclick": {
+        "var": "openCandidate"
       }
     },
     "content": [
