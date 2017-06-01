@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.14/iframeResizer.min.js'></script>
+		<style>
+		iframe#election-map-2017 {
+			margin: 0;
+			padding: 0;
+			border: none;
+			width: 100%;
+			padding: 0 10px;
+			border: 1px solid #DDD;
+			border-radius: 5px;
+		}
+		</style>
+		<iframe id="election-map-2017"
+						scrolling="no"
+						src="http://localhost:2468/"></iframe>
+		<script>iFrameResize({log:true},'#election-map-2017')</script>
+	</body>
+</html>

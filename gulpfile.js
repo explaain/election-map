@@ -38,6 +38,7 @@ const JSIndex = [
 
 // JS Files to concat and compress
 const JSFiles = [
+  'public/js/iframeResizer.contentWindow.min.js',
   'public/js/jquery.js',
   'public/js/bootstrap.js',
   'public/js/leaflet.js',
