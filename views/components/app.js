@@ -69,12 +69,18 @@ class App {
     }
 
     model.constituenciesData = [];
-    model.partySummary = {};
+    //@TODO - HOTFIX - should be actually model.partySummary = {}
+    model.partySummary = {
+      "numberOfResults":"",
+      "totalNumberOfConstituencies":"",
+      "totalVotes":"",
+      "forecastWinningParty":""
+    };
     model.partiesData = {
       results: []
     };
     model.latestData = [];
-    model.seatsCard = { name: (SWITCH ? "" : "2015: ") + "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes", parties: []}
+    model.seatsCard = { name: (SWITCH ? "" : "2015: ") + "Seats at a Glance", getWidth: self.getSeatsWidth, type: "votes", parties: [], partiesExist: true}
     const client = algoliasearch(conf.algoliaId, conf.algoliaPublic)
     async.parallel([
       function(cb){
@@ -85,13 +91,16 @@ class App {
             hitsPerPage: 650 //TODO: looks like a hardcode
           }, function searchDone(err, content) {
             model.constituenciesData = require("../../public/data/constituencies2017-empty");
-            const freshData = content.hits;
-            self.totalResultsAmount = freshData.length;
-            freshData.forEach(function(constituency){
-              model.constituenciesData.filter(function(_constituency) {
-                return _constituency.objectID === constituency.objectID;
-              })[0].results = constituency.results;
-            })
+            console.log("CH4")
+            if(content){
+              const freshData = content.hits;
+              self.totalResultsAmount = freshData.length;
+              freshData.forEach(function(constituency){
+                model.constituenciesData.filter(function(_constituency) {
+                  return _constituency.objectID === constituency.objectID;
+                })[0].results = constituency.results;
+              })
+            }
             cb();
           });
         } else {
@@ -123,21 +132,24 @@ class App {
           index.search('', {
             hitsPerPage: 650 //TODO: looks like a hardcode
           }, function searchDone(err, content) {
-            content.hits.forEach(function(party){
-              const partyCode = party.name.toLowerCase().replace(/\s/g,"-");
-              model.partiesData.results.push({
-                party: partyCode,
-                //rank: parties.length+1,
-                votes: party.totalVotes,
-                name: party.name,
-                seats: party.totalSeats?party.totalSeats:0,
-                share: party.percentageShare,
-                shareChange: party.percentageChange,
+            console.log("CH1")
+            if(content){
+              content.hits.forEach(function(party){
+                const partyCode = party.name.toLowerCase().replace(/\s/g,"-");
+                model.partiesData.results.push({
+                  party: partyCode,
+                  //rank: parties.length+1,
+                  votes: party.totalVotes,
+                  name: party.name,
+                  seats: party.totalSeats?party.totalSeats:0,
+                  share: party.percentageShare,
+                  shareChange: party.percentageChange,
+                });
+                model.partiesData.results.sort(function(a,b){
+                  return b.seats - a.seats;
+                })
               });
-              model.partiesData.results.sort(function(a,b){
-                return b.seats - a.seats;
-              })
-            });
+            }
             cb();
           });
         } else {
@@ -151,11 +163,18 @@ class App {
         if(SWITCH){
           const index = client.initIndex("map-pa-"+(conf.paFetchMode==="LIVE"?"live":"test"));
           index.search('', {}, function searchDone(err, content) {
-            model.partySummary = content.hits[0];
+            console.log("CH2")
+            if(content){
+              model.partySummary = content.hits[0];
+              model.partySummaryReallyLoaded = true;
+            }
+            model.partySummaryLoaded = true;
             cb();
           });
         } else {
           model.partySummary = require("../../public/data/partySummary2015");
+          model.partySummaryLoaded = true;
+          model.partySummaryReallyLoaded = true;
           cb();
         }
       },
@@ -163,7 +182,11 @@ class App {
         if(SWITCH){
           const index = client.initIndex("map-latest-"+(conf.paFetchMode==="LIVE"?"live":"test"));
           index.search('', {}, function searchDone(err, content) {
-            model.latestData = content.hits;
+            console.log("CH3")
+            if(content){
+              model.latestData = content.hits;
+              model.latestDataLoaded = true;
+            }
             cb();
           });
         } else {
@@ -187,6 +210,7 @@ class App {
         }
 
       })
+      model.seatsCard.partiesExist = model.seatsCard.parties.length > 0;
       model.seatsCard.parties.sort(function(a,b){
         return b.seats - a.seats;
       })
@@ -325,33 +349,37 @@ class App {
         share: "% Share",
       }
     }
+    if(model.partySummaryReallyLoaded){
+      self.summaryRows = [
+        {
+          cells: [
+            { value: 'No. of Results:' },
+            { value: model.partySummary.numberOfResults+ ' / ' + model.partySummary.totalNumberOfConstituencies  }
+          ]
+        },
+        {
+          cells: [
+            { value: 'Total Votes:' },
+            { value: CommaFormatted(model.partySummary.totalVotes) }
+          ]
+        },
+        {
+          cells: [
+            { value: (SWITCH?'Forecast Winner:':'Winner:') },
+            { value: model.partySummary.forecastWinningParty }
+          ]
+        },
+        // {
+        //   cells: [
+        //     { value: 'Forecast Majority:' },
+        //     { value: model.data.summary.forecastMajority }
+        //   ]
+        // }
+      ];
+    } else {
+      self.summaryRows = []
+    }
 
-    self.summaryRows = [
-      {
-        cells: [
-          { value: 'No. of Results:' },
-          { value: model.partySummary.numberOfResults+ ' / ' + model.partySummary.totalNumberOfConstituencies  }
-        ]
-      },
-      {
-        cells: [
-          { value: 'Total Votes:' },
-          { value: CommaFormatted(model.partySummary.totalVotes) }
-        ]
-      },
-      {
-        cells: [
-          { value: (SWITCH?'Forecast Winner:':'Winner:') },
-          { value: model.partySummary.forecastWinningParty }
-        ]
-      },
-      // {
-      //   cells: [
-      //     { value: 'Forecast Majority:' },
-      //     { value: model.data.summary.forecastMajority }
-      //   ]
-      // }
-    ];
 
     var summaryTitle = SWITCH ? 'Voting Summary' : '2015 Voting Summary';
 
@@ -415,8 +443,8 @@ class App {
     const tableCardRows = self.partiesToTable(model.selectedConstituency?model.selectedConstituency.results:model.partiesData.results);
     model.cardsData = {
       'seatsCard': "seatsCard",
-      'summaryCard': { id: "summaryCard", name: (SWITCH ? "Voting Summary" : "2015: Results Summary"), icon: "fa-bar-chart", rows: self.summaryRows, type: "stats" },
-      'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list" },
+      'summaryCard': { id: "summaryCard", name: (SWITCH ? "Voting Summary" : "2015: Results Summary"), icon: "fa-bar-chart", rows: self.summaryRows, type: "stats", rowsExist: self.summaryRows.length>0 || !model.partySummaryLoaded },
+      'latestCard': { id: "latestCard", name: "Latest Results", items: self.latestItems, type: "list", itemsExist: self.latestItems.length > 0 || !model.latestDataLoaded },
       'tableCard': { id: "tableCard", name: mainName, showCandidates: showCandidates, selectedConstituency: model.selectedConstituency, localCandidates: localCandidates, tableName: tableName, type: "table", rows: tableCardRows, rowsExist: tableCardRows.length>1, deselectConstituency: self.deselectConstituency, selectedConstituency: model.selectedConstituency }
     }
     self.seatsCard = new Card(model.cardsData["seatsCard"]);

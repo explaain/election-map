@@ -1,5 +1,6 @@
 const conf = require("../conf/conf.js");
 const paFetchModeIsLive = conf.paFetchMode==="LIVE";
+const helpers = require("./helpers");
 
 module.exports = function(app){
 
@@ -18,6 +19,7 @@ module.exports = function(app){
     connectToPA(function(c){
       c.list('/'+(!paFetchModeIsLive?"test/":"")+req.params.folder,function(err, list) {
         if(err){
+          helpers.consoleError("PAFL: Folder not found");
           res.send({error: "Folder not found"});
         } else {
           const result = {};
@@ -37,8 +39,10 @@ module.exports = function(app){
   app.get("/pa/:folder/get/:file", function(req, res){
     if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
     connectToPA(function(c){
-      c.get('/'+(!paFetchModeIsLive?"test/":"")+req.params.folder+'/'+req.params.file+".xml", function(err, stream) {
+      const filePath = '/'+(!paFetchModeIsLive?"test/":"")+req.params.folder+'/'+req.params.file+".xml";
+      c.get(filePath, function(err, stream) {
         if(err){
+          helpers.consoleError("PAFGF: File not found: " + filePath);
           res.send({error: "File not found"});
           c.destroy();
         } else {
@@ -54,23 +58,31 @@ module.exports = function(app){
             });
             c.destroy();
           });
+          stream.on('error', () => {
+            helpers.consoleError("PAFGF: Stream broke");
+            res.send({error: "Stream broke"});
+            c.destroy();
+          });
         }
       })
     })
   })
 
   app.get("/pa-update", function(req, res){
-    if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
+    if(!paFetchModeIsLive){
+      helpers.consoleWarning("PU: Warning! Using TEST query until the START of election calculation")
+    }
     if((new Date())-lastFetchedSopt>conf.sopFetchTimeout*1000 && sopFetchStatus!=="updating"){
       lastFetchedSopt = new Date();
       const parseString = require('xml2js').parseString;
       var lastObservedSop;
       var lastObservedSopn = 0;
-      const SopRegExp = new RegExp(!!paFetchModeIsLive?"^Snap_General_Election_Sop_":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
+      const SopRegExp = new RegExp(!!paFetchModeIsLive?"^Snap_General_Election_Sop_(\\d+)\.xml":"^Test_Snap_General_Election_Sop_(\\d+)\.xml$","i")
       connectToPA(function(c){
-        const folder = !!paFetchModeIsLive?'/results':'/test/results';
+        const folder = paFetchModeIsLive?'/results':'/test/results';
         c.list(folder, function(err, list) {
           if(err){
+            helpers.consoleError("PU: Folder not found: " + folder);
             res.send({error: err});
             c.destroy();
           } else {
@@ -87,9 +99,11 @@ module.exports = function(app){
             if(lastObservedSopn>lastFetchedSopn){
               sopFetchStatus = "updating"
               lastFetchedSopn = lastObservedSopn;
-              console.log("New Sop published. Fetching...")
-              c.get(folder+'/'+lastObservedSop, function(err, stream) {
+              helpers.consoleInfo("PU: New Sop published. Fetching...")
+              const filePath = folder+'/'+lastObservedSop;
+              c.get(filePath, function(err, stream) {
                 if(err){
+                  helpers.consoleError("PU: File not found: " + filePath);
                   res.send({error: "File not found"});
                   c.destroy();
                 } else {
@@ -104,34 +118,46 @@ module.exports = function(app){
                       traverseSop(sopJSON,c,folder,req,res);
                     });
                   });
+                  stream.on('error', () => {
+                    helpers.consoleError("PU: Stream broke");
+                    res.send({error: "Stream broke"});
+                    c.destroy();
+                  });
                 }
               })
             } else {
-              console.log("No new Sop published. No fetch needed.");
+              helpers.consoleInfo("PU: No new Sop published. No fetch needed.");
               res.send({ok: true, updated: false})
               c.destroy();
             }
           }
         });
+      },function(){
+        helpers.consoleError("PU: Cound not connect to PA");
+        res.send({error: "Cound not connect to PA"});
       });
     } else {
-      console.log("Not going to check for a new Sop right now");
+      //helpers.consoleInfo("PU: Not going to check for a new Sop right now");
       res.send({ok: true, updated: false})
     }
   });
 
   app.get("/pa-update-latest", function(req, res){
-    if(!paFetchModeIsLive){console.log("Warning! Using TEST query until the START of election calculation")}
+    if(!paFetchModeIsLive){
+      helpers.consoleWarning("PUL: Warning! Using TEST query until the START of election calculation");
+    }
     if((new Date())-lastFetchedConstituencyt>conf.sopFetchTimeout*1000 && latestFetchStatus!=="updating"){
+      helpers.consoleInfo("PUL: Fetching latest results...")
       latestFetchStatus = "updating";
       lastFetchedConstituencyt = new Date();
       const parseString = require('xml2js').parseString;
       const SopRegExp = new RegExp(!!paFetchModeIsLive?"^Snap_General_Election_result_":"^Test_Snap_General_Election_result_","i")
       connectToPA(function(c){
         const async = require("async");
-        const folder = !!paFetchModeIsLive?'/results':'/test/results';
+        const folder = paFetchModeIsLive?'/results':'/test/results';
         c.list(folder, function(err, list) {
           if(err){
+            helpers.consoleError("PUL: Folder not found: " + folder);
             res.send({error: err});
             c.destroy();
           } else {
@@ -152,6 +178,7 @@ module.exports = function(app){
               const path = folder+'/'+fileToFetch;
               c.get(path, function(err, stream) {
                 if(err){
+                  helpers.consoleError("PUL: File not found: " + fileToFetch);
                   callback();
                 } else {
                   const chunks = [];
@@ -173,33 +200,38 @@ module.exports = function(app){
                     });
                   });
                   stream.on('error', () => {
+                    helpers.consoleError("PUL: Stream broke");
                     callback();
                   });
                 }
               });
             },function(){
               paDB.updateLatest(data,function(){
+                helpers.consoleSuccess("PUL: Update finished");
                 latestFetchStatus = "idle";
                 res.send({ok: true, updated: true})
                 c.destroy();
               });
-
-            })
-
+            });
           }
         });
+      },function(){
+        helpers.consoleError("PUL: Cound not connect to PA");
       });
     } else {
-      console.log("Not going to check for a new Sop right now");
+      //helpers.consoleInfo("PUL: Not going to check for a new Sop right now");
       res.send({ok: true, updated: false})
     }
   });
 
-  function connectToPA(callback){
+  function connectToPA(callback,onerror){
     var Client = require('ftp');
     var c = new Client();
     c.on('ready', function() {
       callback(c);
+    });
+    c.on('error', function() {
+      onerror();
     });
     c.connect({
       host: "ftpout.pa.press.net",
@@ -209,10 +241,7 @@ module.exports = function(app){
   }
 
   function traverseSop(sopJSON,c,folder,req,res){
-    //TODO: sopNumber might be 2,3,4,5,6 etc!
-    const sopNumber = "1" /*lastFetchedSopn*/; // not sure here, even at the LIVE TEST on 16 May 2017 they always had "1" suffix
     const async = require("async");
-    //TODO: Make sure the prefix for LIVE data is CORRECT!
     const constituencyFilePrefix = paFetchModeIsLive?"Snap_General_Election_result_":"Test_Snap_General_Election_result_";
     async.parallel([
       function(sopUpdated){
@@ -224,10 +253,15 @@ module.exports = function(app){
             if(xml){
               const parseString = require('xml2js').parseString;
               parseString(xml, function (err, constituencyJSON) {
-                paDB.updateConstituency(constituencyJSON,constituencyUpdated);
+                if(!err){
+                  paDB.updateConstituency(constituencyJSON,constituencyUpdated);
+                } else {
+                  helpers.consoleError("TS: XML could not be parsed");
+                  constituencyUpdated();
+                }
               });
             } else {
-              // error happened, but still letting it go
+              helpers.consoleError("TS: XML could not be found");
               constituencyUpdated();
             }
           });
@@ -241,7 +275,7 @@ module.exports = function(app){
         res.send({error: err});
       } else {
         sopFetchStatus = "idle";
-        console.log("Done!")
+        helpers.consoleSuccess("PU: Traversal finished");
         res.send({ok: true, updated: true});
       }
     });
@@ -250,12 +284,16 @@ module.exports = function(app){
 
   function getLatestResult(_xml,sopNumber,c,folder,constituencyFilePrefix,constituency,callback){
     const fileName = folder+'/'+constituencyFilePrefix+constituency.$.name.replace(/&/g,"and").replace(/\s/g,"_")+"_"+sopNumber+".xml";
-    c.get(fileName, function(err, stream) {
-      if(err){
-        // In this case ERROR means SUCCESS: if file not found, then the previously
+    c.get(fileName, function(notFound, stream) {
+      if(notFound){
+        // In this case notFound means SUCCESS: if file not found, then the previously
         // fetched XML is the latest!
-        console.log("FETCHED: " + constituency.$.name + " " + (sopNumber - 1))
-        callback(_xml);
+        // console.log("FETCHED: " + constituency.$.name + " " + (sopNumber - 1))
+        if(sopNumber - 1 > 0){
+          callback(_xml);
+        } else { // this is a real error
+          helpers.consoleError("GLR: Result file not found!");
+        }
       } else {
         const chunks = [];
         stream.on('data', (chunk) => {
@@ -267,10 +305,10 @@ module.exports = function(app){
           getLatestResult(_xml,sopNumber,c,folder,constituencyFilePrefix,constituency,callback)
         });
         stream.on('error', () => {
+          helpers.consoleError("GLR: Stream broken");
           callback();
         });
       }
     });
   }
-
 }

@@ -145,4 +145,117 @@ module.exports = function(CardTemplates){
       }
     ]
   }
+  CardTemplates.votes = {
+     "dom":"div.content",
+     "content":[
+        {
+           "dom":"h2",
+           "content":{
+              "var":"name"
+           }
+        },
+        {
+           "dom":"div.body-content",
+           "content":[
+              {
+                "condition": "partiesExist",
+                 "dom":"div",
+                 "loop":"parties",
+                 "content":[
+                    {
+                       "dom":"div.seats",
+                       "content":{
+                          "var":"seats"
+                       }
+                    },
+                    {
+                       "dom":"p.name",
+                       "content":{
+                          "var":"name"
+                       }
+                    },
+                    {
+                       "template":"progress-bar"
+                    }
+                 ]
+              },
+              {
+                "condition": "!partiesExist",
+                 "dom":"div",
+                 "content":"Sorry, there is no data yet"
+              }
+           ]
+        }
+     ]
+  }
+  CardTemplates.list = {
+     "dom":"div.content",
+     "content":[
+        {
+           "dom":"h2",
+           "content":{
+              "var":"name"
+           }
+        },
+        {
+           "dom":"div.body-content",
+           "content":[
+              {
+                "condition": "itemsExist",
+                 "dom":"ul",
+                 "loop":"items",
+                 "content":[
+                    {
+                       "dom":"li",
+                       "content":{
+                          "var":"value"
+                       },
+                       "attr":{
+                          "onclick":{
+                             "var":"action"
+                          }
+                       }
+                    }
+                 ]
+              },
+              {
+                "condition": "!itemsExist",
+                 "dom":"div",
+                 "content":"Sorry, there is no data yet"
+              }
+           ]
+        }
+     ]
+  }
+  CardTemplates.stats = {
+     "dom":"div.content",
+     "content":[
+        {
+           "dom":"h2",
+           "content":{
+              "var":"name"
+           }
+        },
+        {
+           "dom":"div.body-content",
+           "content":[
+              {
+                "condition": "rowsExist",
+                 "dom":"table.stats.blank",
+                 "loop":"rows",
+                 "content":[
+                    {
+                       "template":"row"
+                    }
+                 ]
+              },
+              {
+                "condition": "!rowsExist",
+                 "dom":"div",
+                 "content":"Sorry, there is no data yet"
+              }
+           ]
+        }
+     ]
+  }
 };
