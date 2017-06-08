@@ -366,7 +366,7 @@ class App {
         {
           cells: [
             { value: (SWITCH?'Forecast Winner:':'Winner:') },
-            { value: model.partySummary.forecastWinningParty }
+            { value: model.partySummary.forecastWinningParty ? model.partySummary.forecastWinningParty : "TBC" }
           ]
         },
         // {
