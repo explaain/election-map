@@ -45,7 +45,7 @@ module.exports = function(CardTemplates){
           {
             "dom": "p",
             "condition": "!rowsExist",
-            "content": "Sorry, there is no data yet"
+            "content": "The data will appear shortly!"
           },
           {
             "dom": "p",
@@ -182,7 +182,7 @@ module.exports = function(CardTemplates){
               {
                 "condition": "!partiesExist",
                  "dom":"div",
-                 "content":"Sorry, there is no data yet"
+                 "content":"The data will appear shortly!"
               }
            ]
         }
@@ -221,7 +221,7 @@ module.exports = function(CardTemplates){
               {
                 "condition": "!itemsExist",
                  "dom":"div",
-                 "content":"Sorry, there is no data yet"
+                 "content":"The data will appear shortly!"
               }
            ]
         }
@@ -252,7 +252,7 @@ module.exports = function(CardTemplates){
               {
                 "condition": "!rowsExist",
                  "dom":"div",
-                 "content":"Sorry, there is no data yet"
+                 "content":"The data will appear shortly!"
               }
            ]
         }
