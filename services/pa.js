@@ -72,9 +72,6 @@ module.exports = function(app){
     if(!paFetchModeIsLive){
       helpers.consoleWarning("PU: Warning! Using TEST query until the START of election calculation")
     }
-    console.log("1: " + lastFetchedSopt);
-    console.log("2: " + conf.sopFetchTimeout);
-    console.log("3: " + sopFetchStatus);
     if((new Date())-lastFetchedSopt>conf.sopFetchTimeout*1000 && sopFetchStatus!=="updating"){
       lastFetchedSopt = new Date();
       const parseString = require('xml2js').parseString;
