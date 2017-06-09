@@ -15,6 +15,11 @@ var allParties = [
     color: "#ffc524"
   },
   {
+    key: "liberal-democrat",
+    name: "Liberal Democrats",
+    color: "#ffc524"
+  },
+  {
     key: "ukip",
     name: "Ukip",
     color: "#9c347c"
@@ -31,6 +36,11 @@ var allParties = [
   },
   {
     key: "plaid-cymru---the-party-of-wales",
+    name: "Plaid Cymru",
+    color: "#f7c023"
+  },
+  {
+    key: "plaid-cymru",
     name: "Plaid Cymru",
     color: "#f7c023"
   },
@@ -95,12 +105,22 @@ var allParties = [
     color: "#f3df00",
   },
   {
+    key: "democratic-unionist-party",
+    name: "Democratic Unionist Party",
+    color: "#c52329",
+  },
+  {
     key: "democratic-unionist-party---d.u.p.",
     name: "Democratic Unionist Party",
     color: "#c52329",
   },
   {
     key: "sinn-féin",
+    name: "Sinn Féin",
+    color: "#039355",
+  },
+  {
+    key: "sinn-fein",
     name: "Sinn Féin",
     color: "#039355",
   },
